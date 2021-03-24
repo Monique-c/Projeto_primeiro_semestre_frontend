@@ -1,0 +1,31 @@
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  height:9%;
+  
+  letter-spacing: 0.2px;
+}
+
+.navbar-initialPage {
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  
+  line-height: 18px;
+  color: #3C64B1;
+  
+  margin-right: 50px;
+}
+
+.navbar-items {
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  
+  line-height: 18px;
+  color: #3C64B1;
+}
