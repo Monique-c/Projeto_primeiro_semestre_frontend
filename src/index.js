@@ -11,6 +11,9 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 //API Pages
 import Homepage from './pages/Homepage';
 import Eleitorado from './pages/Eleitorado';
+import Abstencao from './pages/Abstencao';
+import Renda from './pages/Renda';
+import GraficosRelevantes from './pages/GraficosRelevantes';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -19,12 +22,30 @@ ReactDOM.render(
         <Route path="/home"
           render={(props) => <Homepage {...props} />}
         />
+
         <Route
           path="/eleitorado"
           render={(props) => <Eleitorado {...props} />}
         />
+
+        <Route
+          path="/abstencao"
+          render={(props) => <Abstencao {...props} />}
+        />
+
+        <Route
+          path="/renda"
+          render={(props) => <Renda {...props} />}
+        />
+
+        <Route
+          path="/relevantes"
+          render={(props) => <GraficosRelevantes {...props} />}
+        />
+
         <Redirect to="/home" />
         <Redirect from="/" to="/home" />
+
       </Switch>
     </Switch>
   </BrowserRouter>,

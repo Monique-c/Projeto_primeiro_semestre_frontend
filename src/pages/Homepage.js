@@ -29,7 +29,7 @@ function Homepage() {
         <div className="homepage-container text-center">
           <Row>
             <Col lg="4">
-              <a href="/">
+              <a href="/eleitorado">
                 <Card body className="text-center homepage-card-container">
                   <CardImg className="mt-2" alt="..." src={eleitorado}
                     height="80" width="80"
@@ -42,26 +42,26 @@ function Homepage() {
             </Col>
 
             <Col lg="4">
-              <a href="/">
+              <a href="/abstencao">
                 <Card body className="text-center homepage-card-container">
                   <CardImg className="mt-2  mb-4" alt="..." src={abstencao}
                     height="80" width="80"
                   />
                   <CardBody>
-                    <span className='card-title'>Abstenção</span>
+                    <span className='card-title'>Comparecimento <br />e Abstenção</span>
                   </CardBody>
                 </Card>
               </a>
             </Col>
 
             <Col lg="4">
-              <a href="/">
+              <a href="/renda">
                 <Card body className="text-center homepage-card-container">
                   <CardImg className="mt-2 mb-4" alt="..." src={renda}
                     height="80" width="80"
                   />
                   <CardBody>
-                    <span className='card-title'>Renda</span>
+                    <span className='card-title'>Renda <br /> per capta</span>
                   </CardBody>
                 </Card>
               </a>
@@ -70,7 +70,7 @@ function Homepage() {
 
           <Row>
             <Col lg="12">
-              <a href="/">
+              <a href="/relevantes">
                 <Card body
                   className="text-center homepage-large-card-container ">
                   <CardBody>

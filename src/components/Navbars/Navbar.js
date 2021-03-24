@@ -26,19 +26,19 @@ function Example() {
           </Col>
 
           <Col>
-            <a href="/">
+            <a href="/eleitorado">
               <span className="navbar-items"> ELEITORADO </span>
             </a>
           </Col>
 
           <Col>
-            <a href="/">
+            <a href="/abstencao">
               <span className="navbar-items"> ABSTENÇÃO </span>
             </a>
           </Col>
 
           <Col>
-            <a href="/">
+            <a href="/renda">
               <span className="navbar-items"> RENDA </span>
             </a>
           </Col>

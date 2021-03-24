@@ -19,13 +19,13 @@ import '../assets/styles/homepage.css'
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footers/Footer.js";
 
-function Eleitorado() {
+function Abstencao() {
   return (
     <>
       <Navbar />
       <Container>
         <div className="homepage-container">
-          <span>Eleitorado</span>
+          <span>Abstenção</span>
         </div>
       </Container>
 
@@ -34,4 +34,4 @@ function Eleitorado() {
   );
 }
 
-export default Eleitorado;
+export default Abstencao;
