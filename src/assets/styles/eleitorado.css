@@ -1,0 +1,54 @@
+.eleitorado-container {
+  min-height: 75vh;
+  margin: 5% 50px;
+}
+
+.card-filtro-container {
+  margin: 30px
+}
+
+
+.limpar-font {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+  color: #214BB5;
+  cursor: pointer;
+}
+
+.title {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 0.4px;
+  color: #0A3143;
+  margin-bottom: 15%;
+}
+
+.subtitle { 
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: 0.2px;
+
+  color: #0A3143;
+}
+
+#mensagem-sem-filtro {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+  letter-spacing: 0.05em;
+
+  color: #C9CBCF;
+  margin-left: 40px;
+}

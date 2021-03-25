@@ -31,7 +31,7 @@ function Homepage() {
             <Col lg="4">
               <a href="/eleitorado">
                 <Card body className="text-center homepage-card-container">
-                  <CardImg className="mt-2" alt="..." src={eleitorado}
+                  <CardImg className="mt-2  mb-4" alt="..." src={eleitorado}
                     height="80" width="80"
                   />
                   <CardBody>
@@ -61,7 +61,7 @@ function Homepage() {
                     height="80" width="80"
                   />
                   <CardBody>
-                    <span className='card-title'>Renda <br /> per capta</span>
+                    <span className='card-title'>Renda <br /> per capita</span>
                   </CardBody>
                 </Card>
               </a>

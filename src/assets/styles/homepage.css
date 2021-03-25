@@ -1,13 +1,13 @@
 .homepage-container {
   min-height: 71.2vh;
-  width: 750px;
+  width: 850px;
   margin-top: 5%;
 }
 
 .homepage-card-container {
   background-color: #0A6893;
   border-radius: 10px;
-  width: 230px;
+  width: 275px;
   height: 100%;
 }
 
@@ -15,7 +15,7 @@
   margin-top: 20px;
   background-color: #0A6893;
   border-radius: 10px;
-  width: 100%;
+  width: 101.7%;
   height: 150px;
 }
 
