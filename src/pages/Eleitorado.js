@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // reactstrap components
 import {
@@ -18,6 +18,9 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 
+import lottie from 'lottie-web';
+import loading from '../assets/lottieJSONs/loading.json';
+
 import '../assets/styles/eleitorado.css';
 
 import SemFiltro from 'assets/img/Icons/semFiltro.svg';
@@ -28,7 +31,26 @@ import Footer from "components/Footers/Footer.js";
 import EleitoradoFilter from 'components/Cards/eleitoradoFilter';
 
 function Eleitorado() {
-  const [filtroAplicado, setFiltroAplicado] = useState(false);
+  const [filtroAplicado, setFiltroAplicado] = useState(true);
+
+
+  // tentativa lixo de implementar loading kk
+
+  // const [load, setLoad] = useState(true);
+  // const container = useRef(null)
+
+  // useEffect(() => {
+  //   if (load === true) {
+  //     lottie.loadAnimation({
+  //       container: container.current,
+  //       renderer: 'svg',
+  //       loop: true,
+  //       autoplay: true,
+  //       animationData: loading
+  //     })
+  //   }
+  // }, [load])
+
 
   return (
     <>
@@ -44,6 +66,7 @@ function Eleitorado() {
             <EleitoradoFilter />
           </Col>
 
+
           {filtroAplicado ?
             (<>
               <span>filtro aplicado :)</span>
@@ -55,8 +78,8 @@ function Eleitorado() {
                   <img src={SemFiltro} width='230px' height='230px' />
                   <span id='mensagem-sem-filtro'>
                     Realize um filtro <br />
-                    no lado esquerdo <br />
-                    para iniciar sua busca.
+                        no lado esquerdo <br />
+                        para iniciar sua busca.
                   </span>
                 </Row>
               </Col>

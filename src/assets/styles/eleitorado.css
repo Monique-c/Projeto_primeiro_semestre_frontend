@@ -52,3 +52,8 @@
   color: #C9CBCF;
   margin-left: 40px;
 }
+
+.loading {
+  width:70%;
+  height:70%
+}
