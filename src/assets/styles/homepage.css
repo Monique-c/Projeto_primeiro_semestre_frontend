@@ -1,0 +1,34 @@
+.homepage-container {
+  min-height: 71.2vh;
+  width: 850px;
+  margin-top: 5%;
+}
+
+.homepage-card-container {
+  background-color: #0A6893;
+  border-radius: 10px;
+  width: 275px;
+  height: 100%;
+}
+
+.homepage-large-card-container {
+  margin-top: 20px;
+  background-color: #0A6893;
+  border-radius: 10px;
+  width: 101.7%;
+  height: 150px;
+}
+
+.card-title {
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 32px;
+
+  letter-spacing: 0.3px;
+
+  color: #FFFFFF;
+
+  align-self: flex-end;
+}
