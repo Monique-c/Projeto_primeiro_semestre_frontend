@@ -22,9 +22,11 @@ import '../../assets/styles/eleitorado.css';
 export default function EleitoradoFilter() {
 
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
+  const [representanteEleito, setRepresentanteEleito] = useState(false);
 
   const [cidade, setCidade] = useState('');
   const [cidadeComparada, setCidadeComparada] = useState('');
+  const [cidadeSelecionada, setCidadeSelecionada] = useState('');
 
   const [opcoes, setOpcoes] = useState([]);
   const [faixaEtária, setFaixaEtaria] = useState(false);
@@ -104,7 +106,7 @@ export default function EleitoradoFilter() {
                   Opções de Filtro
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby="dropdownMenuButton">
-                  <FormGroup check className='ml-2'>
+                  <FormGroup check className='ml-3'>
                     <Label check>
                       <Input
                         type="checkbox"
@@ -147,32 +149,6 @@ export default function EleitoradoFilter() {
                     <Label check>
                       <Input
                         type="checkbox"
-                        value={genero}
-                        onChange={() => {
-                          setGenero(!genero);
-                          genero ? retirarOpcao('genero') : adicionarOpcao('genero')
-                        }}
-                      />
-                      <span className="form-check-sign"></span>
-                        Gênero
-                      </Label>
-
-                    <Label check>
-                      <Input
-                        type="checkbox"
-                        value={deficiencia}
-                        onChange={() => {
-                          setDeficiencia(!deficiencia);
-                          deficiencia ? retirarOpcao('deficiencia') : adicionarOpcao('deficiencia')
-                        }}
-                      />
-                      <span className="form-check-sign"></span>
-                        Eleitores com deficiência
-                      </Label>
-
-                    <Label check>
-                      <Input
-                        type="checkbox"
                         value={nomeSocial}
                         onChange={() => {
                           setNomeSocial(!nomeSocial);
@@ -205,6 +181,31 @@ export default function EleitoradoFilter() {
                       placeholder="São José dos Campos"
                       value={cidadeComparada}
                       onChange={e => setCidadeComparada(e.target.value)}
+                    />
+                  </FormGroup>
+                </>)
+                : null
+              }
+              
+              <Label check className='mt-4 ml-3'>
+                <Input
+                  type="checkbox"
+                  value={representanteEleito}
+                  onClick={() => setRepresentanteEleito(!representanteEleito)}
+                />
+                <span className="form-check-sign"></span>
+                Representante Eleito
+              </Label>
+
+              {representanteEleito ?
+                (<>
+                  <FormGroup className='mt-3'>
+                    <label htmlFor="cidadeSelecionada">Cidade</label>
+                    <Input
+                      id="cidadeSelecionada"
+                      placeholder="Jacareí"
+                      value={cidadeSelecionada}
+                      onChange={e => setCidadeSelecionada(e.target.value)}
                     />
                   </FormGroup>
                 </>)

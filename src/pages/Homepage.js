@@ -73,7 +73,7 @@ function Homepage() {
               <a href="/relevantes">
                 <Card body
                   className="text-center homepage-large-card-container ">
-                  <CardBody>
+                  <CardBody id="grafico_relevante">
                     <span className='card-title'>Graficos Relevantes</span>
                   </CardBody>
                 </Card>
