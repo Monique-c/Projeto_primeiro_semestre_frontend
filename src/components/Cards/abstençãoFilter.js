@@ -17,24 +17,21 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 
-import '../../assets/styles/eleitorado.css';
+import '../../assets/styles/abstenção.css';
 
-export default function EleitoradoFilter() {
+export default function AbstençãoFilter() {
 
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
-  const [representanteEleito, setRepresentanteEleito] = useState(false);
 
   const [cidade, setCidade] = useState('');
   const [cidadeComparada, setCidadeComparada] = useState('');
-  const [cidadeSelecionada, setCidadeSelecionada] = useState('');
-
+ 
   const [opcoes, setOpcoes] = useState([]);
   const [faixaEtária, setFaixaEtaria] = useState(false);
   const [estadoCivil, setEstadoCivil] = useState(false);
   const [escolaridadePublica, setEscolaridadePublica] = useState(false);
   const [genero, setGenero] = useState(false);
   const [deficiencia, setDeficiencia] = useState(false);
-  const [nomeSocial, setNomeSocial] = useState(false);
 
   useEffect(() => {
 
@@ -47,7 +44,6 @@ export default function EleitoradoFilter() {
   async function limparDados() {
     setCidade('');
     setCidadeComparada('');
-    setCidadeSelecionada('');
     setOpcoes([]);
   }
 
@@ -83,7 +79,8 @@ export default function EleitoradoFilter() {
 
         <Row>
           <Col className='d-flex'>
-            <Form>
+            <Form 
+              style={{width:'100%'}}>
               <FormGroup>
                 <label htmlFor="cidades">Cidades</label>
                 <Input
@@ -146,19 +143,6 @@ export default function EleitoradoFilter() {
                       <span className="form-check-sign"></span>
                         Escolaridade Declarada
                       </Label>
-
-                    <Label check>
-                      <Input
-                        type="checkbox"
-                        value={nomeSocial}
-                        onChange={() => {
-                          setNomeSocial(!nomeSocial);
-                          nomeSocial ? retirarOpcao('nomeSocial') : adicionarOpcao('nomeSocial')
-                        }}
-                      />
-                      <span className="form-check-sign"></span>
-                        Nome social
-                    </Label>
                   </FormGroup>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -187,32 +171,7 @@ export default function EleitoradoFilter() {
                 </>)
                 : null
               }
-              
-              <Label check className='mt-4 ml-3'>
-                <Input
-                  type="checkbox"
-                  value={representanteEleito}
-                  onClick={() => setRepresentanteEleito(!representanteEleito)}
-                />
-                <span className="form-check-sign"></span>
-                Representante Eleito
-              </Label>
-
-              {representanteEleito ?
-                (<>
-                  <FormGroup className='mt-3'>
-                    <label htmlFor="cidadeSelecionada">Cidade</label>
-                    <Input
-                      id="cidadeSelecionada"
-                      placeholder="Jacareí"
-                      value={cidadeSelecionada}
-                      onChange={e => setCidadeSelecionada(e.target.value)}
-                    />
-                  </FormGroup>
-                </>)
-                : null
-              }
-
+    
               <div className='d-flex justify-content-end'>
                 <Button onClick={() => filtrarDados()}
                   style={{
