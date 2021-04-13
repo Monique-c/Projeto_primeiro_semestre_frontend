@@ -2,18 +2,10 @@ import React, { useState } from "react";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  CardText,
-  Container,
-  Row,
-  Col,
+  Container
 } from "reactstrap";
 
-import '../assets/styles/homepage.css'
+import "../assets/styles/homepage.css"
 
 // core components
 import Navbar from "components/Navbars/Navbar.js";

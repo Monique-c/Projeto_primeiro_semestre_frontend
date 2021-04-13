@@ -5,20 +5,19 @@ import {
   Card,
   CardImg,
   CardBody,
-  Container,
   Row,
   Col,
 } from "reactstrap";
 
-import '../assets/styles/homepage.css'
+import "../assets/styles/homepage.css"
 
 // core components
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footers/Footer.js";
 
-import eleitorado from '../assets/img/Icons/perfilDoEleitorado.svg';
-import abstencao from '../assets/img/Icons/abstenção.svg';
-import renda from '../assets/img/Icons/renda.svg';
+import eleitorado from "../assets/img/Icons/perfilDoEleitorado.svg";
+import abstencao from "../assets/img/Icons/abstenção.svg";
+import renda from "../assets/img/Icons/renda.svg";
 
 function Homepage() {
   return (

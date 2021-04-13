@@ -9,11 +9,11 @@ import "assets/demo/demo.css?v=1.4.0";
 import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 
 //API Pages
-import Homepage from './pages/Homepage';
-import Eleitorado from './pages/Eleitorado';
-import Abstencao from './pages/Abstencao';
-import Renda from './pages/Renda';
-import GraficosRelevantes from './pages/GraficosRelevantes';
+import Homepage from "./pages/Homepage";
+import Eleitorado from "./pages/Eleitorado";
+import Abstencao from "./pages/Abstencao";
+import Renda from "./pages/Renda";
+import GraficosRelevantes from "./pages/GraficosRelevantes";
 
 ReactDOM.render(
   <BrowserRouter>

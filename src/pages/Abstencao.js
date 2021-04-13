@@ -13,13 +13,13 @@ import {
   Col,
 } from "reactstrap";
 
-import lottie from 'lottie-web';
-import loading from '../assets/lottieJSONs/loading.json';
+import lottie from "lottie-web";
+import loading from "../assets/lottieJSONs/loading.json";
 
-import '../assets/styles/homepage.css'
-import '../assets/styles/abstenção.css'
+import "../assets/styles/homepage.css"
+import "../assets/styles/abstenção.css"
 
-import SemFiltro from 'assets/img/Icons/semFiltro.svg';
+import SemFiltro from "assets/img/Icons/semFiltro.svg";
 
 // core components
 import Navbar from "components/Navbars/Navbar.js";
@@ -36,7 +36,7 @@ function Abstencao() {
     if (load === true) {
       lottie.loadAnimation({
         container: container.current,
-        renderer: 'svg',
+        renderer: "svg",
         loop: true,
         autoplay: true,
         animationData: loading
@@ -47,7 +47,7 @@ function Abstencao() {
   return (
     <>
       <Navbar />
-      <Container style={{ minHeight: '82vh' }} fluid>
+      <Container style={{ minHeight: "82vh" }} fluid>
 
         <div className='text-center my-5'>
           <span className='abstencao-title'>Comparecimento/Abstenção</span>
@@ -61,7 +61,10 @@ function Abstencao() {
           {load ?
             (<>
               <Col>
-                <Row style={{ height: '50%', marginTop: '-4%' }} className='d-flex align-items-center mr-5'>
+                <Row
+                  style={{ height: "50%", marginTop: "-4%" }}
+                  className='d-flex align-items-center mr-5'
+                >
                   <div className="loading" ref={container} />
                 </Row>
               </Col>
@@ -76,7 +79,10 @@ function Abstencao() {
                   :
                   (<>
                     <Col>
-                      <Row style={{ height: '50%', marginLeft: '15%' }} className='mt-5 d-flex align-items-center mr-5'>
+                      <Row
+                        style={{ height: "50%", marginLeft: "15%" }}
+                        className='mt-5 d-flex align-items-center mr-5'
+                      >
                         <img src={SemFiltro} width='230px' height='230px' />
                         <span id='mensagem-sem-filtro'>
                           Realize um filtro <br />
