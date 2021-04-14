@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 import {
   Button,
@@ -17,15 +17,21 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 
-import '../../assets/styles/abstenção.css';
+import {useDispatch} from "react-redux"
+
+import "../../assets/styles/abstenção.css";
+
+import api from "../../services/api"
+import * as LoadingData from "../../store/actions/filterGraphics";
 
 export default function AbstençãoFilter() {
+  const dispatch = useDispatch()
 
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
 
-  const [cidade, setCidade] = useState('');
-  const [cidadeComparada, setCidadeComparada] = useState('');
- 
+  const [cidade, setCidade] = useState("");
+  const [cidadeComparada, setCidadeComparada] = useState("");
+
   const [opcoes, setOpcoes] = useState([]);
   const [faixaEtária, setFaixaEtaria] = useState(false);
   const [estadoCivil, setEstadoCivil] = useState(false);
@@ -33,17 +39,22 @@ export default function AbstençãoFilter() {
   const [genero, setGenero] = useState(false);
   const [deficiencia, setDeficiencia] = useState(false);
 
-  useEffect(() => {
-
-  }, []);
-
   async function filtrarDados() {
-    alert(`cidade: ${cidade}\n cidadeComparada: ${cidadeComparada}`)
+    dispatch(LoadingData.handleDataAbstencao(true, false));
+    // alert(`cidade: ${cidade}\n cidadeComparada: ${cidadeComparada}`)
+
+    const form = {
+      "parametro_busca": "NM_MUNICIPIO",
+      "filtro_busca": "SOCORRO"
+    }
+    const { data } = await api.post("pesquisas-abstencao", form)
+
+    dispatch(LoadingData.handleDataAbstencao(false, true, data));
   }
 
   async function limparDados() {
-    setCidade('');
-    setCidadeComparada('');
+    setCidade("");
+    setCidadeComparada("");
     setOpcoes([]);
   }
 
@@ -59,14 +70,14 @@ export default function AbstençãoFilter() {
   }
 
   return (
-    <Card style={{ width: '300px', marginLeft: '10px' }}>
+    <Card style={{ width: "300px", marginLeft: "10px" }}>
       <div className='card-filtro-container'>
         <Row className='mb-5'>
           <Col lg='11'
             className='d-flex'
             style={{
-              justifyContent: 'space-between',
-              alignItems: 'center'
+              justifyContent: "space-between",
+              alignItems: "center"
             }}
           >
             <span className='subtitle'> Filtros </span>
@@ -79,8 +90,8 @@ export default function AbstençãoFilter() {
 
         <Row>
           <Col className='d-flex'>
-            <Form 
-              style={{width:'100%'}}>
+            <Form
+              style={{width:"100%"}}>
               <FormGroup>
                 <label htmlFor="cidades">Cidades</label>
                 <Input
@@ -94,7 +105,7 @@ export default function AbstençãoFilter() {
               <label htmlFor="opcoes">Opções</label>
               <UncontrolledDropdown>
                 <DropdownToggle
-                  style={{ width: '100%', marginTop: '-0.5px' }}
+                  style={{ width: "100%", marginTop: "-0.5px" }}
                   aria-expanded={false}
                   caret
                   className='btn-round'
@@ -111,7 +122,7 @@ export default function AbstençãoFilter() {
                         value={faixaEtária}
                         onChange={() => {
                           setFaixaEtaria(!faixaEtária);
-                          faixaEtária ? retirarOpcao('faixaEtária') : adicionarOpcao('faixaEtária')
+                          faixaEtária ? retirarOpcao("faixaEtária") : adicionarOpcao("faixaEtária")
                         }}
                       />
                       <span className="form-check-sign"></span>
@@ -124,7 +135,7 @@ export default function AbstençãoFilter() {
                         value={estadoCivil}
                         onChange={() => {
                           setEstadoCivil(!estadoCivil);
-                          estadoCivil ? retirarOpcao('estadoCivil') : adicionarOpcao('estadoCivil')
+                          estadoCivil ? retirarOpcao("estadoCivil") : adicionarOpcao("estadoCivil")
                         }}
                       />
                       <span className="form-check-sign"></span>
@@ -137,7 +148,7 @@ export default function AbstençãoFilter() {
                         value={escolaridadePublica}
                         onChange={() => {
                           setEscolaridadePublica(!escolaridadePublica);
-                          escolaridadePublica ? retirarOpcao('escolaridadePublica') : adicionarOpcao('escolaridadePublica')
+                          escolaridadePublica ? retirarOpcao("escolaridadePublica") : adicionarOpcao("escolaridadePublica")
                         }}
                       />
                       <span className="form-check-sign"></span>
@@ -171,11 +182,11 @@ export default function AbstençãoFilter() {
                 </>)
                 : null
               }
-    
+
               <div className='d-flex justify-content-end'>
                 <Button onClick={() => filtrarDados()}
                   style={{
-                    backgroundColor: '#214bb5',
+                    backgroundColor: "#214bb5",
                   }}>
                   Aplicar
                 </Button>

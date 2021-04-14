@@ -9,6 +9,10 @@ import {
 
 import  { Bar } from "react-chartjs-2";
 
+import { useSelector, useDispatch } from "react-redux";
+
+import * as LoadingData from "../store/actions/filterGraphics";
+
 import api from "../services/api"
 
 import lottie from "lottie-web";
@@ -22,18 +26,20 @@ import SemFiltro from "assets/img/Icons/semFiltro.svg";
 // core components
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footers/Footer.js";
-import AbstençãoFilter from "components/Cards/abstençãoFilter";
+import AbstençãoFilter from "components/Cards/abstencaoFilter";
 
-function Abstencao() {
-  const [filtroAplicado, setFiltroAplicado] = useState(false);
-
-  const [load, setLoad] = useState(false);
-  const [dados, setDados] = useState({})
-
+export default function Abstencao() {
+  const dispatch = useDispatch()
   const container = useRef(null);
 
+  const loadingData = useSelector((state) => state.filterGraphics.loading);
+  const filtroAplicado = useSelector((state) => state.filterGraphics.filterApplied);
+  const dataResult = useSelector((state) => state.filterGraphics.data);
+
+  const [dados, setDados] = useState({})
+
   useEffect(() => {
-    if (load === true) {
+    if (loadingData) {
       lottie.loadAnimation({
         container: container.current,
         renderer: "svg",
@@ -42,20 +48,14 @@ function Abstencao() {
         animationData: loading
       })
     }
-  }, [load]);
+  }, [loadingData]);
 
-  useEffect(() => getData(), [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {if (filtroAplicado) getData()}, [filtroAplicado])
 
-  const getData = async () => {
-    setLoad(true)
-    const form = {
-      "parametro_busca": "NM_MUNICIPIO",
-      "filtro_busca": "SOCORRO"
-    }
-    const { data }  = await api.post("pesquisas-abstencao", form)
-
-    const keys = Object.keys(data)
-    const values = Object.values(data)
+  const getData = () => {
+    const keys = Object.keys(dataResult)
+    const values = Object.values(dataResult)
 
     keys.shift()
     values.shift()
@@ -74,8 +74,6 @@ function Abstencao() {
         ]
       }
     );
-    setFiltroAplicado(true)
-    setLoad(false)
   }
 
   const Chart = () => {
@@ -107,7 +105,7 @@ function Abstencao() {
             <AbstençãoFilter/>
           </Col>
 
-          {load ? (
+          {loadingData ? (
             <Col>
               <Row
                 style={{ height: "30%", marginTop: "-4%" }}
@@ -146,4 +144,3 @@ function Abstencao() {
   );
 }
 
-export default Abstencao;
