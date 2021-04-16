@@ -22,6 +22,8 @@ import {useDispatch} from "react-redux"
 import "../../assets/styles/abstenção.css";
 
 import api from "../../services/api"
+import ibge from "../../services/api_ibge"
+
 import * as LoadingData from "../../store/actions/filterGraphics";
 
 export default function AbstençãoFilter() {
@@ -29,6 +31,7 @@ export default function AbstençãoFilter() {
 
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
 
+  const [cidades, setCidades] = useState([]);
   const [cidade, setCidade] = useState("");
   const [cidadeComparada, setCidadeComparada] = useState("");
 
@@ -39,13 +42,23 @@ export default function AbstençãoFilter() {
   const [genero, setGenero] = useState(false);
   const [deficiencia, setDeficiencia] = useState(false);
 
+  useEffect(() => {
+    (async () => {
+      const { data } = await ibge.get()
+      const nomeCidades = data.map(city => city.nome);
+      setCidades(nomeCidades)
+    })()
+  }, [])
+
   async function filtrarDados() {
     dispatch(LoadingData.handleDataAbstencao(true, false));
-    // alert(`cidade: ${cidade}\n cidadeComparada: ${cidadeComparada}`)
 
     const form = {
       "parametro_busca": "NM_MUNICIPIO",
-      "filtro_busca": "SOCORRO"
+      "NM_MUNICIPIO": cidade,
+      "NM_MUNICIPIO_COMPARAR": cidadeComparada,
+      "DS_FAIXA_ETÁRIA": faixaEtária,
+      "DS_ESTADO_CIVIL" : estadoCivil
     }
     const { data } = await api.post("pesquisas-abstencao", form)
 
@@ -94,12 +107,28 @@ export default function AbstençãoFilter() {
               style={{width:"100%"}}>
               <FormGroup>
                 <label htmlFor="cidades">Cidades</label>
-                <Input
-                  id="cidades"
-                  value={cidade}
-                  onChange={e => setCidade(e.target.value)}
-                  placeholder="São José dos Campos"
-                />
+                <select
+                  name="cidades"
+                  className="form-control mt-2"
+                  style={{
+                    width: "100%",
+                    borderRadius: "3%",
+                    color: "#32325d",
+                  }}
+                  onChange={(event) => {
+                    const value = event.target.value.split(",");
+                    setCidade(value);
+                  }}
+                >
+                  {cidades.map((cidade, index) => (
+                    <option
+                      key={index}
+                      value={cidade}
+                    >
+                      {cidade}
+                    </option>
+                  ))}
+                </select>
               </FormGroup>
 
               <label htmlFor="opcoes">Opções</label>
@@ -121,7 +150,7 @@ export default function AbstençãoFilter() {
                         type="checkbox"
                         value={faixaEtária}
                         onChange={() => {
-                          setFaixaEtaria(!faixaEtária);
+                          setFaixaEtaria(!faixaEtária)
                           faixaEtária ? retirarOpcao("faixaEtária") : adicionarOpcao("faixaEtária")
                         }}
                       />
@@ -172,12 +201,28 @@ export default function AbstençãoFilter() {
                 (<>
                   <FormGroup className='mt-3'>
                     <label htmlFor="cidadeComparada">Comparar com</label>
-                    <Input
-                      id="cidadeComparada"
-                      placeholder="São José dos Campos"
-                      value={cidadeComparada}
-                      onChange={e => setCidadeComparada(e.target.value)}
-                    />
+                    <select
+                      name="cidadeComparada"
+                      className="form-control mt-2"
+                      style={{
+                        width: "100%",
+                        borderRadius: "3%",
+                        color: "#32325d",
+                      }}
+                      onChange={(event) => {
+                        const value = event.target.value.split(",");
+                        setCidadeComparada(value);
+                      }}
+                    >
+                      {cidades.map((cidade, index) => (
+                        <option
+                          key={index}
+                          value={cidade}
+                        >
+                          {cidade}
+                        </option>
+                      ))}
+                    </select>
                   </FormGroup>
                 </>)
                 : null
