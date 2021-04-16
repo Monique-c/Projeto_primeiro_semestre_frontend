@@ -102,7 +102,7 @@ export default function RelevantesFilter() {
                   id="assuntos"
                   value={assunto}
                   onChange={e => setAssunto(e.target.value)}
-                  placeholder="Biometria"
+                  placeholder="Eleitorado"
                 />
               </FormGroup>
 
@@ -169,7 +169,7 @@ export default function RelevantesFilter() {
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Nomd Social
+                        Nome Social
                       </Label>
                   </FormGroup>
                 </DropdownMenu>
