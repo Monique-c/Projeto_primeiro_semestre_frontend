@@ -17,7 +17,10 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 
+import {useDispatch, useSelector} from "react-redux"
+
 import api from "../../services/api";
+import ibge from "../../services/api_ibge"
 
 import "../../assets/styles/eleitorado.css";
 
@@ -26,6 +29,7 @@ export default function EleitoradoFilter(callback) {
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
   const [representanteEleito, setRepresentanteEleito] = useState(false);
 
+  const [cidades, setCidades] = useState([]);
   const [cidade, setCidade] = useState("");
   const [cidadeComparada, setCidadeComparada] = useState("");
   const [cidadeSelecionada, setCidadeSelecionada] = useState("");
@@ -39,7 +43,12 @@ export default function EleitoradoFilter(callback) {
   const [nomeSocial, setNomeSocial] = useState(false);
 
   useEffect(() => {
+    (async () => {
+      const { data } = await ibge.get()
+      const nomeCidades = data.map(city => city.nome);
 
+      setCidades(nomeCidades);
+    })()
   }, []);
 
   async function filtrarDados() {
@@ -92,28 +101,42 @@ export default function EleitoradoFilter(callback) {
         </Row>
 
         <Row>
-          <Col className='d-flex'>
+          <Col>
             <Form>
               <FormGroup>
                 <label htmlFor="cidades">Cidades</label>
-                <Input
-                  id="cidades"
-                  value={cidade}
-                  onChange={e => setCidade(e.target.value)}
-                  placeholder="São José dos Campos"
-                />
+                <select
+                  name="cidades"
+                  className="form-control mt-2"
+                  style={{
+                    width: "100%",
+                    borderRadius: "3%",
+                    color: "#32325d",
+                  }}
+                  onChange={(event) => {
+                    const value = event.target.value.split(",");
+                    setCidade(value);
+                  }}
+                >
+                  {cidades.map((cidade, index) => (
+                    <option
+                      key={index}
+                      value={cidade}
+                    >
+                      {cidade}
+                    </option>
+                  ))}
+                </select>
               </FormGroup>
 
               <label htmlFor="opcoes">Opções</label>
               <UncontrolledDropdown>
                 <DropdownToggle
-                  style={{ width: "100%", marginTop: "-0.5px" }}
-                  aria-expanded={false}
                   caret
-                  className='btn-round'
+                  className='btn-round w-100'
                   color="info"
                   id="opcoes"
-                  type="button">
+                >
                   Opções de Filtro
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby="dropdownMenuButton">
@@ -127,7 +150,7 @@ export default function EleitoradoFilter(callback) {
                           faixaEtária ? retirarOpcao("faixaEtária") : adicionarOpcao("faixaEtária")
                         }}
                       />
-                      <span className="form-check-sign"></span>
+                      <span className="form-check-sign" />
                         Faixa Etária
                     </Label>
 
@@ -140,7 +163,7 @@ export default function EleitoradoFilter(callback) {
                           estadoCivil ? retirarOpcao("estadoCivil") : adicionarOpcao("estadoCivil")
                         }}
                       />
-                      <span className="form-check-sign"></span>
+                      <span className="form-check-sign" />
                         Estado civil
                       </Label>
 
@@ -153,7 +176,7 @@ export default function EleitoradoFilter(callback) {
                           escolaridadePublica ? retirarOpcao("escolaridadePublica") : adicionarOpcao("escolaridadePublica")
                         }}
                       />
-                      <span className="form-check-sign"></span>
+                      <span className="form-check-sign" />
                         Escolaridade Declarada
                       </Label>
 
@@ -166,7 +189,7 @@ export default function EleitoradoFilter(callback) {
                           nomeSocial ? retirarOpcao("nomeSocial") : adicionarOpcao("nomeSocial")
                         }}
                       />
-                      <span className="form-check-sign"></span>
+                      <span className="form-check-sign" />
                         Nome social
                     </Label>
                   </FormGroup>
@@ -179,7 +202,7 @@ export default function EleitoradoFilter(callback) {
                   value={comparacaoAtiva}
                   onClick={() => setComparacaoAtiva(!comparacaoAtiva)}
                 />
-                <span className="form-check-sign"></span>
+                <span className="form-check-sign" />
                 Adicionar comparação
               </Label>
 
@@ -187,12 +210,28 @@ export default function EleitoradoFilter(callback) {
                 (<>
                   <FormGroup className='mt-3'>
                     <label htmlFor="cidadeComparada">Comparar com</label>
-                    <Input
-                      id="cidadeComparada"
-                      placeholder="São José dos Campos"
-                      value={cidadeComparada}
-                      onChange={e => setCidadeComparada(e.target.value)}
-                    />
+                    <select
+                      name="cidadeComparada"
+                      className="form-control mt-2"
+                      style={{
+                        width: "100%",
+                        borderRadius: "3%",
+                        color: "#32325d",
+                      }}
+                      onChange={(event) => {
+                        const value = event.target.value.split(",");
+                        setCidadeComparada(value);
+                      }}
+                    >
+                      {cidades.map((cidade, index) => (
+                        <option
+                          key={index}
+                          value={cidade}
+                        >
+                          {cidade}
+                        </option>
+                      ))}
+                    </select>
                   </FormGroup>
                 </>)
                 : null
@@ -207,21 +246,6 @@ export default function EleitoradoFilter(callback) {
                 <span className="form-check-sign"></span>
                 Representante Eleito
               </Label>
-
-              {representanteEleito ?
-                (<>
-                  <FormGroup className='mt-3'>
-                    <label htmlFor="cidadeSelecionada">Cidade</label>
-                    <Input
-                      id="cidadeSelecionada"
-                      placeholder="Jacareí"
-                      value={cidadeSelecionada}
-                      onChange={e => setCidadeSelecionada(e.target.value)}
-                    />
-                  </FormGroup>
-                </>)
-                : null
-              }
 
               <div className='d-flex justify-content-end'>
                 <Button onClick={() => filtrarDados()}

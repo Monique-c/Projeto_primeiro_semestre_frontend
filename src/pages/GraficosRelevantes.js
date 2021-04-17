@@ -121,7 +121,7 @@ function GraficosRelevantes() {
                   (<>
                     <Col>
                       <Row style={{ height: '50%', marginLeft: '15%' }} className='mt-5 d-flex align-items-center mr-5'>
-                        <img src={SemFiltro} width='230px' height='230px' />
+                        <img src={SemFiltro} width='230px' height='230px' alt="Realize um filtro"/>
                         <span id='mensagem-sem-filtro'>
                           Realize um filtro <br />
                           no lado esquerdo <br />

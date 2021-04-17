@@ -1,6 +1,5 @@
 import React, { useState,useEffect,useRef } from "react";
 
-// reactstrap components
 import {
   Container,
   Row,
@@ -9,11 +8,7 @@ import {
 
 import  { Bar } from "react-chartjs-2";
 
-import { useSelector, useDispatch } from "react-redux";
-
-import * as LoadingData from "../store/actions/filterGraphics";
-
-import api from "../services/api"
+import { useSelector } from "react-redux";
 
 import lottie from "lottie-web";
 import loading from "../assets/lottieJSONs/loading.json";
@@ -29,7 +24,6 @@ import Footer from "components/Footers/Footer.js";
 import AbstençãoFilter from "components/Cards/abstencaoFilter";
 
 export default function Abstencao() {
-  const dispatch = useDispatch()
   const container = useRef(null);
 
   const loadingData = useSelector((state) => state.filterGraphics.loading);
@@ -126,7 +120,7 @@ export default function Abstencao() {
                       style={{ height: "50%", marginLeft: "15%" }}
                       className='mt-5 d-flex align-items-center mr-5'
                     >
-                      <img src={SemFiltro} width='230px' height='230px' />
+                      <img src={SemFiltro} width='230px' height='230px' alt="Realize um filtro"/>
                       <span id='mensagem-sem-filtro'>
                         Realize um filtro <br />
                         no lado esquerdo <br />

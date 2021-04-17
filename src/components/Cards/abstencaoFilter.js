@@ -17,7 +17,7 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 
 import "../../assets/styles/abstenção.css";
 
@@ -25,6 +25,7 @@ import api from "../../services/api"
 import ibge from "../../services/api_ibge"
 
 import * as LoadingData from "../../store/actions/filterGraphics";
+import * as GetCidades from "../../store/actions/getCities";
 
 export default function AbstençãoFilter() {
   const dispatch = useDispatch()
@@ -46,15 +47,16 @@ export default function AbstençãoFilter() {
     (async () => {
       const { data } = await ibge.get()
       const nomeCidades = data.map(city => city.nome);
-      setCidades(nomeCidades)
+
+      setCidades(nomeCidades);
     })()
   }, [])
+
 
   async function filtrarDados() {
     dispatch(LoadingData.handleDataAbstencao(true, false));
 
     const form = {
-      "parametro_busca": "NM_MUNICIPIO",
       "NM_MUNICIPIO": cidade,
       "NM_MUNICIPIO_COMPARAR": cidadeComparada,
       "DS_FAIXA_ETÁRIA": faixaEtária,
@@ -103,8 +105,7 @@ export default function AbstençãoFilter() {
 
         <Row>
           <Col className='d-flex'>
-            <Form
-              style={{width:"100%"}}>
+            <Form>
               <FormGroup>
                 <label htmlFor="cidades">Cidades</label>
                 <select
