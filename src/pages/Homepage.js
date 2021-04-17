@@ -16,10 +16,12 @@ import "../assets/styles/homepage.css"
 // core components
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footers/Footer.js";
+import ModalFilter from "components/Cards/modalFilter";
 
 import eleitorado from '../assets/img/Icons/perfilDoEleitorado.svg';
 import abstencao from '../assets/img/Icons/abstenção.svg';
 import renda from '../assets/img/Icons/renda.svg';
+import lupa from '../assets/img/Icons/lupa.svg';
 
 export default function Homepage() {
   return (
@@ -29,6 +31,7 @@ export default function Homepage() {
       <div className="d-flex justify-content-center">
 
         <div className="homepage-container text-center">
+
           <Row>
             <Col lg="4">
               <Link to="/eleitorado">
