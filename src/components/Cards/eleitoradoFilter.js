@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 import {
   Button,
@@ -17,16 +17,22 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 
-import '../../assets/styles/eleitorado.css';
+import {useDispatch, useSelector} from "react-redux"
 
-export default function EleitoradoFilter() {
+import api from "../../services/api";
+import ibge from "../../services/api_ibge"
+
+import "../../assets/styles/eleitorado.css";
+
+export default function EleitoradoFilter(callback) {
 
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
   const [representanteEleito, setRepresentanteEleito] = useState(false);
 
-  const [cidade, setCidade] = useState('');
-  const [cidadeComparada, setCidadeComparada] = useState('');
-  const [cidadeSelecionada, setCidadeSelecionada] = useState('');
+  const [cidades, setCidades] = useState([]);
+  const [cidade, setCidade] = useState("");
+  const [cidadeComparada, setCidadeComparada] = useState("");
+  const [cidadeSelecionada, setCidadeSelecionada] = useState("");
 
   const [opcoes, setOpcoes] = useState([]);
   const [faixaEtária, setFaixaEtaria] = useState(false);
@@ -37,17 +43,30 @@ export default function EleitoradoFilter() {
   const [nomeSocial, setNomeSocial] = useState(false);
 
   useEffect(() => {
+    (async () => {
+      const { data } = await ibge.get()
+      const nomeCidades = data.map(city => city.nome);
 
+      setCidades(nomeCidades);
+    })()
   }, []);
 
   async function filtrarDados() {
-    alert(`cidade: ${cidade}\n cidadeComparada: ${cidadeComparada}`)
+    // alert(`cidade: ${cidade}\n cidadeComparada: ${cidadeComparada}`)
+
+    const data = {
+      "parametro_busca": "NM_MUNICIPIO",
+      "filtro_busca": "SOCORRO"
+    }
+    const response = await api.post("pesquisas-abstencao", data)
+
+    console.log(response.data);
   }
 
   async function limparDados() {
-    setCidade('');
-    setCidadeComparada('');
-    setCidadeSelecionada('');
+    setCidade("");
+    setCidadeComparada("");
+    setCidadeSelecionada("");
     setOpcoes([]);
   }
 
@@ -63,14 +82,14 @@ export default function EleitoradoFilter() {
   }
 
   return (
-    <Card style={{ width: '300px', marginLeft: '10px' }}>
+    <Card style={{ width: "300px", marginLeft: "10px" }}>
       <div className='card-filtro-container'>
         <Row className='mb-5'>
           <Col lg='11'
             className='d-flex'
             style={{
-              justifyContent: 'space-between',
-              alignItems: 'center'
+              justifyContent: "space-between",
+              alignItems: "center"
             }}
           >
             <span className='subtitle'> Filtros </span>
@@ -82,28 +101,42 @@ export default function EleitoradoFilter() {
         </Row>
 
         <Row>
-          <Col className='d-flex'>
+          <Col>
             <Form>
               <FormGroup>
                 <label htmlFor="cidades">Cidades</label>
-                <Input
-                  id="cidades"
-                  value={cidade}
-                  onChange={e => setCidade(e.target.value)}
-                  placeholder="São José dos Campos"
-                />
+                <select
+                  name="cidades"
+                  className="form-control mt-2"
+                  style={{
+                    width: "100%",
+                    borderRadius: "3%",
+                    color: "#32325d",
+                  }}
+                  onChange={(event) => {
+                    const value = event.target.value.split(",");
+                    setCidade(value);
+                  }}
+                >
+                  {cidades.map((cidade, index) => (
+                    <option
+                      key={index}
+                      value={cidade}
+                    >
+                      {cidade}
+                    </option>
+                  ))}
+                </select>
               </FormGroup>
 
               <label htmlFor="opcoes">Opções</label>
               <UncontrolledDropdown>
                 <DropdownToggle
-                  style={{ width: '100%', marginTop: '-0.5px' }}
-                  aria-expanded={false}
                   caret
-                  className='btn-round'
+                  className='btn-round w-100'
                   color="info"
                   id="opcoes"
-                  type="button">
+                >
                   Opções de Filtro
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby="dropdownMenuButton">
@@ -114,10 +147,10 @@ export default function EleitoradoFilter() {
                         value={faixaEtária}
                         onChange={() => {
                           setFaixaEtaria(!faixaEtária);
-                          faixaEtária ? retirarOpcao('faixaEtária') : adicionarOpcao('faixaEtária')
+                          faixaEtária ? retirarOpcao("faixaEtária") : adicionarOpcao("faixaEtária")
                         }}
                       />
-                      <span className="form-check-sign"></span>
+                      <span className="form-check-sign" />
                         Faixa Etária
                     </Label>
 
@@ -127,10 +160,10 @@ export default function EleitoradoFilter() {
                         value={estadoCivil}
                         onChange={() => {
                           setEstadoCivil(!estadoCivil);
-                          estadoCivil ? retirarOpcao('estadoCivil') : adicionarOpcao('estadoCivil')
+                          estadoCivil ? retirarOpcao("estadoCivil") : adicionarOpcao("estadoCivil")
                         }}
                       />
-                      <span className="form-check-sign"></span>
+                      <span className="form-check-sign" />
                         Estado civil
                       </Label>
 
@@ -140,10 +173,10 @@ export default function EleitoradoFilter() {
                         value={escolaridadePublica}
                         onChange={() => {
                           setEscolaridadePublica(!escolaridadePublica);
-                          escolaridadePublica ? retirarOpcao('escolaridadePublica') : adicionarOpcao('escolaridadePublica')
+                          escolaridadePublica ? retirarOpcao("escolaridadePublica") : adicionarOpcao("escolaridadePublica")
                         }}
                       />
-                      <span className="form-check-sign"></span>
+                      <span className="form-check-sign" />
                         Escolaridade Declarada
                       </Label>
 
@@ -153,10 +186,10 @@ export default function EleitoradoFilter() {
                         value={nomeSocial}
                         onChange={() => {
                           setNomeSocial(!nomeSocial);
-                          nomeSocial ? retirarOpcao('nomeSocial') : adicionarOpcao('nomeSocial')
+                          nomeSocial ? retirarOpcao("nomeSocial") : adicionarOpcao("nomeSocial")
                         }}
                       />
-                      <span className="form-check-sign"></span>
+                      <span className="form-check-sign" />
                         Nome social
                     </Label>
                   </FormGroup>
@@ -169,7 +202,7 @@ export default function EleitoradoFilter() {
                   value={comparacaoAtiva}
                   onClick={() => setComparacaoAtiva(!comparacaoAtiva)}
                 />
-                <span className="form-check-sign"></span>
+                <span className="form-check-sign" />
                 Adicionar comparação
               </Label>
 
@@ -177,17 +210,33 @@ export default function EleitoradoFilter() {
                 (<>
                   <FormGroup className='mt-3'>
                     <label htmlFor="cidadeComparada">Comparar com</label>
-                    <Input
-                      id="cidadeComparada"
-                      placeholder="São José dos Campos"
-                      value={cidadeComparada}
-                      onChange={e => setCidadeComparada(e.target.value)}
-                    />
+                    <select
+                      name="cidadeComparada"
+                      className="form-control mt-2"
+                      style={{
+                        width: "100%",
+                        borderRadius: "3%",
+                        color: "#32325d",
+                      }}
+                      onChange={(event) => {
+                        const value = event.target.value.split(",");
+                        setCidadeComparada(value);
+                      }}
+                    >
+                      {cidades.map((cidade, index) => (
+                        <option
+                          key={index}
+                          value={cidade}
+                        >
+                          {cidade}
+                        </option>
+                      ))}
+                    </select>
                   </FormGroup>
                 </>)
                 : null
               }
-              
+
               <Label check className='mt-4 ml-3'>
                 <Input
                   type="checkbox"
@@ -198,25 +247,10 @@ export default function EleitoradoFilter() {
                 Representante Eleito
               </Label>
 
-              {representanteEleito ?
-                (<>
-                  <FormGroup className='mt-3'>
-                    <label htmlFor="cidadeSelecionada">Cidade</label>
-                    <Input
-                      id="cidadeSelecionada"
-                      placeholder="Jacareí"
-                      value={cidadeSelecionada}
-                      onChange={e => setCidadeSelecionada(e.target.value)}
-                    />
-                  </FormGroup>
-                </>)
-                : null
-              }
-
               <div className='d-flex justify-content-end'>
                 <Button onClick={() => filtrarDados()}
                   style={{
-                    backgroundColor: '#214bb5',
+                    backgroundColor: "#214bb5",
                   }}>
                   Aplicar
                 </Button>

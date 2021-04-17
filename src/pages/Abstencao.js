@@ -1,53 +1,94 @@
 import React, { useState,useEffect,useRef } from "react";
 
-// reactstrap components
 import {
-  Button,
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  CardText,
   Container,
   Row,
   Col,
 } from "reactstrap";
 
-import lottie from 'lottie-web';
-import loading from '../assets/lottieJSONs/loading.json';
+import  { Bar } from "react-chartjs-2";
 
-import '../assets/styles/homepage.css'
-import '../assets/styles/abstenção.css'
+import { useSelector } from "react-redux";
 
-import SemFiltro from 'assets/img/Icons/semFiltro.svg';
+import lottie from "lottie-web";
+import loading from "../assets/lottieJSONs/loading.json";
+
+import "../assets/styles/homepage.css"
+import "../assets/styles/abstenção.css"
+
+import SemFiltro from "assets/img/Icons/semFiltro.svg";
 
 // core components
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footers/Footer.js";
-import AbstençãoFilter from "components/Cards/abstençãoFilter";
+import AbstençãoFilter from "components/Cards/abstencaoFilter";
 
-function Abstencao() {
-  const [filtroAplicado, setFiltroAplicado] = useState(false);
-
-  const [load, setLoad] = useState(false);
+export default function Abstencao() {
   const container = useRef(null);
 
+  const loadingData = useSelector((state) => state.filterGraphics.loading);
+  const filtroAplicado = useSelector((state) => state.filterGraphics.filterApplied);
+  const dataResult = useSelector((state) => state.filterGraphics.data);
+
+  const [dados, setDados] = useState({})
+
   useEffect(() => {
-    if (load === true) {
+    if (loadingData) {
       lottie.loadAnimation({
         container: container.current,
-        renderer: 'svg',
+        renderer: "svg",
         loop: true,
         autoplay: true,
         animationData: loading
       })
     }
-  }, [load]);
+  }, [loadingData]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {if (filtroAplicado) getData()}, [filtroAplicado])
+
+  const getData = () => {
+    const keys = Object.keys(dataResult)
+    const values = Object.values(dataResult)
+
+    keys.shift()
+    values.shift()
+
+    setDados({
+        labels: keys,
+        datasets: [
+          {
+            "data": values,
+            backgroundColor: "rgba(0,9,272,0.2)",
+            borderColor: "rgba(0,9,272,1)",
+            borderWidth: 1,
+            hoverBackgroundColor: "rgba(0,9,232,0.4)",
+            hoverBorderColor: "rgba(0,9,232,1)",
+          }
+        ]
+      }
+    );
+  }
+
+  const Chart = () => {
+    return (
+      <Bar
+        data={dados}
+        width={100}
+        height={40}
+        legend={false}
+        options={{
+          maintainAspectRatio: true
+        }}
+      />
+    )
+  }
+
 
   return (
     <>
       <Navbar />
-      <Container style={{ minHeight: '82vh' }} fluid>
+      <Container style={{ minHeight: "82vh" }} fluid>
 
         <div className='text-center my-5'>
           <span className='abstencao-title'>Comparecimento/Abstenção</span>
@@ -58,36 +99,36 @@ function Abstencao() {
             <AbstençãoFilter/>
           </Col>
 
-          {load ?
-            (<>
-              <Col>
-                <Row style={{ height: '50%', marginTop: '-4%' }} className='d-flex align-items-center mr-5'>
-                  <div className="loading" ref={container} />
-                </Row>
-              </Col>
-            </>
+          {loadingData ? (
+            <Col>
+              <Row
+                style={{ height: "30%", marginTop: "-4%" }}
+                className='d-flex align-items-center mr-5'
+              >
+                <div className="loading" ref={container} />
+              </Row>
+            </Col>
             ) : (
               <>
-                {/* -----------------------------------------------*/}
-                {filtroAplicado ?
-                  (<>
-                    <span>filtro aplicado :)</span>
-                  </>)
-                  :
-                  (<>
-                    <Col>
-                      <Row style={{ height: '50%', marginLeft: '15%' }} className='mt-5 d-flex align-items-center mr-5'>
-                        <img src={SemFiltro} width='230px' height='230px' />
-                        <span id='mensagem-sem-filtro'>
-                          Realize um filtro <br />
-                          no lado esquerdo <br />
-                          para iniciar sua busca.
-                        </span>
-                      </Row>
-                    </Col>
-                  </>)
-                }
-                {/*    ----------------------------------------------  */}
+                {filtroAplicado ? (
+                  <Col>
+                    <Chart />
+                  </Col>
+                ) : (
+                  <Col>
+                    <Row
+                      style={{ height: "50%", marginLeft: "15%" }}
+                      className='mt-5 d-flex align-items-center mr-5'
+                    >
+                      <img src={SemFiltro} width='230px' height='230px' alt="Realize um filtro"/>
+                      <span id='mensagem-sem-filtro'>
+                        Realize um filtro <br />
+                        no lado esquerdo <br />
+                        para iniciar sua busca.
+                      </span>
+                    </Row>
+                  </Col>
+                )}
               </>
             )}
         </Row>
@@ -97,4 +138,3 @@ function Abstencao() {
   );
 }
 
-export default Abstencao;
