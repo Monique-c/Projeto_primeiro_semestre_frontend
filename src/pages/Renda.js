@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 
 import lottie from "lottie-web";
-import loading from "../assets/lottieJSONs/loading.json";
+import loading_lottie from "../assets/lottieJSONs/loading_lottie.json";
 
 import "../assets/styles/homepage.css"
 import "../assets/styles/renda.css"
@@ -40,7 +40,7 @@ function Renda() {
         renderer: "svg",
         loop: true,
         autoplay: true,
-        animationData: loading
+        animationData: loading_lottie
       })
     }
   }, [load]);
@@ -66,7 +66,7 @@ function Renda() {
                   style={{ height: "50%", marginTop: "-4%" }}
                   className='d-flex align-items-center mr-5'
                 >
-                  <div className="loading" ref={container} />
+                  <div className="loading_lottie" ref={container} />
                 </Row>
               </Col>
             </>

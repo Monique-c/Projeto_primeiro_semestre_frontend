@@ -2,30 +2,24 @@ import React, { useState, useEffect } from "react";
 
 import {
   Button,
-  Container,
   Card,
   Row,
   Col,
   Form,
   FormGroup,
   Input,
-  FormText,
   Label,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown
+  UncontrolledDropdown,
 } from "reactstrap";
 
-import {useDispatch, useSelector} from "react-redux"
-
 import api from "../../services/api";
-import ibge from "../../services/api_ibge"
+import ibge from "../../services/api_ibge";
 
 import "../../assets/styles/eleitorado.css";
 
 export default function EleitoradoFilter(callback) {
-
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
   const [representanteEleito, setRepresentanteEleito] = useState(false);
 
@@ -35,30 +29,39 @@ export default function EleitoradoFilter(callback) {
   const [cidadeSelecionada, setCidadeSelecionada] = useState("");
 
   const [opcoes, setOpcoes] = useState([]);
-  const [faixaEtária, setFaixaEtaria] = useState(false);
-  const [estadoCivil, setEstadoCivil] = useState(false);
-  const [escolaridadePublica, setEscolaridadePublica] = useState(false);
+  const [faixaEtária, setFaixaEtaria] = useState(true);
+  const [estadoCivil, setEstadoCivil] = useState(true);
+  const [escolaridadePublica, setEscolaridadePublica] = useState(true);
   const [genero, setGenero] = useState(false);
   const [deficiencia, setDeficiencia] = useState(false);
-  const [nomeSocial, setNomeSocial] = useState(false);
+  const [nomeSocial, setNomeSocial] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const { data } = await ibge.get()
-      const nomeCidades = data.map(city => city.nome);
+      const { data } = await ibge.get();
+      const nomeCidades = data.map((city) => city.nome);
 
       setCidades(nomeCidades);
-    })()
+    })();
   }, []);
 
   async function filtrarDados() {
     // alert(`cidade: ${cidade}\n cidadeComparada: ${cidadeComparada}`)
 
     const data = {
-      "parametro_busca": "NM_MUNICIPIO",
-      "filtro_busca": "SOCORRO"
-    }
-    const response = await api.post("pesquisas-abstencao", data)
+      municipios: [
+        "SÃO PAULO",
+        "SÃO JOSÉ DOS CAMPOS",
+        "CARAPICUIBA",
+        "BARUERI",
+      ],
+      colunas: [
+        "QT_ELEITORES_PERFIL",
+        "QT_ELEITORES_INC_NM_SOCIAL",
+        "QT_ELEITORES_DEFICIENCIA",
+      ],
+    };
+    const response = await api.post("pesquisas-eleitorado", data);
 
     console.log(response.data);
   }
@@ -71,30 +74,30 @@ export default function EleitoradoFilter(callback) {
   }
 
   async function adicionarOpcao(opcao) {
-    setOpcoes([...opcoes, opcao])
-    alert(`ADICIONADO\n\nopçoes: \n [ ${opcoes} ]`)
+    setOpcoes([...opcoes, opcao]);
+    alert(`ADICIONADO\n\nopçoes: \n [ ${opcoes} ]`);
   }
 
   async function retirarOpcao(opcao) {
     let arrayPivot = opcoes;
-    setOpcoes(arrayPivot.filter(item => item !== opcao));
-    alert(`RETIRADO\n\nopçoes: \n [ ${opcoes} ]`)
+    setOpcoes(arrayPivot.filter((item) => item !== opcao));
+    alert(`RETIRADO\n\nopçoes: \n [ ${opcoes} ]`);
   }
 
   return (
     <Card style={{ width: "300px", marginLeft: "10px" }}>
-      <div className='card-filtro-container'>
-        <Row className='mb-5'>
-          <Col lg='11'
-            className='d-flex'
+      <div className="card-filtro-container">
+        <Row className="mb-5">
+          <Col
+            lg="11"
+            className="d-flex"
             style={{
               justifyContent: "space-between",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
-            <span className='subtitle'> Filtros </span>
-            <span onClick={() => limparDados()}
-              className='limpar-font'>
+            <span className="subtitle"> Filtros </span>
+            <span onClick={() => limparDados()} className="limpar-font">
               Limpar
             </span>
           </Col>
@@ -119,10 +122,7 @@ export default function EleitoradoFilter(callback) {
                   }}
                 >
                   {cidades.map((cidade, index) => (
-                    <option
-                      key={index}
-                      value={cidade}
-                    >
+                    <option key={index} value={cidade}>
                       {cidade}
                     </option>
                   ))}
@@ -133,70 +133,82 @@ export default function EleitoradoFilter(callback) {
               <UncontrolledDropdown>
                 <DropdownToggle
                   caret
-                  className='btn-round w-100'
+                  className="btn-round w-100"
                   color="info"
                   id="opcoes"
                 >
                   Opções de Filtro
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby="dropdownMenuButton">
-                  <FormGroup check className='ml-3'>
+                  <FormGroup check className="ml-3">
                     <Label check>
                       <Input
+                        checked={faixaEtária}
                         type="checkbox"
                         value={faixaEtária}
                         onChange={() => {
                           setFaixaEtaria(!faixaEtária);
-                          faixaEtária ? retirarOpcao("faixaEtária") : adicionarOpcao("faixaEtária")
+                          faixaEtária
+                            ? adicionarOpcao("faixaEtária")
+                            : retirarOpcao("faixaEtária");
                         }}
                       />
                       <span className="form-check-sign" />
-                        Faixa Etária
+                      Faixa Etária
                     </Label>
 
                     <Label check>
                       <Input
+                        checked={estadoCivil}
                         type="checkbox"
                         value={estadoCivil}
                         onChange={() => {
                           setEstadoCivil(!estadoCivil);
-                          estadoCivil ? retirarOpcao("estadoCivil") : adicionarOpcao("estadoCivil")
+                          estadoCivil
+                            ? adicionarOpcao("estadoCivil")
+                            : retirarOpcao("estadoCivil");
                         }}
                       />
                       <span className="form-check-sign" />
-                        Estado civil
-                      </Label>
+                      Estado civil
+                    </Label>
 
                     <Label check>
                       <Input
+                        checked={escolaridadePublica}
                         type="checkbox"
                         value={escolaridadePublica}
                         onChange={() => {
                           setEscolaridadePublica(!escolaridadePublica);
-                          escolaridadePublica ? retirarOpcao("escolaridadePublica") : adicionarOpcao("escolaridadePublica")
+                          escolaridadePublica
+                            ? adicionarOpcao("escolaridadePublica")
+                            : retirarOpcao("escolaridadePublica");
                         }}
                       />
                       <span className="form-check-sign" />
-                        Escolaridade Declarada
-                      </Label>
+                      Escolaridade Declarada
+                    </Label>
 
                     <Label check>
                       <Input
+                        checked={nomeSocial}
                         type="checkbox"
                         value={nomeSocial}
                         onChange={() => {
                           setNomeSocial(!nomeSocial);
-                          nomeSocial ? retirarOpcao("nomeSocial") : adicionarOpcao("nomeSocial")
+                          nomeSocial
+                            ? adicionarOpcao("nomeSocial")
+                            : retirarOpcao("nomeSocial");
                         }}
                       />
                       <span className="form-check-sign" />
-                        Nome social
+                      Nome social
                     </Label>
                   </FormGroup>
                 </DropdownMenu>
               </UncontrolledDropdown>
 
-              <Label check className='mt-4 ml-3'>
+              <Label check className="mt-4 ml-3">
                 <Input
                   type="checkbox"
                   value={comparacaoAtiva}
@@ -206,9 +218,9 @@ export default function EleitoradoFilter(callback) {
                 Adicionar comparação
               </Label>
 
-              {comparacaoAtiva ?
-                (<>
-                  <FormGroup className='mt-3'>
+              {comparacaoAtiva ? (
+                <>
+                  <FormGroup className="mt-3">
                     <label htmlFor="cidadeComparada">Comparar com</label>
                     <select
                       name="cidadeComparada"
@@ -224,20 +236,16 @@ export default function EleitoradoFilter(callback) {
                       }}
                     >
                       {cidades.map((cidade, index) => (
-                        <option
-                          key={index}
-                          value={cidade}
-                        >
+                        <option key={index} value={cidade}>
                           {cidade}
                         </option>
                       ))}
                     </select>
                   </FormGroup>
-                </>)
-                : null
-              }
+                </>
+              ) : null}
 
-              <Label check className='mt-4 ml-3'>
+              <Label check className="mt-4 ml-3">
                 <Input
                   type="checkbox"
                   value={representanteEleito}
@@ -247,11 +255,13 @@ export default function EleitoradoFilter(callback) {
                 Representante Eleito
               </Label>
 
-              <div className='d-flex justify-content-end'>
-                <Button onClick={() => filtrarDados()}
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={() => filtrarDados()}
                   style={{
                     backgroundColor: "#214bb5",
-                  }}>
+                  }}
+                >
                   Aplicar
                 </Button>
               </div>
@@ -260,5 +270,5 @@ export default function EleitoradoFilter(callback) {
         </Row>
       </div>
     </Card>
-  )
+  );
 }
