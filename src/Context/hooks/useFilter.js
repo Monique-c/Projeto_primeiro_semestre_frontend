@@ -21,10 +21,10 @@ export default function useFilter() {
     const key = Object.keys(data[0]).splice(2);
 
     const newData = {
-      labels: key,
+      labels: key, //eixo X
       datasets: [
         {
-          data: Object.values(data[0]).splice(2),
+          data: Object.values(data[0]).splice(2), // eixo Y
           label: data[0]["NM_MUNICIPIO"],
           backgroundColor: "rgba(0,9,272,0.2)",
           borderColor: "rgba(0,9,272,1)",
