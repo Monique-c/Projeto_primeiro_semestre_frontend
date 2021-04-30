@@ -30,7 +30,7 @@
   margin-bottom: 15%;
 }
 
-.subtitle { 
+.subtitle {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
@@ -53,7 +53,7 @@
   margin-left: 40px;
 }
 
-.loading {
+.loading_lottie {
   width:80%;
   height:80%
 }
@@ -61,7 +61,7 @@
 .gráfico{
   width: 90%;
   margin-top: -2%;
-  
+
 }
 
 .gráfico h1{

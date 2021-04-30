@@ -1,34 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   Button,
-  Container,
   Card,
   Row,
   Col,
   Form,
   FormGroup,
   Input,
-  FormText,
   Label,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
   UncontrolledDropdown
 } from "reactstrap";
 
-import {useDispatch, useSelector} from "react-redux"
+import { Context } from '../../Context/FilterContext'
 
 import "../../assets/styles/abstenção.css";
 
-import api from "../../services/api"
 import ibge from "../../services/api_ibge"
 
-import * as LoadingData from "../../store/actions/filterGraphics";
-import * as GetCidades from "../../store/actions/getCities";
-
 export default function AbstençãoFilter() {
-  const dispatch = useDispatch()
 
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
 
@@ -43,6 +35,8 @@ export default function AbstençãoFilter() {
   const [genero, setGenero] = useState(false);
   const [deficiencia, setDeficiencia] = useState(false);
 
+  const { filtrarDados } = useContext(Context);
+
   useEffect(() => {
     (async () => {
       const { data } = await ibge.get()
@@ -51,21 +45,6 @@ export default function AbstençãoFilter() {
       setCidades(nomeCidades);
     })()
   }, [])
-
-
-  async function filtrarDados() {
-    dispatch(LoadingData.handleDataAbstencao(true, false));
-
-    const form = {
-      "NM_MUNICIPIO": cidade,
-      "NM_MUNICIPIO_COMPARAR": cidadeComparada,
-      "DS_FAIXA_ETÁRIA": faixaEtária,
-      "DS_ESTADO_CIVIL" : estadoCivil
-    }
-    const { data } = await api.post("pesquisas-abstencao", form)
-
-    dispatch(LoadingData.handleDataAbstencao(false, true, data));
-  }
 
   async function limparDados() {
     setCidade("");
@@ -230,7 +209,7 @@ export default function AbstençãoFilter() {
               }
 
               <div className='d-flex justify-content-end'>
-                <Button onClick={() => filtrarDados()}
+                <Button onClick={filtrarDados}
                   style={{
                     backgroundColor: "#214bb5",
                   }}>

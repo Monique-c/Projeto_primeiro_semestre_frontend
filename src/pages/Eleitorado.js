@@ -7,7 +7,7 @@ import {
 } from "reactstrap";
 
 import lottie from "lottie-web";
-import loading from "../assets/lottieJSONs/loading.json";
+import loading_lottie from "../assets/lottieJSONs/loading_lottie.json";
 
 import "../assets/styles/eleitorado.css";
 import  {HorizontalBar } from "react-chartjs-2";
@@ -51,7 +51,7 @@ function Eleitorado() {
         renderer: "svg",
         loop: true,
         autoplay: true,
-        animationData: loading
+        animationData: loading_lottie
       })
     }
   }, [load]);
@@ -91,7 +91,7 @@ function Eleitorado() {
                   style={{ height: "50%", marginTop: "-4%" }}
                   className='d-flex align-items-center mr-5'
                 >
-                  <div className="loading" ref={container} />
+                  <div className="loading_lottie" ref={container} />
                 </Row>
               </Col>
             </>

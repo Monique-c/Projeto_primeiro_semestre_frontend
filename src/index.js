@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Provider } from "react-redux"
+
+import {FilterProvider} from './Context/FilterContext'
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
 import "assets/scss/now-ui-kit.scss?v=1.4.0";
 import "assets/demo/demo.css?v=1.4.0";
 import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
-
-import store from "./store";
 
 //API Pages
 import Homepage from "./pages/Homepage";
@@ -19,7 +18,8 @@ import Renda from "./pages/Renda";
 import GraficosRelevantes from "./pages/GraficosRelevantes";
 
 ReactDOM.render(
-  <Provider store={store} >
+
+  <FilterProvider>
     <BrowserRouter>
       <Switch>
         <Switch>
@@ -53,6 +53,6 @@ ReactDOM.render(
         </Switch>
       </Switch>
     </BrowserRouter>
-  </Provider>,
+  </FilterProvider>,
   document.getElementById("root")
 );

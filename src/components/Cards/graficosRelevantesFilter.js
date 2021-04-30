@@ -1,28 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 import {
   Button,
-  Container,
   Card,
   Row,
   Col,
   Form,
   FormGroup,
   Input,
-  FormText,
   Label,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown
+  UncontrolledDropdown,
 } from "reactstrap";
 
-import '../../assets/styles/graficosRelevantes.css';
+import "../../assets/styles/graficosRelevantes.css";
 
 export default function RelevantesFilter() {
+  const [assunto, setAssunto] = useState("");
 
-  const [assunto, setAssunto] = useState('');
- 
   const [categorias, setCategorias] = useState([]);
   const [faixaEtária, setFaixaEtaria] = useState(false);
   const [estadoCivil, setEstadoCivil] = useState(false);
@@ -35,73 +31,68 @@ export default function RelevantesFilter() {
   const [araçatuba, setAraçatuba] = useState(false);
   const [valeDoParaíba, setValeDoParaíba] = useState(false);
   const [araraquara, setAraraquara] = useState(false);
-  const [piracicaba, setPiracicaba] = useState(false); 
-
-  useEffect(() => {
-
-  }, []);
+  const [piracicaba, setPiracicaba] = useState(false);
 
   async function filtrarDados() {
-    alert(`categoria: ${categorias}\n localização: ${localizações}`)
+    alert(`categoria: ${categorias}\n localização: ${localizações}`);
   }
 
   async function limparDados() {
-    setAssunto('');
+    setAssunto("");
     setCategorias([]);
     setLocalização([]);
   }
 
   async function adicionarCategoria(categoria) {
-    setCategorias([...categorias, categoria])
-    alert(`ADICIONADO\n\ncategorias: \n [ ${categorias} ]`)
+    setCategorias([...categorias, categoria]);
+    alert(`ADICIONADO\n\ncategorias: \n [ ${categorias} ]`);
   }
 
   async function retirarCategoria(categoria) {
     let arrayPivot = categorias;
-    setCategorias(arrayPivot.filter(item => item !== categoria));
-    alert(`RETIRADO\n\ncategorias: \n [ ${categorias} ]`)
+    setCategorias(arrayPivot.filter((item) => item !== categoria));
+    alert(`RETIRADO\n\ncategorias: \n [ ${categorias} ]`);
   }
 
   async function adicionarLocalização(localização) {
-    setLocalização([...localizações, localização])
-    alert(`ADICIONADO\n\nlocalizações: \n [ ${localizações} ]`)
+    setLocalização([...localizações, localização]);
+    alert(`ADICIONADO\n\nlocalizações: \n [ ${localizações} ]`);
   }
 
   async function retirarLocalização(localização) {
     let arrayPivot = localização;
-    setLocalização(arrayPivot.filter(item => item !== localização));
-    alert(`RETIRADO\n\nlocalizações: \n [ ${localizações} ]`)
+    setLocalização(arrayPivot.filter((item) => item !== localização));
+    alert(`RETIRADO\n\nlocalizações: \n [ ${localizações} ]`);
   }
 
   return (
-    <Card style={{ width: '300px', marginLeft: '10px' }}>
-      <div className='card-filtro-container'>
-        <Row className='mb-5'>
-          <Col lg='11'
-            className='d-flex'
+    <Card style={{ width: "300px", marginLeft: "10px" }}>
+      <div className="card-filtro-container">
+        <Row className="mb-5">
+          <Col
+            lg="11"
+            className="d-flex"
             style={{
-              justifyContent: 'space-between',
-              alignItems: 'center'
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            <span className='subtitle'> Filtros </span>
-            <span onClick={() => limparDados()}
-              className='limpar-font'>
+            <span className="subtitle"> Filtros </span>
+            <span onClick={() => limparDados()} className="limpar-font">
               Limpar
             </span>
           </Col>
         </Row>
 
         <Row>
-          <Col className='d-flex'>
-            <Form 
-              style={{width:'100%'}}>
+          <Col className="d-flex">
+            <Form style={{ width: "100%" }}>
               <FormGroup>
                 <label htmlFor="assuntos">Assuntos</label>
                 <Input
                   id="assuntos"
                   value={assunto}
-                  onChange={e => setAssunto(e.target.value)}
+                  onChange={(e) => setAssunto(e.target.value)}
                   placeholder="Eleitorado"
                 />
               </FormGroup>
@@ -109,28 +100,31 @@ export default function RelevantesFilter() {
               <label htmlFor="categoria">Categoria</label>
               <UncontrolledDropdown>
                 <DropdownToggle
-                  style={{ width: '100%', marginTop: '-0.5px' }}
+                  style={{ width: "100%", marginTop: "-0.5px" }}
                   aria-expanded={false}
                   caret
-                  className='btn-round'
+                  className="btn-round"
                   color="info"
                   id="categoria"
-                  type="button">
+                  type="button"
+                >
                   Ver Opções
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby="dropdownMenuButton">
-                  <FormGroup check className='ml-3'>
+                  <FormGroup check className="ml-3">
                     <Label check>
                       <Input
                         type="checkbox"
                         value={faixaEtária}
                         onChange={() => {
                           setFaixaEtaria(!faixaEtária);
-                          faixaEtária ? retirarCategoria('faixaEtária') : adicionarCategoria('faixaEtária')
+                          faixaEtária
+                            ? retirarCategoria("faixaEtária")
+                            : adicionarCategoria("faixaEtária");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Faixa Etária
+                      Faixa Etária
                     </Label>
 
                     <Label check>
@@ -139,12 +133,14 @@ export default function RelevantesFilter() {
                         value={estadoCivil}
                         onChange={() => {
                           setEstadoCivil(!estadoCivil);
-                          estadoCivil ? retirarCategoria('estadoCivil') : adicionarCategoria('estadoCivil')
+                          estadoCivil
+                            ? retirarCategoria("estadoCivil")
+                            : adicionarCategoria("estadoCivil");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Estado civil
-                      </Label>
+                      Estado civil
+                    </Label>
 
                     <Label check>
                       <Input
@@ -152,25 +148,29 @@ export default function RelevantesFilter() {
                         value={escolaridadePublica}
                         onChange={() => {
                           setEscolaridadePublica(!escolaridadePublica);
-                          escolaridadePublica ? retirarCategoria('escolaridadePublica') : adicionarCategoria('escolaridadePublica')
+                          escolaridadePublica
+                            ? retirarCategoria("escolaridadePublica")
+                            : adicionarCategoria("escolaridadePublica");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Escolaridade Declarada
-                      </Label>
+                      Escolaridade Declarada
+                    </Label>
 
-                      <Label check>
+                    <Label check>
                       <Input
                         type="checkbox"
                         value={nomeSocial}
                         onChange={() => {
                           setNomeSocial(!nomeSocial);
-                          nomeSocial ? retirarCategoria('nomeSocial') : adicionarCategoria('nomeSocial')
+                          nomeSocial
+                            ? retirarCategoria("nomeSocial")
+                            : adicionarCategoria("nomeSocial");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Nome Social
-                      </Label>
+                      Nome Social
+                    </Label>
                   </FormGroup>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -178,28 +178,31 @@ export default function RelevantesFilter() {
               <label htmlFor="localização">Localização</label>
               <UncontrolledDropdown>
                 <DropdownToggle
-                  style={{ width: '100%', marginTop: '-0.5px' }}
+                  style={{ width: "100%", marginTop: "-0.5px" }}
                   aria-expanded={false}
                   caret
-                  className='btn-round'
+                  className="btn-round"
                   color="info"
                   id="localização"
-                  type="button">
+                  type="button"
+                >
                   Estado/Região/Cidade
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby="dropdownMenuButton">
-                  <FormGroup check className='ml-4'>
+                  <FormGroup check className="ml-4">
                     <Label check>
                       <Input
                         type="checkbox"
                         value={sãoJoséDoRioPreto}
                         onChange={() => {
                           setSãoJoséDoRioPreto(!sãoJoséDoRioPreto);
-                          sãoJoséDoRioPreto ? retirarLocalização('sãoJoséDoRioPreto') : adicionarLocalização('sãoJoséDoRioPreto')
+                          sãoJoséDoRioPreto
+                            ? retirarLocalização("sãoJoséDoRioPreto")
+                            : adicionarLocalização("sãoJoséDoRioPreto");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        São José Do Rio Preto
+                      São José Do Rio Preto
                     </Label>
 
                     <Label check>
@@ -208,12 +211,14 @@ export default function RelevantesFilter() {
                         value={riberãoPreto}
                         onChange={() => {
                           setRiberãoPreto(!riberãoPreto);
-                          riberãoPreto ? retirarLocalização('riberãoPreto') : adicionarLocalização('riberãoPreto')
+                          riberãoPreto
+                            ? retirarLocalização("riberãoPreto")
+                            : adicionarLocalização("riberãoPreto");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Riberão Preto
-                      </Label>
+                      Riberão Preto
+                    </Label>
 
                     <Label check>
                       <Input
@@ -221,59 +226,69 @@ export default function RelevantesFilter() {
                         value={araçatuba}
                         onChange={() => {
                           setAraçatuba(!araçatuba);
-                          araçatuba ? retirarLocalização('araçatuba') : adicionarLocalização('araçatuba')
+                          araçatuba
+                            ? retirarLocalização("araçatuba")
+                            : adicionarLocalização("araçatuba");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Araçatuba
-                      </Label>
+                      Araçatuba
+                    </Label>
 
-                      <Label check>
+                    <Label check>
                       <Input
                         type="checkbox"
                         value={valeDoParaíba}
                         onChange={() => {
                           setValeDoParaíba(!valeDoParaíba);
-                          valeDoParaíba ? retirarLocalização('valeDoParaíba') : adicionarLocalização('valeDoParaíba')
+                          valeDoParaíba
+                            ? retirarLocalização("valeDoParaíba")
+                            : adicionarLocalização("valeDoParaíba");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Vale Do Paraíba
-                      </Label>
+                      Vale Do Paraíba
+                    </Label>
 
-                      <Label check>
+                    <Label check>
                       <Input
                         type="checkbox"
                         value={araraquara}
                         onChange={() => {
                           setAraraquara(!araraquara);
-                          araraquara ? retirarLocalização('araraquara') : adicionarLocalização('araraquara')
+                          araraquara
+                            ? retirarLocalização("araraquara")
+                            : adicionarLocalização("araraquara");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Araraquara
-                      </Label>
+                      Araraquara
+                    </Label>
 
-                      <Label check>
+                    <Label check>
                       <Input
                         type="checkbox"
                         value={piracicaba}
                         onChange={() => {
                           setPiracicaba(!piracicaba);
-                          piracicaba ? retirarLocalização('piracicaba') : adicionarLocalização('piracicaba')
+                          piracicaba
+                            ? retirarLocalização("piracicaba")
+                            : adicionarLocalização("piracicaba");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Piracicaba
-                      </Label>
+                      Piracicaba
+                    </Label>
                   </FormGroup>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <div className='d-flex justify-content-end'>
-                <Button onClick={() => filtrarDados()}
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={() => filtrarDados()}
                   style={{
-                    backgroundColor: '#214bb5',
-                  }}>
+                    backgroundColor: "#214bb5",
+                  }}
+                >
                   Aplicar
                 </Button>
               </div>
@@ -282,5 +297,5 @@ export default function RelevantesFilter() {
         </Row>
       </div>
     </Card>
-  )
+  );
 }
