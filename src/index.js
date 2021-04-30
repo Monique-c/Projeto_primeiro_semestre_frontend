@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import {FilterProvider} from './Context/FilterContext'
+import { FilterProvider } from "./Context/AbstencaoFilterContext";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
@@ -18,41 +18,36 @@ import Renda from "./pages/Renda";
 import GraficosRelevantes from "./pages/GraficosRelevantes";
 
 ReactDOM.render(
-
-  <FilterProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <Switch>
       <Switch>
-        <Switch>
-          <Route path="/home"
-            render={(props) => <Homepage {...props} />}
-          />
+        <Route path="/home" render={(props) => <Homepage {...props} />} />
 
-          <Route
-            path="/eleitorado"
-            render={(props) => <Eleitorado {...props} />}
-          />
+        <Route
+          path="/eleitorado"
+          render={(props) => <Eleitorado {...props} />}
+        />
 
-          <Route
-            path="/abstencao"
-            render={(props) => <Abstencao {...props} />}
-          />
+        <Route
+          path="/abstencao"
+          render={(props) => (
+            <FilterProvider>
+              <Abstencao {...props} />
+            </FilterProvider>
+          )}
+        />
 
-          <Route
-            path="/renda"
-            render={(props) => <Renda {...props} />}
-          />
+        <Route path="/renda" render={(props) => <Renda {...props} />} />
 
-          <Route
-            path="/relevantes"
-            render={(props) => <GraficosRelevantes {...props} />}
-          />
+        <Route
+          path="/relevantes"
+          render={(props) => <GraficosRelevantes {...props} />}
+        />
 
-          <Redirect to="/home" />
-          <Redirect from="/" to="/home" />
-
-        </Switch>
+        <Redirect to="/home" />
+        <Redirect from="/" to="/home" />
       </Switch>
-    </BrowserRouter>
-  </FilterProvider>,
+    </Switch>
+  </BrowserRouter>,
   document.getElementById("root")
 );

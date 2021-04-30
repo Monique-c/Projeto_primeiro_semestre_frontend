@@ -11,17 +11,16 @@ import {
   Label,
   DropdownToggle,
   DropdownMenu,
-  UncontrolledDropdown
+  UncontrolledDropdown,
 } from "reactstrap";
 
-import { Context } from '../../Context/FilterContext'
+import { Context } from "../../Context/AbstencaoFilterContext";
 
 import "../../assets/styles/abstenção.css";
 
-import ibge from "../../services/api_ibge"
+import ibge from "../../services/api_ibge";
 
 export default function AbstençãoFilter() {
-
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
 
   const [cidades, setCidades] = useState([]);
@@ -29,9 +28,10 @@ export default function AbstençãoFilter() {
   const [cidadeComparada, setCidadeComparada] = useState("");
 
   const [opcoes, setOpcoes] = useState([]);
-  const [faixaEtária, setFaixaEtaria] = useState(false);
-  const [estadoCivil, setEstadoCivil] = useState(false);
-  const [escolaridadePublica, setEscolaridadePublica] = useState(false);
+  const [faixaEtária, setFaixaEtaria] = useState(true);
+  const [estadoCivil, setEstadoCivil] = useState(true);
+  const [escolaridadePublica, setEscolaridadePublica] = useState(true);
+  const [nomeSocial, setNomeSocial] = useState(true);
   const [genero, setGenero] = useState(false);
   const [deficiencia, setDeficiencia] = useState(false);
 
@@ -39,12 +39,12 @@ export default function AbstençãoFilter() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await ibge.get()
-      const nomeCidades = data.map(city => city.nome);
+      const { data } = await ibge.get();
+      const nomeCidades = data.map((city) => city.nome);
 
       setCidades(nomeCidades);
-    })()
-  }, [])
+    })();
+  }, []);
 
   async function limparDados() {
     setCidade("");
@@ -53,37 +53,37 @@ export default function AbstençãoFilter() {
   }
 
   async function adicionarOpcao(opcao) {
-    setOpcoes([...opcoes, opcao])
-    alert(`ADICIONADO\n\nopçoes: \n [ ${opcoes} ]`)
+    setOpcoes([...opcoes, opcao]);
+    alert(`ADICIONADO\n\nopçoes: \n [ ${opcoes} ]`);
   }
 
   async function retirarOpcao(opcao) {
     let arrayPivot = opcoes;
-    setOpcoes(arrayPivot.filter(item => item !== opcao));
-    alert(`RETIRADO\n\nopçoes: \n [ ${opcoes} ]`)
+    setOpcoes(arrayPivot.filter((item) => item !== opcao));
+    alert(`RETIRADO\n\nopçoes: \n [ ${opcoes} ]`);
   }
 
   return (
     <Card style={{ width: "300px", marginLeft: "10px" }}>
-      <div className='card-filtro-container'>
-        <Row className='mb-5'>
-          <Col lg='11'
-            className='d-flex'
+      <div className="card-filtro-container">
+        <Row className="mb-5">
+          <Col
+            lg="11"
+            className="d-flex"
             style={{
               justifyContent: "space-between",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
-            <span className='subtitle'> Filtros </span>
-            <span onClick={() => limparDados()}
-              className='limpar-font'>
+            <span className="subtitle"> Filtros </span>
+            <span onClick={() => limparDados()} className="limpar-font">
               Limpar
             </span>
           </Col>
         </Row>
 
         <Row>
-          <Col className='d-flex'>
+          <Col className="d-flex">
             <Form>
               <FormGroup>
                 <label htmlFor="cidades">Cidades</label>
@@ -101,10 +101,7 @@ export default function AbstençãoFilter() {
                   }}
                 >
                   {cidades.map((cidade, index) => (
-                    <option
-                      key={index}
-                      value={cidade}
-                    >
+                    <option key={index} value={cidade}>
                       {cidade}
                     </option>
                   ))}
@@ -117,57 +114,67 @@ export default function AbstençãoFilter() {
                   style={{ width: "100%", marginTop: "-0.5px" }}
                   aria-expanded={false}
                   caret
-                  className='btn-round'
+                  className="btn-round"
                   color="info"
                   id="opcoes"
-                  type="button">
+                  type="button"
+                >
                   Opções de Filtro
                 </DropdownToggle>
                 <DropdownMenu aria-labelledby="dropdownMenuButton">
-                  <FormGroup check className='ml-3'>
+                  <FormGroup check className="ml-3">
                     <Label check>
                       <Input
+                        checked={faixaEtária}
                         type="checkbox"
                         value={faixaEtária}
                         onChange={() => {
-                          setFaixaEtaria(!faixaEtária)
-                          faixaEtária ? retirarOpcao("faixaEtária") : adicionarOpcao("faixaEtária")
+                          setFaixaEtaria(!faixaEtária);
+                          faixaEtária
+                            ? adicionarOpcao("faixaEtária")
+                            : retirarOpcao("faixaEtária");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Faixa Etária
+                      Faixa Etária
                     </Label>
 
                     <Label check>
                       <Input
+                        checked={estadoCivil}
                         type="checkbox"
                         value={estadoCivil}
                         onChange={() => {
                           setEstadoCivil(!estadoCivil);
-                          estadoCivil ? retirarOpcao("estadoCivil") : adicionarOpcao("estadoCivil")
+                          estadoCivil
+                            ? adicionarOpcao("estadoCivil")
+                            : retirarOpcao("estadoCivil");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Estado civil
-                      </Label>
+                      Estado civil
+                    </Label>
 
                     <Label check>
                       <Input
+                        checked={escolaridadePublica}
                         type="checkbox"
                         value={escolaridadePublica}
                         onChange={() => {
                           setEscolaridadePublica(!escolaridadePublica);
-                          escolaridadePublica ? retirarOpcao("escolaridadePublica") : adicionarOpcao("escolaridadePublica")
+                          escolaridadePublica
+                            ? adicionarOpcao("escolaridadePublica")
+                            : retirarOpcao("escolaridadePublica");
                         }}
                       />
                       <span className="form-check-sign"></span>
-                        Escolaridade Declarada
-                      </Label>
+                      Escolaridade Declarada
+                    </Label>
                   </FormGroup>
                 </DropdownMenu>
               </UncontrolledDropdown>
 
-              <Label check className='mt-4 ml-3'>
+              <Label check className="mt-4 ml-3">
                 <Input
                   type="checkbox"
                   value={comparacaoAtiva}
@@ -177,9 +184,9 @@ export default function AbstençãoFilter() {
                 Adicionar comparação
               </Label>
 
-              {comparacaoAtiva ?
-                (<>
-                  <FormGroup className='mt-3'>
+              {comparacaoAtiva ? (
+                <>
+                  <FormGroup className="mt-3">
                     <label htmlFor="cidadeComparada">Comparar com</label>
                     <select
                       name="cidadeComparada"
@@ -195,24 +202,22 @@ export default function AbstençãoFilter() {
                       }}
                     >
                       {cidades.map((cidade, index) => (
-                        <option
-                          key={index}
-                          value={cidade}
-                        >
+                        <option key={index} value={cidade}>
                           {cidade}
                         </option>
                       ))}
                     </select>
                   </FormGroup>
-                </>)
-                : null
-              }
+                </>
+              ) : null}
 
-              <div className='d-flex justify-content-end'>
-                <Button onClick={filtrarDados}
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={filtrarDados}
                   style={{
                     backgroundColor: "#214bb5",
-                  }}>
+                  }}
+                >
                   Aplicar
                 </Button>
               </div>
@@ -221,5 +226,5 @@ export default function AbstençãoFilter() {
         </Row>
       </div>
     </Card>
-  )
+  );
 }
