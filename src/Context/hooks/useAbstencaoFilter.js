@@ -1,61 +1,143 @@
 import React, { useState } from "react";
 
-// import api from "../../services/api";
-import abstencao from "../../controllers/abstencao";
+import api from "../../services/api";
+import abstencao from "../../controllers/abstencao_json";
 
 var randomColor = require("randomcolor");
 
 export default function useFilter() {
   const [loading, setLoading] = useState(false);
-  const [dataResult, setDataResult] = useState([]);
   const [filtroAplicado, setFiltroAplicado] = useState(false);
+
+  const [faixaEtariaPorAbstencao, setFaixaEtariaPorAbstencao] = useState([]);
+  const [
+    faixaEtariaPorComparecimento,
+    setFaixaEtariaPorComparecimento,
+  ] = useState([]);
+
   var color = randomColor({});
 
   async function filtrarDados() {
     setLoading(true);
     setFiltroAplicado(false);
 
-    // const { data } = await api.post("pesquisas-eleitorado", form)
+    const form = {
+      municipios: ["SÃO JOSÉ DOS CAMPOS", "SÃO PAULO"],
+      colunas: [
+        "QT_ABSTENCAO",
+        "QT_COMPARECIMENTO",
+        "QT_ABSTENCAO_DEFICIENTE",
+        "QT_COMPARECIMENTO_DEFICIENTE",
+      ],
+    };
 
+    const { data } = await api.post("pesquisas-abstencao", form);
+    // console.log(data);
+    // Para teste estou usando  dados que estão em src/controllers/abstencao
+    // Estes dados são os mesmos retornados do banco de dados
     return handleData(abstencao);
   }
 
   function handleData(data) {
-    const key = Object.keys(data[0]).splice(1);
-    // a key é utilizada para as legendas do eixo X,
-    // a função slice remove o primeiro elemento do array
-    // no caso o nome da cidade que não é necessário para o eixo X
-
     var color = randomColor({
       count: data.length,
       luminosity: "bright",
       hue: "random",
     }); // gerando cores aleatóriamente
 
-    const datasets = data.map((dado, index) => {
-      const novoDataset = {
-        data: Object.values(dado).slice(1),
-        label: dado.NM_MUNICIPIO,
-        backgroundColor: color[index],
-        borderWidth: 1,
-        hoverBackgroundColor: color[index],
-        hoverBorderColor: color[index],
+    const handleFaixaEtariaAbstencao = data.map((item) => {
+      const newAbstencaoValues = item.faixa_etaria.map(
+        // data de acordo os valores
+        (abs) => abs.qt_abstencao
+      );
+
+      const newAbstencaoCategorias = item.faixa_etaria.map(
+        // Labels do eixo das categorias ou eixo x
+        (abs) => abs.desc_faixa_etaria
+      );
+
+      return {
+        municipio: item.municipio,
+        newAbstencaoCategorias,
+        newAbstencaoValues,
       };
-      return novoDataset;
     });
-    /* Este data.map é semelhante ao for do python
-      ele irá passar por cada elemento do array (data)
-      e em cada iteração eu estou criando um novo
-      elemento com as configurações necessárias para gerar
-      o gráfico dinamicamente.
-    */
 
-    const newData = {
-      labels: key, //eixo X
-      datasets, // dados e configuração do gráfico
-    };
+    const setDatasetAbstencaoPorFaixaEtaria = handleFaixaEtariaAbstencao.map(
+      (item, index) => {
+        return {
+          labels: item.newAbstencaoCategorias, // eixo x ou eixo das categorias
+          datasets: [
+            //datasets: responsável pelo eixo dos valores / eixo y e style do gráfico
+            {
+              data: item.newAbstencaoValues,
+              label: item.municipio,
+              // Abobrinha
+              backgroundColor: color[index],
+              borderWidth: 1,
+              hoverBackgroundColor: color[index],
+              hoverBorderColor: color[index],
+            },
+          ],
+        };
+      }
+    );
 
-    setDataResult(newData); // carrega os dados já pronto para o gráfico
+    const handleFaixaEtariaComparecimento = data.map((item) => {
+      const newComparecimentoValues = item.faixa_etaria.map(
+        // data de acordo os valores
+        (abs) => abs.qt_comparecimento
+      );
+
+      const newComparecimentoCategorias = item.faixa_etaria.map(
+        // Labels do eixo das categorias ou eixo x
+        (abs) => abs.desc_faixa_etaria
+      );
+
+      return {
+        municipio: item.municipio,
+        newComparecimentoCategorias,
+        newComparecimentoValues,
+      };
+    });
+
+    const setDatasetComparecimentoPorFaixaEtaria = handleFaixaEtariaComparecimento.map(
+      (item, index) => {
+        return {
+          labels: item.newComparecimentoCategorias, // eixo x ou eixo das categorias
+          datasets: [
+            //datasets: responsável pelo eixo dos valores / eixo y e style do gráfico
+            {
+              data: item.newComparecimentoValues,
+              label: item.municipio,
+              backgroundColor: color[index],
+              borderWidth: 1,
+              hoverBackgroundColor: color[index],
+              hoverBorderColor: color[index],
+            },
+          ],
+        };
+      }
+    );
+
+    const handleEstadoCivil = data.map((dado, index) => {
+      return {
+        municipio: dado.municipio,
+        estado_civil: dado.estado_civil,
+      };
+    });
+
+    const handleGrauEscolaridade = data.map((dado, index) => {
+      return {
+        municipio: dado.municipio,
+        grau_escolaridade: dado.grau_escolaridade,
+      };
+    });
+
+    // carrega os dados já pronto para o gráfico
+    setFaixaEtariaPorAbstencao(setDatasetAbstencaoPorFaixaEtaria);
+    setFaixaEtariaPorComparecimento(setDatasetComparecimentoPorFaixaEtaria);
+
     setFiltroAplicado(true); // apenas informa que o filtro foi aplicado
 
     setTimeout(function () {
@@ -65,7 +147,13 @@ export default function useFilter() {
     return true;
   }
 
-  return { loading, dataResult, filtrarDados, filtroAplicado };
+  return {
+    loading,
+    filtrarDados,
+    filtroAplicado,
+    faixaEtariaPorAbstencao,
+    faixaEtariaPorComparecimento,
+  };
   // dados e funções que são utilizados em
   // outros componentes e paginas por exemplo
   // a pagina de abstenção
