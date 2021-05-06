@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 
 import { Container, Row, Col } from "reactstrap";
 
-import { Bar } from "react-chartjs-2";
+import { Bar, HorizontalBar } from "react-chartjs-2";
 
 import { Context } from "../Context/AbstencaoFilterContext";
 
@@ -20,7 +20,12 @@ import InfoFilter from "components/Cards/infoFilter";
 
 export default function Abstencao() {
   const container = useRef(null);
-  const { loading, dataResult, filtroAplicado } = useContext(Context);
+  const {
+    loading,
+    filtroAplicado,
+    faixaEtariaPorAbstencao,
+    faixaEtariaPorComparecimento,
+  } = useContext(Context);
 
   const [dados, setDados] = useState({});
   const [qtEleitores, setQtEleitores] = useState({});
@@ -53,7 +58,29 @@ export default function Abstencao() {
   const Chart = () => {
     return (
       <div>
-        <Bar data={dataResult} width={100} height={40} options={options} />
+        {faixaEtariaPorAbstencao.map((item) => (
+          <div>
+            <h5>
+              <b>Abstenção </b>
+              por faixa etária
+            </h5>
+            <Bar data={item} width={100} height={40} options={options} />
+          </div>
+        ))}
+        {faixaEtariaPorComparecimento.map((item) => (
+          <div>
+            <h5>
+              <b>Comparecimento </b>
+              por faixa etária
+            </h5>
+            <HorizontalBar
+              data={item}
+              width={100}
+              height={40}
+              options={options}
+            />
+          </div>
+        ))}
       </div>
     );
   };
