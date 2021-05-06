@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Provider } from "react-redux"
+
+import { FilterProvider } from "./Context/AbstencaoFilterContext";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
 import "assets/scss/now-ui-kit.scss?v=1.4.0";
 import "assets/demo/demo.css?v=1.4.0";
 import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
-
-import store from "./store";
 
 //API Pages
 import Homepage from "./pages/Homepage";
@@ -19,40 +18,36 @@ import Renda from "./pages/Renda";
 import GraficosRelevantes from "./pages/GraficosRelevantes";
 
 ReactDOM.render(
-  <Provider store={store} >
-    <BrowserRouter>
+  <BrowserRouter>
+    <Switch>
       <Switch>
-        <Switch>
-          <Route path="/home"
-            render={(props) => <Homepage {...props} />}
-          />
+        <Route path="/home" render={(props) => <Homepage {...props} />} />
 
-          <Route
-            path="/eleitorado"
-            render={(props) => <Eleitorado {...props} />}
-          />
+        <Route
+          path="/eleitorado"
+          render={(props) => <Eleitorado {...props} />}
+        />
 
-          <Route
-            path="/abstencao"
-            render={(props) => <Abstencao {...props} />}
-          />
+        <Route
+          path="/abstencao"
+          render={(props) => (
+            <FilterProvider>
+              <Abstencao {...props} />
+            </FilterProvider>
+          )}
+        />
 
-          <Route
-            path="/renda"
-            render={(props) => <Renda {...props} />}
-          />
+        <Route path="/renda" render={(props) => <Renda {...props} />} />
 
-          <Route
-            path="/relevantes"
-            render={(props) => <GraficosRelevantes {...props} />}
-          />
+        <Route
+          path="/relevantes"
+          render={(props) => <GraficosRelevantes {...props} />}
+        />
 
-          <Redirect to="/home" />
-          <Redirect from="/" to="/home" />
-
-        </Switch>
+        <Redirect to="/home" />
+        <Redirect from="/" to="/home" />
       </Switch>
-    </BrowserRouter>
-  </Provider>,
+    </Switch>
+  </BrowserRouter>,
   document.getElementById("root")
 );
