@@ -25,6 +25,11 @@ export default function RendaFilter() {
   const [cidadeComparada, setCidadeComparada] = useState('');
 
   const [regioes, setRegioes] = useState([]);
+  
+  function setCities(){
+    setRegioes.push(cidadeEscolhida);
+  }
+  
   const [sãoJoséDoRioPreto, setSãoJoséDoRioPreto] = useState(false);
   const [riberãoPreto, setRiberãoPreto] = useState(false);
   const [araçatuba, setAraçatuba] = useState(false);
@@ -35,8 +40,10 @@ export default function RendaFilter() {
 
   const [opcoes, setOpcoes] = useState([]);
   const [rendaMedia, setRendaMedia] = useState(false);
+  const [rendaMedia, setRendaMedia] = useState(false);
   const [rendaMaior, setRendaMaior] = useState(false);
   const [rendaMenor, setRendaMenor] = useState(false);
+
 
   useEffect(() => {
 
