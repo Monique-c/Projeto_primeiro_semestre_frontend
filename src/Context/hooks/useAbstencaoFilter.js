@@ -21,7 +21,7 @@ export default function useFilter() {
   }
 
   function handleData(data) {
-    const key = Object.keys(data[0]).splice(1);
+    const key = Object.keys(data[0]).splice(3);
     // a key é utilizada para as legendas do eixo X,
     // a função slice remove o primeiro elemento do array
     // no caso o nome da cidade que não é necessário para o eixo X
@@ -34,7 +34,7 @@ export default function useFilter() {
 
     const datasets = data.map((dado, index) => {
       const novoDataset = {
-        data: Object.values(dado).slice(1),
+        data: Object.values(dado).slice(3),
         label: dado.NM_MUNICIPIO,
         backgroundColor: color[index],
         borderWidth: 1,
@@ -55,7 +55,12 @@ export default function useFilter() {
       datasets, // dados e configuração do gráfico
     };
 
-    setDataResult(newData); // carrega os dados já pronto para o gráfico
+    const newData2 = {
+      labels: key, //eixo X
+      datasets, // dados e configuração do gráfico
+    };
+
+    setDataResult(newData, newData2); // carrega os dados já pronto para o gráfico
     setFiltroAplicado(true); // apenas informa que o filtro foi aplicado
 
     setTimeout(function () {

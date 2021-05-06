@@ -53,7 +53,7 @@ export default function Abstencao() {
   const Chart = () => {
     return (
       <div>
-        <Bar data={dataResult} width={100} height={40} options={options} />;
+        <Bar data={dataResult} width={100} height={40} options={options} />
       </div>
     );
   };
