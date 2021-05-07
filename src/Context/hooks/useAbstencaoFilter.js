@@ -10,12 +10,15 @@ export default function useFilter() {
   const [filtroAplicado, setFiltroAplicado] = useState(false);
 
   const [faixaEtariaPorAbstencao, setFaixaEtariaPorAbstencao] = useState([]);
+
   const [
     faixaEtariaPorComparecimento,
     setFaixaEtariaPorComparecimento,
   ] = useState([]);
-
-  var color = randomColor({});
+  const [
+    faixaEtariaPorComparecimentoComparativo,
+    setFaixaEtariaPorComparecimentoComparativo,
+  ] = useState([]);
 
   async function filtrarDados() {
     setLoading(true);
@@ -31,7 +34,7 @@ export default function useFilter() {
       ],
     };
 
-    const { data } = await api.post("pesquisas-abstencao", form);
+    // const { data } = await api.post("pesquisas-abstencao", form);
     // console.log(data);
     // Para teste estou usando  dados que estão em src/controllers/abstencao
     // Estes dados são os mesmos retornados do banco de dados
@@ -39,120 +42,174 @@ export default function useFilter() {
   }
 
   function handleData(data) {
-    var color = randomColor({
+    var colors = randomColor({
       count: data.length,
       luminosity: "bright",
       hue: "random",
     }); // gerando cores aleatóriamente
 
+    // Crie constantes para lidar com cada categoria e tema,
+    // ex: categoria faixa etaria tema abstenção
     const handleFaixaEtariaAbstencao = data.map((item) => {
-      const newAbstencaoValues = item.faixa_etaria.map(
+      //filtre os dados aqui
+      const valores = item.faixa_etaria.map(
         // data de acordo os valores
         (abs) => abs.qt_abstencao
       );
 
-      const newAbstencaoCategorias = item.faixa_etaria.map(
+      const categorias = item.faixa_etaria.map(
         // Labels do eixo das categorias ou eixo x
         (abs) => abs.desc_faixa_etaria
       );
 
       return {
         municipio: item.municipio,
-        newAbstencaoCategorias,
-        newAbstencaoValues,
+        categorias,
+        valores,
       };
     });
 
-    const setDatasetAbstencaoPorFaixaEtaria = handleFaixaEtariaAbstencao.map(
-      (item, index) => {
-        return {
-          labels: item.newAbstencaoCategorias, // eixo x ou eixo das categorias
-          datasets: [
-            //datasets: responsável pelo eixo dos valores / eixo y e style do gráfico
-            {
-              data: item.newAbstencaoValues,
-              label: item.municipio,
-              // Abobrinha
-              backgroundColor: color[index],
-              borderWidth: 1,
-              hoverBackgroundColor: color[index],
-              hoverBorderColor: color[index],
-            },
-          ],
-        };
-      }
-    );
-
     const handleFaixaEtariaComparecimento = data.map((item) => {
-      const newComparecimentoValues = item.faixa_etaria.map(
+      const valores = item.faixa_etaria.map(
         // data de acordo os valores
         (abs) => abs.qt_comparecimento
       );
 
-      const newComparecimentoCategorias = item.faixa_etaria.map(
+      const categorias = item.faixa_etaria.map(
         // Labels do eixo das categorias ou eixo x
         (abs) => abs.desc_faixa_etaria
       );
 
       return {
         municipio: item.municipio,
-        newComparecimentoCategorias,
-        newComparecimentoValues,
+        categorias,
+        valores,
       };
     });
 
-    const setDatasetComparecimentoPorFaixaEtaria = handleFaixaEtariaComparecimento.map(
+    // crie outras const abaixo
+    // const handleEstadoCivilAbstencao = data.map((item) => {
+
+    // })
+
+    /* Chamando funções:
+      Passe os dados "tratados" em funções diferentes para cada tema.
+      Essas funções irão fazer os "moldes" para os gráficos. Adicione
+      como parâmetro da função as constates criadas a cima para seu tema,
+      adicione também a variável colors para que as cores do gráficos, gere
+      automaticamente.
+    */
+    handleDataAbstencao(handleFaixaEtariaAbstencao, colors);
+    handleDataComparecimento(handleFaixaEtariaComparecimento, colors);
+
+    /*
+      Após a execução das funções acima atualizamos
+      o estado de loading e mostramos os gráficos modelados
+      em tela
+    */
+    setFiltroAplicado(true); // Apenas informa que o filtro foi aplicado
+    // Esse timeout é utilizado para simular uma espera de 3 segundos ou 3000 mls
+    setTimeout(function () {
+      setLoading(false);
+    }, 3000);
+
+    return true;
+  }
+
+  // Modelando dados de abstenção
+  function handleDataAbstencao(faixaEtaria, colors) {
+    /* ----------------------- INICIO Faixa etária -----------------------  */
+    const setDatasetAbstencaoPorFaixaEtaria = faixaEtaria.map((item, index) => {
+      const newDataset = {
+        data: item.valores,
+        label: item.municipio,
+        backgroundColor: colors[index],
+      };
+      return {
+        datasets: newDataset,
+      };
+    });
+
+    const datasetAbstencaoPorFaixaEtaria = {
+      labels: faixaEtaria[0].categorias,
+      datasets: setDatasetAbstencaoPorFaixaEtaria.map((item) => item.datasets),
+    };
+
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setFaixaEtariaPorAbstencao(datasetAbstencaoPorFaixaEtaria);
+    /* ----------------------- FIM Faixa etária -----------------------  */
+
+    // Adicione aqui a modelagem das outras categorias (estado civil por exemplo)
+    /*    ----------------------- iNICIO <CATEGORIA> -----------------------  */
+
+    /*    ----------------------- FIM <CATEGORIA> -----------------------  */
+  }
+
+  // Modelando dados de Comparecimento
+  function handleDataComparecimento(faixaEtaria, colors) {
+    /*    ----------------------- INICIO Faixa etária -----------------------  */
+    const setDatasetComparecimentoPorFaixaEtariaMunicipios = faixaEtaria.map(
       (item, index) => {
         return {
-          labels: item.newComparecimentoCategorias, // eixo x ou eixo das categorias
+          labels: item.categorias, // eixo x ou eixo das categorias
           datasets: [
             //datasets: responsável pelo eixo dos valores / eixo y e style do gráfico
             {
-              data: item.newComparecimentoValues,
+              data: item.valores,
               label: item.municipio,
-              backgroundColor: color[index],
+              // Abobrinha
+              backgroundColor: colors[index],
               borderWidth: 1,
-              hoverBackgroundColor: color[index],
-              hoverBorderColor: color[index],
+              hoverBackgroundColor: colors[index],
+              hoverBorderColor: colors[index],
             },
           ],
         };
       }
     );
 
-    const handleEstadoCivil = data.map((dado, index) => {
-      return {
-        municipio: dado.municipio,
-        estado_civil: dado.estado_civil,
-      };
-    });
+    const setDatasetComparecimentoPorFaixaEtariaComparativo = faixaEtaria.map(
+      (item, index) => {
+        const newDataset = {
+          data: item.valores,
+          label: item.municipio,
+          backgroundColor: colors[index],
+        };
+        return {
+          datasets: newDataset,
+        };
+      }
+    );
 
-    const handleGrauEscolaridade = data.map((dado, index) => {
-      return {
-        municipio: dado.municipio,
-        grau_escolaridade: dado.grau_escolaridade,
-      };
-    });
+    const datasetComparecimentoPorFaixaEtariaComparativo = {
+      labels: faixaEtaria[0].categorias,
+      datasets: setDatasetComparecimentoPorFaixaEtariaComparativo.map(
+        (item) => item.datasets
+      ),
+    };
 
-    // carrega os dados já pronto para o gráfico
-    setFaixaEtariaPorAbstencao(setDatasetAbstencaoPorFaixaEtaria);
-    setFaixaEtariaPorComparecimento(setDatasetComparecimentoPorFaixaEtaria);
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setFaixaEtariaPorComparecimento(
+      setDatasetComparecimentoPorFaixaEtariaMunicipios
+    );
+    setFaixaEtariaPorComparecimentoComparativo(
+      datasetComparecimentoPorFaixaEtariaComparativo
+    );
+    /*    ----------------------- FIM Faixa etária -----------------------  */
 
-    setFiltroAplicado(true); // apenas informa que o filtro foi aplicado
+    // Adicione aqui a modelagem das outras categorias (estado civil por exemplo)
+    /*    ----------------------- iNICIO <CATEGORIA> -----------------------  */
 
-    setTimeout(function () {
-      setLoading(false);
-    }, 3000);
-    // este timeout é utilizado para simular uma espera de 3 segundos ou 3000 mls
-    return true;
+    /*    ----------------------- FIM <CATEGORIA> -----------------------  */
   }
 
   return {
-    loading,
     filtrarDados,
+    loading,
     filtroAplicado,
     faixaEtariaPorAbstencao,
     faixaEtariaPorComparecimento,
+    faixaEtariaPorComparecimentoComparativo,
   };
   // dados e funções que são utilizados em
   // outros componentes e paginas por exemplo
