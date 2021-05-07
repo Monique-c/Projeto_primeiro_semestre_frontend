@@ -64,7 +64,7 @@ export default function AbstençãoFilter() {
   }
 
   return (
-    <Card style={{ width: "300px", marginLeft: "10px" }}>
+    <Card style={{ maxWidth: "300px" }}>
       <div className="card-filtro-container">
         <Row className="mb-5">
           <Col

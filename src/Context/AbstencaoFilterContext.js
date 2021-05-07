@@ -9,9 +9,9 @@ function FilterProvider({ children }) {
     loading,
     filtroAplicado,
     filtrarDados,
-    dataResult,
     faixaEtariaPorAbstencao,
     faixaEtariaPorComparecimento,
+    faixaEtariaPorComparecimentoComparativo,
   } = useFilter();
 
   return (
@@ -22,6 +22,7 @@ function FilterProvider({ children }) {
         loading,
         faixaEtariaPorAbstencao,
         faixaEtariaPorComparecimento,
+        faixaEtariaPorComparecimentoComparativo,
       }}
     >
       {children}
