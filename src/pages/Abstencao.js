@@ -25,6 +25,7 @@ export default function Abstencao() {
     filtroAplicado,
     faixaEtariaPorAbstencao,
     faixaEtariaPorComparecimento,
+    faixaEtariaPorComparecimentoComparativo,
   } = useContext(Context);
 
   const [dados, setDados] = useState({});
@@ -58,29 +59,32 @@ export default function Abstencao() {
   const Chart = () => {
     return (
       <div>
-        {faixaEtariaPorAbstencao.map((item) => (
-          <div>
-            <h5>
-              <b>Abstenção </b>
-              por faixa etária
-            </h5>
-            <Bar data={item} width={100} height={40} options={options} />
-          </div>
-        ))}
+        {/*
+        deixei comentado para mostrar uma abordagem para o time ou Gabriel
         {faixaEtariaPorComparecimento.map((item) => (
           <div>
             <h5>
               <b>Comparecimento </b>
               por faixa etária
             </h5>
-            <HorizontalBar
-              data={item}
-              width={100}
-              height={40}
-              options={options}
-            />
+            <HorizontalBar data={item} options={options} />
           </div>
-        ))}
+        ))} */}
+
+        <div>
+          <h5>
+            <b>Comparecimento </b>
+            por faixa etária
+          </h5>
+          <Bar data={faixaEtariaPorComparecimentoComparativo} />
+        </div>
+        <div>
+          <h5>
+            <b>Abstenção </b>
+            por faixa etária
+          </h5>
+          <Bar data={faixaEtariaPorAbstencao} />
+        </div>
       </div>
     );
   };
@@ -94,7 +98,7 @@ export default function Abstencao() {
         </div>
 
         <Row>
-          <Col lg="3">
+          <Col lg="4">
             <AbstençãoFilter />
           </Col>
 
