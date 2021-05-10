@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { FilterProvider } from "./Context/AbstencaoFilterContext";
+import { FilterProviderRelevante } from "./Context/GráficosRelevantesFilterContext";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
@@ -41,7 +42,11 @@ ReactDOM.render(
 
         <Route
           path="/relevantes"
-          render={(props) => <GraficosRelevantes {...props} />}
+          render={(props) => (
+            <FilterProviderRelevante>
+              <GraficosRelevantes {...props} />
+            </FilterProviderRelevante>
+          )}
         />
 
         <Redirect to="/home" />

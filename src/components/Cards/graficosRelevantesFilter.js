@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   Button,
@@ -14,7 +14,12 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 
+
+import { Context } from "../../Context/GráficosRelevantesFilterContext";
+
 import "../../assets/styles/graficosRelevantes.css";
+
+import ibge from "../../services/api_ibge";
 
 export default function RelevantesFilter() {
   const [assunto, setAssunto] = useState("");
@@ -33,9 +38,7 @@ export default function RelevantesFilter() {
   const [araraquara, setAraraquara] = useState(false);
   const [piracicaba, setPiracicaba] = useState(false);
 
-  async function filtrarDados() {
-    alert(`categoria: ${categorias}\n localização: ${localizações}`);
-  }
+  const { filtrarDados } = useContext(Context);
 
   async function limparDados() {
     setAssunto("");

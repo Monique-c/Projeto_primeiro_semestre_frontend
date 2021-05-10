@@ -26,6 +26,12 @@ export default function Abstencao() {
     faixaEtariaPorAbstencao,
     faixaEtariaPorComparecimento,
     faixaEtariaPorComparecimentoComparativo,
+    estadoCivilPorAbstencao,
+    estadoCivilPorComparecimento,
+    estadoCivilPorComparecimentoComparativo,
+    escolaridadeDeclaradaPorAbstencao,
+    escolaridadeDeclaradaPorComparecimento,
+    escolaridadeDeclaradaPorComparecimentoComparativo,
   } = useContext(Context);
 
   const [dados, setDados] = useState({});
@@ -59,8 +65,6 @@ export default function Abstencao() {
   const Chart = () => {
     return (
       <div>
-        {/*
-        deixei comentado para mostrar uma abordagem para o time ou Gabriel
         {faixaEtariaPorComparecimento.map((item) => (
           <div>
             <h5>
@@ -69,7 +73,7 @@ export default function Abstencao() {
             </h5>
             <HorizontalBar data={item} options={options} />
           </div>
-        ))} */}
+        ))}
 
         <div>
           <h5>
@@ -84,6 +88,53 @@ export default function Abstencao() {
             por faixa etária
           </h5>
           <Bar data={faixaEtariaPorAbstencao} />
+        </div>
+        {/*estadoCivilPorComparecimento.map((item) => (
+          <div>
+            <h5>
+              <b>Comparecimento </b>
+              por Estado civil
+            </h5>
+            <HorizontalBar data={item} options={options} />
+        </div>))}*/}
+        <div>
+          <h5>
+            <b>Comparecimento </b>
+            por Estado civil
+          </h5>
+          <Bar data={estadoCivilPorComparecimentoComparativo} />
+        </div>
+        <div>
+          <h5>
+            <b>Abstenção </b>
+            por Estado civil
+          </h5>
+          <Bar data={estadoCivilPorAbstencao} />
+        </div>
+        {/*
+        {escolaridadeDeclaradaPorComparecimento.map((item) => (
+          <div>
+            <h5>
+              <b>Comparecimento </b>
+              por Escolaridade Declarada
+            </h5>
+            <HorizontalBar data={item} options={options} />
+          </div>
+        ))} */}
+
+        <div>
+          <h5>
+            <b>Comparecimento </b>
+            por Escolaridade Declarada
+          </h5>
+          <Bar data={escolaridadeDeclaradaPorComparecimentoComparativo} />
+        </div>
+        <div>
+          <h5>
+            <b>Abstenção </b>
+            por Escolaridade Declarada
+          </h5>
+          <Bar data={escolaridadeDeclaradaPorAbstencao} />
         </div>
       </div>
     );
@@ -114,7 +165,7 @@ export default function Abstencao() {
           ) : (
             <>
               {filtroAplicado ? (
-                <Col>
+                <Col lg='7'>
                   <Chart />
                 </Col>
               ) : (

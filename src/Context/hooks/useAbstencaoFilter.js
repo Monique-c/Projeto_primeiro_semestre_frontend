@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import api from "../../services/api";
 import abstencao from "../../controllers/abstencao_json";
+import { NewLineKind } from "typescript";
 
 var randomColor = require("randomcolor");
 
@@ -10,15 +11,16 @@ export default function useFilter() {
   const [filtroAplicado, setFiltroAplicado] = useState(false);
 
   const [faixaEtariaPorAbstencao, setFaixaEtariaPorAbstencao] = useState([]);
+  const [estadoCivilPorAbstencao, setEstadoCivilPorAbstencao] = useState([]);
+  const [escolaridadeDeclaradaPorAbstencao, setEscolaridadeDeclaradaPorAbstencao] = useState([]);
 
-  const [
-    faixaEtariaPorComparecimento,
-    setFaixaEtariaPorComparecimento,
-  ] = useState([]);
-  const [
-    faixaEtariaPorComparecimentoComparativo,
-    setFaixaEtariaPorComparecimentoComparativo,
-  ] = useState([]);
+  const [faixaEtariaPorComparecimento, setFaixaEtariaPorComparecimento,] = useState([]);
+  const [estadoCivilPorComparecimento, setEstadoCivilPorComparecimento,] = useState([]);
+  const [escolaridadeDeclaradaPorComparecimento, setEscolaridadeDeclaradaPorComparecimento,] = useState([]);
+
+  const [faixaEtariaPorComparecimentoComparativo, setFaixaEtariaPorComparecimentoComparativo,] = useState([]);
+  const [estadoCivilPorComparecimentoComparativo, setEstadoCivilPorComparecimentoComparativo,] = useState([]);
+  const [escolaridadeDeclaradaPorComparecimentoComparativo, setEscolaridadeDeclaradaPorComparecimentoComparativo,] = useState([]);
 
   async function filtrarDados() {
     setLoading(true);
@@ -88,9 +90,69 @@ export default function useFilter() {
     });
 
     // crie outras const abaixo
-    // const handleEstadoCivilAbstencao = data.map((item) => {
+    const handleEstadoCivilAbstencao = data.map((item) => {
+      const valores = item.estado_civil.map(
+        (abs) => abs.qt_abstencao
+      );
 
-    // })
+      const categorias = item.estado_civil.map(
+        (abs) => abs.desc_estado_civil
+      );
+
+      return {
+        municipio: item.municipio,
+        categorias,
+        valores,
+      };
+    });
+
+    const handleEstadoCivilComparecimento = data.map((item) => {
+      const valores = item.estado_civil.map(
+        (abs) => abs.qt_comparecimento
+      );
+
+      const categorias = item.estado_civil.map(
+        (abs) => abs.desc_estado_civil
+      );
+
+      return {
+        municipio: item.municipio,
+        categorias,
+        valores,
+      };
+    });
+
+    const handleEscolaridadeDeclaradaAbstencao = data.map((item) => {
+      const valores = item.grau_escolaridade.map(
+        (abs) => abs.qt_abstencao
+      );
+
+      const categorias = item.grau_escolaridade.map(
+        (abs) => abs.desc_grau_escolaridade
+      );
+
+      return {
+        municipio: item.municipio,
+        categorias,
+        valores,
+      };
+    });
+
+    const handleEscolaridadeDeclaradaComparecimento = data.map((item) => {
+      const valores = item.grau_escolaridade.map(
+        (abs) => abs.qt_comparecimento
+      );
+
+      const categorias = item.grau_escolaridade.map(
+        (abs) => abs.desc_grau_escolaridade
+      );
+
+      return {
+        municipio: item.municipio,
+        categorias,
+        valores,
+      };
+    });
 
     /* Chamando funções:
       Passe os dados "tratados" em funções diferentes para cada tema.
@@ -99,8 +161,16 @@ export default function useFilter() {
       adicione também a variável colors para que as cores do gráficos, gere
       automaticamente.
     */
-    handleDataAbstencao(handleFaixaEtariaAbstencao, colors);
-    handleDataComparecimento(handleFaixaEtariaComparecimento, colors);
+    handleDataAbstencao(
+      handleFaixaEtariaAbstencao,
+      handleEstadoCivilAbstencao,
+      handleEscolaridadeDeclaradaAbstencao,
+      colors);
+    handleDataComparecimento(
+      handleFaixaEtariaComparecimento,
+      handleEstadoCivilComparecimento,
+      handleEscolaridadeDeclaradaComparecimento,
+      colors);
 
     /*
       Após a execução das funções acima atualizamos
@@ -117,13 +187,16 @@ export default function useFilter() {
   }
 
   // Modelando dados de abstenção
-  function handleDataAbstencao(faixaEtaria, colors) {
+  function handleDataAbstencao(faixaEtaria, estadoCivil, escolaridadeDeclarada, colors) {
     /* ----------------------- INICIO Faixa etária -----------------------  */
     const setDatasetAbstencaoPorFaixaEtaria = faixaEtaria.map((item, index) => {
       const newDataset = {
         data: item.valores,
         label: item.municipio,
         backgroundColor: colors[index],
+        borderWidth: 1,
+        hoverBackgroundColor: colors[index],
+        hoverBorderColor: colors[index],
       };
       return {
         datasets: newDataset,
@@ -140,13 +213,56 @@ export default function useFilter() {
     /* ----------------------- FIM Faixa etária -----------------------  */
 
     // Adicione aqui a modelagem das outras categorias (estado civil por exemplo)
-    /*    ----------------------- iNICIO <CATEGORIA> -----------------------  */
+    /*    ----------------------- iNICIO Estado civil -----------------------  */
+    const setDatasetAbstencaoPorEstadoCivil = estadoCivil.map((item, index) => {
+      const newDataset = {
+        data: item.valores,
+        label: item.municipio,
+        backgroundColor: colors[index],
+        borderWidth: 1,
+        hoverBackgroundColor: colors[index],
+        hoverBorderColor: colors[index],
+      };
+      return {
+        datasets: newDataset,
+      };
+    });
 
-    /*    ----------------------- FIM <CATEGORIA> -----------------------  */
+    const datasetAbstencaoPorEstadoCivil = {
+      labels: estadoCivil[0].categorias,
+      datasets: setDatasetAbstencaoPorEstadoCivil.map((item) => item.datasets),
+    };
+
+    setEstadoCivilPorAbstencao(datasetAbstencaoPorEstadoCivil);
+
+    /*    ----------------------- FIM Estado civil -----------------------  */
+    /*    ----------------- INICIO Escolaridade Declarada ----------------  */
+    const setDatasetAbstencaoPorEscolaridadeDeclarada = escolaridadeDeclarada.map((item, index) => {
+      const newDataset = {
+        data: item.valores,
+        label: item.municipio,
+        backgroundColor: colors[index],
+        borderWidth: 1,
+        hoverBackgroundColor: colors[index],
+        hoverBorderColor: colors[index],
+      };
+      return {
+        datasets: newDataset,
+      };
+    });
+
+    const datasetAbstencaoPorEscolaridadeDeclarada = {
+      labels: escolaridadeDeclarada[0].categorias,
+      datasets: setDatasetAbstencaoPorEscolaridadeDeclarada.map((item) => item.datasets),
+    };
+
+    setEscolaridadeDeclaradaPorAbstencao(datasetAbstencaoPorEscolaridadeDeclarada);
+
+    /*    ------------------- FIM Escolaridade Declarada ------------------  */
   }
 
   // Modelando dados de Comparecimento
-  function handleDataComparecimento(faixaEtaria, colors) {
+  function handleDataComparecimento(faixaEtaria, estadoCivil, escolaridadeDeclarada, colors) {
     /*    ----------------------- INICIO Faixa etária -----------------------  */
     const setDatasetComparecimentoPorFaixaEtariaMunicipios = faixaEtaria.map(
       (item, index) => {
@@ -174,6 +290,9 @@ export default function useFilter() {
           data: item.valores,
           label: item.municipio,
           backgroundColor: colors[index],
+          borderWidth: 1,
+          hoverBackgroundColor: colors[index],
+          hoverBorderColor: colors[index],
         };
         return {
           datasets: newDataset,
@@ -189,18 +308,103 @@ export default function useFilter() {
     };
 
     // Passando o gráfico modelado à variável que irá mostrá-lo em tela
-    setFaixaEtariaPorComparecimento(
-      setDatasetComparecimentoPorFaixaEtariaMunicipios
-    );
-    setFaixaEtariaPorComparecimentoComparativo(
-      datasetComparecimentoPorFaixaEtariaComparativo
-    );
+    setFaixaEtariaPorComparecimento(setDatasetComparecimentoPorFaixaEtariaMunicipios);
+    setFaixaEtariaPorComparecimentoComparativo(datasetComparecimentoPorFaixaEtariaComparativo);
     /*    ----------------------- FIM Faixa etária -----------------------  */
 
     // Adicione aqui a modelagem das outras categorias (estado civil por exemplo)
-    /*    ----------------------- iNICIO <CATEGORIA> -----------------------  */
+    /*    ----------------------- iNICIO Estado civil -----------------------  */
+    const setDatasetComparecimentoPorEstadoCivilMunicipios = estadoCivil.map(
+      (item, index) => {
+        return {
+          labels: item.categorias,
+          datasets: [
+            {
+              data: item.valores,
+              label: item.municipio,
+              backgroundColor: colors[index],
+              borderWidth: 1,
+              hoverBackgroundColor: colors[index],
+              hoverBorderColor: colors[index],
+            },
+          ],
+        };
+      }
+    );
 
-    /*    ----------------------- FIM <CATEGORIA> -----------------------  */
+    const setDatasetComparecimentoPorEstadoCivilComparativo = estadoCivil.map(
+      (item, index) => {
+        const newDataset = {
+          data: item.valores,
+          label: item.municipio,
+          backgroundColor: colors[index],
+          borderWidth: 1,
+          hoverBackgroundColor: colors[index],
+          hoverBorderColor: colors[index],
+        };
+        return {
+          datasets: newDataset,
+        };
+      }
+    );
+
+    const datasetComparecimentoPorEstadoCivilComparativo = {
+      labels: estadoCivil[0].categorias,
+      datasets: setDatasetComparecimentoPorEstadoCivilComparativo.map(
+        (item) => item.datasets
+      ),
+    };
+
+    setEstadoCivilPorComparecimento(setDatasetComparecimentoPorEstadoCivilMunicipios);
+    setEstadoCivilPorComparecimentoComparativo(datasetComparecimentoPorEstadoCivilComparativo);
+
+    /*    ----------------------- FIM Estado civil -----------------------  */
+    /*    ------------------ INICIO Escolaridade Declarada ---------------  */
+    const setDatasetComparecimentoPorEscolaridadeDeclaradaMunicipios = escolaridadeDeclarada.map(
+      (item, index) => {
+        return {
+          labels: item.categorias,
+          dataset: [
+            {
+              data: item.valores,
+              label: item.municipio,
+              backgroundColor: colors[index],
+              borderWidth: 1,
+              hoverBackgroundColor: colors[index],
+              hoverBorderColor: colors[index],
+            },
+          ],
+        };
+      }
+    );
+
+    const setDatasetComparecimentoPorEscolaridadeDeclaradaComparativo = escolaridadeDeclarada.map(
+      (item, index) => {
+        const newDataset = {
+          data: item.valores,
+          label: item.municipio,
+          backgroundColor: colors[index],
+          borderWidth: 1,
+          hoverBackgroundColor: colors[index],
+          hoverBorderColor: colors[index],
+        };
+        return {
+          datasets: newDataset,
+        };
+      }
+    );
+
+    const datasetComparecimentoPorEscolaridadeDeclaradaComparativo = {
+      labels: escolaridadeDeclarada[0].categorias,
+      datasets: setDatasetComparecimentoPorEscolaridadeDeclaradaComparativo.map(
+        (item) => item.datasets
+      ),
+    };
+
+    setEscolaridadeDeclaradaPorComparecimento(setDatasetComparecimentoPorEscolaridadeDeclaradaMunicipios);
+    setEscolaridadeDeclaradaPorComparecimentoComparativo(datasetComparecimentoPorEscolaridadeDeclaradaComparativo);
+
+    /*    -------------------- FIM Escolaridade Declarada ----------------  */
   }
 
   return {
@@ -210,6 +414,12 @@ export default function useFilter() {
     faixaEtariaPorAbstencao,
     faixaEtariaPorComparecimento,
     faixaEtariaPorComparecimentoComparativo,
+    estadoCivilPorAbstencao,
+    estadoCivilPorComparecimento,
+    estadoCivilPorComparecimentoComparativo,
+    escolaridadeDeclaradaPorAbstencao,
+    escolaridadeDeclaradaPorComparecimento,
+    escolaridadeDeclaradaPorComparecimentoComparativo,
   };
   // dados e funções que são utilizados em
   // outros componentes e paginas por exemplo

@@ -12,6 +12,12 @@ function FilterProvider({ children }) {
     faixaEtariaPorAbstencao,
     faixaEtariaPorComparecimento,
     faixaEtariaPorComparecimentoComparativo,
+    estadoCivilPorAbstencao,
+    estadoCivilPorComparecimento,
+    estadoCivilPorComparecimentoComparativo,
+    escolaridadeDeclaradaPorAbstencao,
+    escolaridadeDeclaradaPorComparecimento,
+    escolaridadeDeclaradaPorComparecimentoComparativo,
   } = useFilter();
 
   return (
@@ -23,6 +29,12 @@ function FilterProvider({ children }) {
         faixaEtariaPorAbstencao,
         faixaEtariaPorComparecimento,
         faixaEtariaPorComparecimentoComparativo,
+        estadoCivilPorAbstencao,
+        estadoCivilPorComparecimento,
+        estadoCivilPorComparecimentoComparativo,
+        escolaridadeDeclaradaPorAbstencao,
+        escolaridadeDeclaradaPorComparecimento,
+        escolaridadeDeclaradaPorComparecimentoComparativo,
       }}
     >
       {children}
