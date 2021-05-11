@@ -17,6 +17,7 @@ import {
 import "../../assets/styles/renda.css";
 
 import ibge from "../../services/api_ibge";
+import { Context } from "../../Context/RendaFilterContextTeste";
 
 export default function RendaFilter() {
   const [cidade, setCidade] = useState("");
@@ -24,6 +25,8 @@ export default function RendaFilter() {
 
   const [cidades, setCidades] = useState([]);
   const [cidadeEscolhida, setCidadeEscolhida] = useState([]);
+
+  const { filtrarDados } = useContext(Context);
 
   function setCities() {
     setCidades(...(cidadeEscolhida + cidades));
@@ -37,10 +40,6 @@ export default function RendaFilter() {
       setCidades(nomeCidades);
     })();
   }, []);
-
-  async function filtrarDados() {
-    alert(`cidade: ${cidade}\n cidadeComparada: ${cidadeComparada}`);
-  }
 
   async function limparDados() {
     setCidade("");

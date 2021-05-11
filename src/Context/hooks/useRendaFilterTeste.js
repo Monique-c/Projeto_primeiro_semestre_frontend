@@ -13,16 +13,14 @@ export default function useFilter() {
 
   const [PIB_percapita, setPIB_percapita] = useState([]);
 
-  const [Comparativo, setComparativo] = useState([]);
-
   async function filtrarDados() {
     setLoading(true);
     setFiltroAplicado(false);
 
-    const form = {
-      municipios: ["São José dos Campos", "São Paulo"],
-      colunas: ["PIB", "PIB_percapita"],
-    };
+    // const form = {
+    //   municipios: ["São José dos Campos", "São Paulo"],
+    //   colunas: ["PIB", "PIB_percapita"],
+    // };
 
     // const { data } = await api.post("pesquisas-abstencao", form);
     // console.log(data);
@@ -32,50 +30,39 @@ export default function useFilter() {
   }
 
   function handleData(data) {
-    var colors = randomColor({
-      count: data.length,
-      luminosity: "bright",
-      hue: "random",
-    }); // gerando cores aleatóriamente
-
     // Crie constantes para lidar com cada categoria e tema,
     // ex: categoria faixa etaria tema abstenção
-    const handlePIB = data.map((item) => {
+    const handleMaxPIB = data.map((item) => {
       //filtre os dados aqui
-      const valores = item.PIB.map(
+      const municipios = item.max_PIB.map(
         // data de acordo os valores
-        (abs) => abs.PIB
-      );
+        (pibMax) => {
+          const value = {
+            max_PIB: pibMax.max_PIB,
+            municipio: pibMax.municipio,
+          };
 
-      const categorias = item.pib.map(
-        // Labels do eixo das categorias ou eixo x
-        (abs) => abs.desc_faixa_etaria
+          return value;
+        }
       );
 
       return {
-        municipio: item.municipio,
-        categorias,
-        valores,
+        municipios,
       };
     });
 
-    const handleFaixaEtariaComparecimento = data.map((item) => {
-      const valores = item.faixa_etaria.map(
-        // data de acordo os valores
-        (abs) => abs.qt_comparecimento
-      );
-
-      const categorias = item.faixa_etaria.map(
-        // Labels do eixo das categorias ou eixo x
-        (abs) => abs.desc_faixa_etaria
-      );
-
-      return {
-        municipio: item.municipio,
-        categorias,
-        valores,
-      };
-    });
+    console.log(handleMaxPIB);
+    /*
+    Essa é a estrutura que retorna dessa função acima
+    [{
+      municipios:
+        [
+          {municipio: "São Paulo", max_PIB: 389317000.0},
+          {municipio: "Guarulhos", max_PIB: 32473800.0},
+          {municipio: "Campinas",  max_PIB: 31654700.0,}
+        ]
+      }]
+    */
 
     // crie outras const abaixo
     // const handleEstadoCivilAbstencao = data.map((item) => {
@@ -85,12 +72,9 @@ export default function useFilter() {
     /* Chamando funções:
       Passe os dados "tratados" em funções diferentes para cada tema.
       Essas funções irão fazer os "moldes" para os gráficos. Adicione
-      como parâmetro da função as constates criadas a cima para seu tema,
-      adicione também a variável colors para que as cores do gráficos, gere
-      automaticamente.
+      como parâmetro da função as constates criadas a cima para seu tema.
     */
-    handleDataPIB(handlePIB, colors);
-    handleDataComparecimento(handleFaixaEtariaComparecimento, colors);
+    handleDataMaxPIB(handleMaxPIB);
 
     /*
       Após a execução das funções acima atualizamos
@@ -107,26 +91,33 @@ export default function useFilter() {
   }
 
   // Modelando dados de abstenção
-  function handleDataPIB(PIB, colors) {
-    /* ----------------------- INICIO Faixa etária -----------------------  */
-    const setdatasetPIB = PIB.map((item, index) => {
-      const newDataset = {
-        data: item.valores,
-        label: item.municipio,
-        backgroundColor: colors[index],
-      };
-      return {
-        datasets: newDataset,
-      };
+  function handleDataMaxPIB(PIB) {
+    /* ----------------------- INICIO -----------------------  */
+    const setdatasetPIB = PIB.map((item) => {
+      var colors = randomColor({
+        count: item.municipios.length,
+        luminosity: "bright",
+        hue: "random",
+      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
+
+      const dataset = item.municipios.map((value, index) => {
+        return {
+          label: value.municipio,
+          data: [value.max_PIB],
+          backgroundColor: colors[index],
+        };
+      });
+      return dataset;
     });
 
     const datasetPIB = {
-      labels: PIB[0].categorias,
-      datasets: setdatasetPIB.map((item) => item.datasets),
+      labels: [""],
+      datasets: setdatasetPIB[0],
     };
 
     // Passando o gráfico modelado à variável que irá mostrá-lo em tela
     setPIB(datasetPIB);
+
     /* ----------------------- FIM Faixa etária -----------------------  */
 
     // Adicione aqui a modelagem das outras categorias (estado civil por exemplo)
@@ -135,80 +126,37 @@ export default function useFilter() {
     /*    ----------------------- FIM <CATEGORIA> -----------------------  */
   }
 
-  // Modelando dados de Comparecimento
-  function handleDataComparecimento(PIB_percapita, colors) {
-    /*    ----------------------- INICIO Faixa etária -----------------------  */
-    const setDatasetPIB_percapita = PIB_percapita.map((item, index) => {
-      return {
-        labels: item.categorias, // eixo x ou eixo das categorias
-        datasets: [
-          //datasets: responsável pelo eixo dos valores / eixo y e style do gráfico
-          {
-            data: item.valores,
-            label: item.municipio,
-            // Abobrinha
-            backgroundColor: colors[index],
-            borderWidth: 1,
-            hoverBackgroundColor: colors[index],
-            hoverBorderColor: colors[index],
-          },
-        ],
-      };
-    });
+  // Modelando dados de <OUTRA FUNÇÃO>
 
-    // const data = {
-    //   labels: [cidades[0], cidades[1]],
-    //   datasets: [
-    //     {
-    //       label: "PIB das Cidades",
-    //       data: { PIB },
-    //       backgroundColor: [
-    //         "rgba(255, 80, 132, 0.2)",
-    //         "rgba(54, 162, 235, 0.2)",
-    //         "rgba(255, 206, 86, 0.2)",
-    //         "rgba(75, 192, 192, 0.2)",
-    //         "rgba(153, 102, 255, 0.2)",
-    //         "rgba(255, 159, 64, 0.2)",
-    //       ],
-    //       borderColor: [
-    //         "rgba(255, 80, 132, 1)",
-    //         "rgba(54, 162, 235, 1)",
-    //         "rgba(255, 206, 86, 1)",
-    //         "rgba(75, 192, 192, 1)",
-    //         "rgba(153, 102, 255, 1)",
-    //         "rgba(255, 159, 64, 1)",
-    //       ],
-    //       borderWidth: 1,
-    //     },
-    //   ],
-    // };
-
-    const setDatasetComparativo = PIB.map((item, index) => {
-      const newDataset = {
-        data: item.valores,
-        label: item.municipio,
-        backgroundColor: colors[index],
-      };
-      return {
-        datasets: newDataset,
-      };
-    });
-
-    const datasetComparativo = {
-      labels: PIB[0].categorias,
-      datasets: setDatasetComparativo.map((item) => item.datasets),
+  /*
+    Seu código que não apaguei
+    const data = {
+      labels: [cidades[0], cidades[1]],
+      datasets: [
+        {
+          label: "PIB das Cidades",
+          data: { PIB },
+          backgroundColor: [
+            "rgba(255, 80, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+          ],
+          borderColor: [
+            "rgba(255, 80, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
     };
-
-    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
-    setPIB_percapita(setDatasetPIB_percapita);
-    setComparativo(datasetComparativo);
-    /*    ----------------------- FIM Faixa etária -----------------------  */
-
-    // Adicione aqui a modelagem das outras categorias (estado civil por exemplo)
-    /*    ----------------------- iNICIO <CATEGORIA> -----------------------  */
-
-    /*    ----------------------- FIM <CATEGORIA> -----------------------  */
-  }
+  */
 
   return {
     filtrarDados,
@@ -216,7 +164,6 @@ export default function useFilter() {
     filtroAplicado,
     PIB,
     PIB_percapita,
-    Comparativo,
   };
   // dados e funções que são utilizados em
   // outros componentes e paginas por exemplo

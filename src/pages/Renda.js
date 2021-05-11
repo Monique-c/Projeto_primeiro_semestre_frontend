@@ -20,13 +20,7 @@ import InfoFilter from "components/Cards/infoFilter";
 
 export default function Renda() {
   const container = useRef(null);
-  const {
-    loading,
-    filtroAplicado,
-    PIB,
-    PIB_percapita,
-    Comparativo,
-  } = useContext(Context);
+  const { loading, filtroAplicado, PIB, PIB_percapita } = useContext(Context);
 
   // const [cidades, setCidades] = useState([
   //   "Osasco",
@@ -63,6 +57,18 @@ export default function Renda() {
   //   ],
   // };
 
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  };
+
   useEffect(() => {
     if (loading) {
       lottie.loadAnimation({
@@ -82,13 +88,13 @@ export default function Renda() {
           <h5>
             <b>PIB</b>
           </h5>
-          <Bar data={PIB} />
+          <Bar data={PIB} options={options} />
         </div>
         <div>
           <h5>
             <b>PIB_percapita </b>
           </h5>
-          <Bar data={PIB_percapita} />
+          {/* <Bar data={PIB_percapita} /> */}
         </div>
       </div>
     );
