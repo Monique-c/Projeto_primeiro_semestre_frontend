@@ -7,22 +7,22 @@ const Context = createContext();
 function FilterProvider({ children }) {
   const {
     loading,
-    filtroAplicado,
     filtrarDados,
-    faixaEtariaPorAbstencao,
-    faixaEtariaPorComparecimento,
-    faixaEtariaPorComparecimentoComparativo,
+    filtroAplicado,
+    PIB,
+    PIB_percapita,
+    Comparativo,
   } = useFilter();
 
   return (
     <Context.Provider
       value={{
+        loading,
         filtrarDados,
         filtroAplicado,
-        loading,
-        faixaEtariaPorAbstencao,
-        faixaEtariaPorComparecimento,
-        faixaEtariaPorComparecimentoComparativo,
+        PIB,
+        PIB_percapita,
+        Comparativo,
       }}
     >
       {children}

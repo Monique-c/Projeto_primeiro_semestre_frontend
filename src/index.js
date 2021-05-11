@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import { FilterProvider } from "./Context/AbstencaoFilterContext";
+import { FilterProvider as FPAbs } from "./Context/AbstencaoFilterContext";
+import { FilterProvider as FPRenda } from "./Context/RendaFilterContextTeste";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
@@ -31,13 +32,20 @@ ReactDOM.render(
         <Route
           path="/abstencao"
           render={(props) => (
-            <FilterProvider>
+            <FPAbs>
               <Abstencao {...props} />
-            </FilterProvider>
+            </FPAbs>
           )}
         />
 
-        <Route path="/renda" render={(props) => <Renda {...props} />} />
+        <Route
+          path="/renda"
+          render={(props) => (
+            <FPRenda>
+              <Renda {...props} />
+            </FPRenda>
+          )}
+        />
 
         <Route
           path="/relevantes"

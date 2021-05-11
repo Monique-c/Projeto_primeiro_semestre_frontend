@@ -10,3 +10,5 @@ const data = [
     PIB_percapita: 35272,
   },
 ];
+
+module.exports = data;
