@@ -12,6 +12,7 @@ function EleitoradoProvider({children}) {
     faixaEtariaEleitorado,
     estadoCivilEleitorado,
     grauEscolarEleitorado,
+    NomeSocialEleitorado
    }= useFilter();
 
 
@@ -24,7 +25,7 @@ function EleitoradoProvider({children}) {
         faixaEtariaEleitorado,
         estadoCivilEleitorado,
         grauEscolarEleitorado,
-
+        NomeSocialEleitorado,
       }}
     >
       {children}

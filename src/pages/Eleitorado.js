@@ -26,10 +26,12 @@ export default function Eleitorado() {
     faixaEtariaEleitorado,
     estadoCivilEleitorado,
     grauEscolarEleitorado,
+    NomeSocialEleitorado,
+
   } = useContext(Context2);
 
-  const [dados, setDados] = useState({});
-  const [qtEleitores, setQtEleitores] = useState({});
+  //const [dados, setDados] = useState({});
+  //const [qtEleitores, setQtEleitores] = useState({});
 
   useEffect(() => {
     if (loading) {
@@ -43,9 +45,42 @@ export default function Eleitorado() {
     }
   }, [loading]);
 
+  const data = {
+    labels: ["aaaaaaaaaaaaaaaa"],
+    datasets: [
+      {
+        label: ["aaaaaaaaaaaaaaaaaaa"],
+        data: {faixaEtariaEleitorado},
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   const options = {
     maintainAspectRatio: true,
     scales: {
+      xAxes: [
+        {
+
+
+        }
+      ],
       yAxes: [
         {
           ticks: {
@@ -64,7 +99,7 @@ export default function Eleitorado() {
             <b>Eleitorado </b>
             por faixa etária
           </h5>
-          <Bar data={faixaEtariaEleitorado}/>
+          <Bar data={faixaEtariaEleitorado} options= {options} />
         </div>
         <div>
           <h5>
@@ -79,6 +114,13 @@ export default function Eleitorado() {
             por Grau de Escolariade
           </h5>
           <HorizontalBar data={grauEscolarEleitorado} />
+        </div>
+        <div>
+          <h5>
+            <b>Eleitorado </b>
+            por Nome Social
+          </h5>
+          <Bar data={NomeSocialEleitorado} />
         </div>
       </div>
     );
@@ -109,7 +151,7 @@ export default function Eleitorado() {
           ) : (
             <>
               {filtroAplicado ? (
-                <Col>
+                <Col lg='8'>
                   <Chart />
                 </Col>
               ) : (

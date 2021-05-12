@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import api from "../../services/api";
 import eleitorado from "../../controllers/eleitorado_json";
+import { convertCompilerOptionsFromJson } from "typescript";
 
 var randomColor = require("randomcolor");
 
@@ -12,12 +13,8 @@ export default function useFilter() {
   const [faixaEtariaEleitorado, setEleitoradoPorFaixa] = useState([]);
   const [estadoCivilEleitorado, setEleitoradoPorEstadoCivil] = useState([]);
   const [grauEscolarEleitorado, setEleitoradoPorGrauEscolar] = useState([]);
+  const [NomeSocialEleitorado, setEleitoradoPorNomeSocial] = useState([]);
 
-
-  //const [
-    //faixaEtariaEleitoradoComparativo,
-    //setFaixaEtariaEleitoradoComparativo,
-  //] = useState([]);
 
   async function filtrarDados() {
     setLoading(true);
@@ -36,7 +33,18 @@ export default function useFilter() {
       count: data.length,
       luminosity: "bright",
       hue: "random",
+      format: "rgba",
+      alpha: 0.4,
+
     });
+    var borderColors ={
+      count: data.length,
+      luminosity: "bright",
+      hue: colors.hue,
+      format: "rgba",
+      alpha: 1,
+
+    };
 
 
 
@@ -46,7 +54,7 @@ export default function useFilter() {
         (elt) =>  elt.soma_eleitores_perfil //para x valor
       );
       const index = item.faixa_etaria.map(
-        (elt) => elt.desc_faixa_etaria//para y titulo
+        (elt) => elt.desc_faixa_etaria.trim()//para y titulo
       );
 
       return {
@@ -90,9 +98,23 @@ export default function useFilter() {
     });
 
 
-    handleDataGrauEscolar(handleGrauEscolarEleitorado, colors )
-    handleDataEstadoCivil(handleEstadoCivilEleitorado, colors)
-    handleDataEleitorado(handleFaixaEleitorado, colors);
+
+    const handleNomeSocialEleitorado = data.map((item) => {
+
+      const valores = {
+        NomeSocial: item.QT_ELEITORES_INC_NM_SOCIAL,
+        municipio: item.municipio,
+      };
+      return valores;
+
+    });
+
+
+
+    handleDataNomeSocial( handleNomeSocialEleitorado, colors, borderColors )
+    handleDataGrauEscolar( handleGrauEscolarEleitorado, colors, borderColors)
+    handleDataEstadoCivil( handleEstadoCivilEleitorado, colors,borderColors)
+    handleDataEleitorado( handleFaixaEleitorado, colors, borderColors );
 
 
     setFiltroAplicado(true);
@@ -102,13 +124,16 @@ export default function useFilter() {
 
     return true;
   }
+
 //---------------------------------------------------------------------------------------------
-  function handleDataEleitorado(faixaEtaria, colors){//função que lida com os dados
+  function handleDataEleitorado(faixaEtaria, colors,borderColors){//função que lida com os dados
    const setDatasetEleitoradoFaixaEtaria= faixaEtaria.map((item,index) => {
      const newDatase = {
       data: item.valores,
       label: item.municipio,
       backgroundColor: colors[index],
+      borderColor: borderColors[index],
+      borderWidth: 2,
      }
      return{
        datasets : newDatase,
@@ -124,12 +149,14 @@ export default function useFilter() {
    setEleitoradoPorFaixa(DatasetEleitoradoFaixa);
   }
 //---------------------------------------------------------------------------------------------
-  function handleDataEstadoCivil(EstadoCivil, colors){//função que lida com os dados
+  function handleDataEstadoCivil(EstadoCivil, colors,borderColors){//função que lida com os dados
     const setDatasetEleitoradoEstadoCivil= EstadoCivil.map((item,index) => {
       const newDatase = {
        data: item.valores,
        label: item.municipio,
        backgroundColor: colors[index],
+       borderColor: borderColors[index],
+       borderWidth: 2,
       }
       return{
         datasets : newDatase,
@@ -145,12 +172,14 @@ export default function useFilter() {
     setEleitoradoPorEstadoCivil(DatasetEleitoradoEstadoCivil);
    }
 //---------------------------------------------------------------------------------------------
-   function handleDataGrauEscolar(GrauEscolar, colors){//função que lida com os dados
+   function handleDataGrauEscolar(GrauEscolar, colors,borderColors){//função que lida com os dados
     const setDatasetEleitoradoGrauEscolar= GrauEscolar.map((item,index) => {
       const newDatase = {
        data: item.valores,
        label: item.municipio,
        backgroundColor: colors[index],
+       borderColor: borderColors[index],
+       borderWidth: 2,
       }
       return{
         datasets : newDatase,
@@ -166,6 +195,34 @@ export default function useFilter() {
     setEleitoradoPorGrauEscolar(DatasetEleitoradoGrauEscolar);
    }
 //---------------------------------------------------------------------------------------------
+  function handleDataNomeSocial(NomeSocial, colors, borderColors){//função que lida com os dados
+  const setDatasetEleitoradoNomeSocial= NomeSocial.map((val,index) => {
+
+    const newDatase = {
+     data: [val.NomeSocial],
+     label: val.municipio,
+     backgroundColor: colors[index],
+     borderColor: borderColors[index],
+     borderWidth: 2,
+
+    }
+    return{
+      datasets : newDatase,
+    };
+  });
+
+  const DatasetEleitoradoNomeSocial = {
+   labels: [''],
+   datasets: setDatasetEleitoradoNomeSocial.map((item) =>
+     item.datasets
+   ),
+  };
+
+
+  setEleitoradoPorNomeSocial(DatasetEleitoradoNomeSocial);
+ }
+
+
   return {
     filtroAplicado,
     loading,
@@ -173,7 +230,7 @@ export default function useFilter() {
     faixaEtariaEleitorado,
     estadoCivilEleitorado,
     grauEscolarEleitorado,
-
+    NomeSocialEleitorado,
   };
 
 }
