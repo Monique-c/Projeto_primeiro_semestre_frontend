@@ -10,8 +10,12 @@ export default function useFilter() {
   const [filtroAplicado, setFiltroAplicado] = useState(false);
 
   const [PIB, setPIB] = useState([]);
+  const [MaxPIB, setMaxPIB] = useState([]);
+  const [MinPIB, setMinPIB] = useState([]);
 
-  const [PIB_percapita, setPIB_percapita] = useState([]);
+  const [PIB_Percapta, setPIB_Percapta] = useState([]);
+  const [MaxPIB_Percapta, setMaxPIB_Percapta] = useState([]);
+  const [MinPIB_Percapta, setMinPIB_Percapta] = useState([]);
 
   async function filtrarDados() {
     setLoading(true);
@@ -32,49 +36,134 @@ export default function useFilter() {
   function handleData(data) {
     // Crie constantes para lidar com cada categoria e tema,
     // ex: categoria faixa etaria tema abstenção
-    const handleMaxPIB = data.map((item) => {
-      //filtre os dados aqui
-      const municipios = item.max_PIB.map(
+    const handlePIB = data.map((item) => {
+      //filtre os dados
+      const estado = item.media_PIB_percapta_ESTADO.map(
         // data de acordo os valores
-        (pibMax) => {
+        (pibest) => {
           const value = {
-            max_PIB: pibMax.max_PIB,
-            municipio: pibMax.municipio,
+            PIB: pibest.media_PIB,
+            municipio: "Estado de São Paulo",
           };
 
           return value;
         }
       );
+      const municipios = item.media_PIB_percapta_MUNICIPIO.map(
+        // data de acordo os valores
+        (pibmun) => {
+          const value = {
+            PIB: pibmun.PIB,
+            municipio: pibmun.municipio,
+          };
+
+          return value;
+        }
+      );
+      return {
+        estado,
+        municipios,
+      };
+    });
+    console.log(handlePIB); // ---------------------------
+
+    const handleMaxPIB = data.map((item) => {
+      const municipios = item.max_PIB.map((pibMax) => {
+        const value = {
+          max_PIB: pibMax.max_PIB,
+          municipio: pibMax.municipio,
+        };
+        return value;
+      });
+      return {
+        municipios,
+      };
+    });
+
+    const handleMinPIB = data.map((item) => {
+      const municipios = item.min_PIB.map((pibMin) => {
+        const value = {
+          min_PIB: pibMin.min_PIB,
+          municipio: pibMin.municipio,
+        };
+
+        return value;
+      });
 
       return {
         municipios,
       };
     });
 
-    console.log(handleMaxPIB);
-    /*
-    Essa é a estrutura que retorna dessa função acima
-    [{
-      municipios:
-        [
-          {municipio: "São Paulo", max_PIB: 389317000.0},
-          {municipio: "Guarulhos", max_PIB: 32473800.0},
-          {municipio: "Campinas",  max_PIB: 31654700.0,}
-        ]
-      }]
-    */
+    const handlePIB_Percapta = data.map((item) => {
+      //filtre os dados
+      const estado = item.media_PIB_percapta_ESTADO.map(
+        // data de acordo os valores
+        (pibest) => {
+          const value = {
+            PIB_percapita: pibest.media_PIB_percapta,
+            municipio: "Estado de São Paulo",
+          };
 
-    // crie outras const abaixo
-    // const handleEstadoCivilAbstencao = data.map((item) => {
+          return value;
+        }
+      );
+      const municipios = item.media_PIB_percapta_MUNICIPIO.map(
+        // data de acordo os valores
+        (pibmun) => {
+          const value = {
+            PIB_percapita: pibmun.PIB_percapita,
+            municipio: pibmun.municipio,
+          };
 
-    // })
+          return value;
+        }
+      );
+      return {
+        estado,
+        municipios,
+      };
+    });
+
+    const handleMaxPIB_Percapta = data.map((item) => {
+      const municipios = item.max_PIB_Percapta.map((pib_percapitaMax) => {
+        const value = {
+          max_PIB_percapita: pib_percapitaMax.max_PIB_percapita,
+          municipio: pib_percapitaMax.municipio,
+        };
+        return value;
+      });
+      return {
+        municipios,
+      };
+    });
+
+    const handleMinPIB_Percapta = data.map((item) => {
+      const municipios = item.min_PIB_Percapta.map((pib_percapitaMin) => {
+        const value = {
+          min_PIB_percapita: pib_percapitaMin.min_PIB_percapita,
+          municipio: pib_percapitaMin.municipio,
+        };
+
+        return value;
+      });
+
+      return {
+        municipios,
+      };
+    });
 
     /* Chamando funções:
       Passe os dados "tratados" em funções diferentes para cada tema.
       Essas funções irão fazer os "moldes" para os gráficos. Adicione
       como parâmetro da função as constates criadas a cima para seu tema.
     */
+    handleDataPIB(handlePIB);
     handleDataMaxPIB(handleMaxPIB);
+    handleDataMinPIB(handleMinPIB);
+    handleDataPIB_Percapta(handlePIB_Percapta);
+    handleDataMaxPIB_Percapta(handleMaxPIB_Percapta);
+    handleDataMinPIB_Percapta(handleMinPIB_Percapta);
 
     /*
       Após a execução das funções acima atualizamos
@@ -90,21 +179,29 @@ export default function useFilter() {
     return true;
   }
 
-  // Modelando dados de abstenção
-  function handleDataMaxPIB(PIB) {
+  // Modelando dados de pib
+  function handleDataPIB(PIB) {
     /* ----------------------- INICIO -----------------------  */
     const setdatasetPIB = PIB.map((item) => {
       var colors = randomColor({
-        count: item.municipios.length,
+        count: item.municipios.length + 1,
+        luminosity: "light",
+        hue: "random",
+        a: 0.8,
+      });
+      var borderColors = randomColor({
+        count: item.municipios.length + 1,
         luminosity: "bright",
         hue: "random",
-      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
+      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades +1(estado)
 
       const dataset = item.municipios.map((value, index) => {
         return {
           label: value.municipio,
-          data: [value.max_PIB],
-          backgroundColor: colors[index],
+          data: [value.PIB],
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 3,
         };
       });
       return dataset;
@@ -114,56 +211,189 @@ export default function useFilter() {
       labels: [""],
       datasets: setdatasetPIB[0],
     };
-
     // Passando o gráfico modelado à variável que irá mostrá-lo em tela
     setPIB(datasetPIB);
-
-    /* ----------------------- FIM Faixa etária -----------------------  */
-
-    // Adicione aqui a modelagem das outras categorias (estado civil por exemplo)
-    /*    ----------------------- iNICIO <CATEGORIA> -----------------------  */
-
-    /*    ----------------------- FIM <CATEGORIA> -----------------------  */
   }
 
-  // Modelando dados de <OUTRA FUNÇÃO>
+  function handleDataMaxPIB(MaxPIB) {
+    /* ----------------------- INICIO -----------------------  */
+    const setdatasetMaxPIB = MaxPIB.map((item) => {
+      var colors = randomColor({
+        count: item.municipios.length,
+        luminosity: "light",
+        hue: "random",
+      });
+      var borderColors = randomColor({
+        count: item.municipios.length,
+        luminosity: "bright",
+        hue: "random",
+      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
 
-  /*
-    Seu código que não apaguei
-    const data = {
-      labels: [cidades[0], cidades[1]],
-      datasets: [
-        {
-          label: "PIB das Cidades",
-          data: { PIB },
-          backgroundColor: [
-            "rgba(255, 80, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-          ],
-          borderColor: [
-            "rgba(255, 80, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-          ],
-          borderWidth: 1,
-        },
-      ],
+      const dataset = item.municipios.map((value, index) => {
+        return {
+          label: value.municipio,
+          data: [value.max_PIB],
+          backgroundColor: [colors[index], 0.5],
+          borderColor: [borderColors[index]],
+          borderWidth: 3,
+        };
+      });
+      return dataset;
+    });
+
+    const datasetMaxPIB = {
+      labels: [""],
+      datasets: setdatasetMaxPIB[0],
     };
-  */
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setMaxPIB(datasetMaxPIB);
+  }
+
+  function handleDataMinPIB(MinPIB) {
+    /* ----------------------- INICIO -----------------------  */
+    const setdatasetMinPIB = MinPIB.map((item) => {
+      var colors = randomColor({
+        count: item.municipios.length,
+        luminosity: "light",
+        hue: "random",
+      });
+      var borderColors = randomColor({
+        count: item.municipios.length,
+        luminosity: "bright",
+        hue: "random",
+      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
+
+      const dataset = item.municipios.map((value, index) => {
+        return {
+          label: value.municipio,
+          data: [value.min_PIB],
+          backgroundColor: [colors[index], 0.5],
+          borderColor: [borderColors[index]],
+          borderWidth: 3,
+        };
+      });
+      return dataset;
+    });
+
+    const datasetMinPIB = {
+      labels: [""],
+      datasets: setdatasetMinPIB[0],
+    };
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setMinPIB(datasetMinPIB);
+  }
+
+  function handleDataPIB_Percapta(PIB_Percapta) {
+    /* ----------------------- INICIO -----------------------  */
+    const setdatasetPIB_Percapta = PIB_Percapta.map((item) => {
+      var colors = randomColor({
+        count: item.municipios.length + 1,
+        luminosity: "light",
+        hue: "random",
+      });
+      var borderColors = randomColor({
+        count: item.municipios.length + 1,
+        luminosity: "bright",
+        hue: "random",
+      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades +1(estado)
+
+      const dataset = item.municipios.map((value, index) => {
+        return {
+          label: value.municipio,
+          data: [value.PIB_percapita],
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 3,
+        };
+      });
+      return dataset;
+    });
+
+    const datasetPIB_Percapta = {
+      labels: [""],
+      datasets: setdatasetPIB_Percapta[0],
+    };
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setPIB_Percapta(datasetPIB_Percapta);
+  }
+  function handleDataMaxPIB_Percapta(MaxPIB_Percapta) {
+    /* ----------------------- INICIO -----------------------  */
+    const setdatasetMaxPIB_Percapta = MaxPIB_Percapta.map((item) => {
+      var colors = randomColor({
+        count: item.municipios.length,
+        luminosity: "light",
+        hue: "random",
+      });
+      var borderColors = randomColor({
+        count: item.municipios.length,
+        luminosity: "bright",
+        hue: "random",
+      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
+
+      const dataset = item.municipios.map((value, index) => {
+        return {
+          label: value.municipio,
+          data: [value.max_PIB_percapita],
+          backgroundColor: [colors[index], 0.5],
+          borderColor: [borderColors[index]],
+          borderWidth: 3,
+        };
+      });
+      return dataset;
+    });
+
+    const datasetMaxPIB_Percapta = {
+      labels: [""],
+      datasets: setdatasetMaxPIB_Percapta[0],
+    };
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setMaxPIB_Percapta(datasetMaxPIB_Percapta);
+  }
+
+  function handleDataMinPIB_Percapta(MinPIB_Percapta) {
+    /* ----------------------- INICIO -----------------------  */
+    const setdatasetMinPIB_Percapta = MinPIB_Percapta.map((item) => {
+      var colors = randomColor({
+        count: item.municipios.length,
+        luminosity: "light",
+        hue: "random",
+      });
+      var borderColors = randomColor({
+        count: item.municipios.length,
+        luminosity: "bright",
+        hue: "random",
+      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
+
+      const dataset = item.municipios.map((value, index) => {
+        return {
+          label: value.municipio,
+          data: [value.min_PIB_percapita],
+          backgroundColor: [colors[index], 0.5],
+          borderColor: [borderColors[index]],
+          borderWidth: 3,
+        };
+      });
+      return dataset;
+    });
+
+    const datasetMinPIB_Percapta = {
+      labels: [""],
+      datasets: setdatasetMinPIB_Percapta[0],
+    };
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setMinPIB_Percapta(datasetMinPIB_Percapta);
+  }
 
   return {
     filtrarDados,
     loading,
     filtroAplicado,
     PIB,
-    PIB_percapita,
+    MaxPIB,
+    MinPIB,
+    PIB_Percapta,
+    MaxPIB_Percapta,
+    MinPIB_Percapta,
   };
   // dados e funções que são utilizados em
   // outros componentes e paginas por exemplo

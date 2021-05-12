@@ -70,19 +70,23 @@ export default function RendaFilter() {
               alignItems: "center",
             }}
           >
-            <span className="subtitle"> Filtros </span>
+            <span className="subtitle">
+              <b> Filtros </b>
+            </span>
             <span onClick={() => limparDados()} className="limpar-font">
               Limpar
             </span>
           </Col>
         </Row>
-        <label htmlFor="cidades">Cidades do Estado</label>
+        <label htmlFor="cidades">
+          <b>Estado de São Paulo</b>
+        </label>
 
         <Row>
           <Col className="d-flex">
             <Form style={{ width: "100%", marginTop: "-0.5px" }}>
               <FormGroup>
-                <label htmlFor="cidades">Cidades</label>
+                <label htmlFor="cidades">Cidades:</label>
                 <select
                   name="cidades"
                   className="form-control mt-2"

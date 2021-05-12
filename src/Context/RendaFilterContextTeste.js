@@ -5,8 +5,17 @@ import useFilter from "./hooks/useRendaFilterTeste";
 const Context = createContext();
 
 function FilterProvider({ children }) {
-  const { loading, filtrarDados, filtroAplicado, PIB, PIB_percapita } =
-    useFilter();
+  const {
+    loading,
+    filtrarDados,
+    filtroAplicado,
+    PIB,
+    MaxPIB,
+    MinPIB,
+    PIB_Percapta,
+    MaxPIB_Percapta,
+    MinPIB_Percapta,
+  } = useFilter();
 
   return (
     <Context.Provider
@@ -15,7 +24,11 @@ function FilterProvider({ children }) {
         filtrarDados,
         filtroAplicado,
         PIB,
-        PIB_percapita,
+        MaxPIB,
+        MinPIB,
+        PIB_Percapta,
+        MaxPIB_Percapta,
+        MinPIB_Percapta,
       }}
     >
       {children}

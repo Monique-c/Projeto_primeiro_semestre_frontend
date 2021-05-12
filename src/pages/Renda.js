@@ -20,7 +20,16 @@ import InfoFilter from "components/Cards/infoFilter";
 
 export default function Renda() {
   const container = useRef(null);
-  const { loading, filtroAplicado, PIB, PIB_percapita } = useContext(Context);
+  const {
+    loading,
+    filtroAplicado,
+    PIB,
+    MaxPIB,
+    MinPIB,
+    PIB_Percapta,
+    MaxPIB_Percapta,
+    MinPIB_Percapta,
+  } = useContext(Context);
 
   // const [cidades, setCidades] = useState([
   //   "Osasco",
@@ -92,9 +101,33 @@ export default function Renda() {
         </div>
         <div>
           <h5>
-            <b>PIB_percapita </b>
+            <b> Maiores PIBs</b>
           </h5>
-          {/* <Bar data={PIB_percapita} /> */}
+          <Bar data={MaxPIB} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores PIBs</b>
+          </h5>
+          <Bar data={MinPIB} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> PIB Percapita</b>
+          </h5>
+          <Bar data={PIB_Percapta} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores PIBs Percapita</b>
+          </h5>
+          <Bar data={MaxPIB_Percapta} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores PIBs Percapita</b>
+          </h5>
+          <Bar data={MinPIB_Percapta} options={options} />
         </div>
       </div>
     );
