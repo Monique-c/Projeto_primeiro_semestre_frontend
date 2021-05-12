@@ -24,14 +24,13 @@ export default function Abstencao() {
     loading,
     filtroAplicado,
     faixaEtariaPorAbstencao,
-    faixaEtariaPorComparecimento,
     faixaEtariaPorComparecimentoComparativo,
     estadoCivilPorAbstencao,
-    estadoCivilPorComparecimento,
     estadoCivilPorComparecimentoComparativo,
     escolaridadeDeclaradaPorAbstencao,
-    escolaridadeDeclaradaPorComparecimento,
     escolaridadeDeclaradaPorComparecimentoComparativo,
+    totalAbstencao,
+    totalComparecimento,
   } = useContext(Context);
 
   const [dados, setDados] = useState({});
@@ -65,76 +64,68 @@ export default function Abstencao() {
   const Chart = () => {
     return (
       <div>
-        {faixaEtariaPorComparecimento.map((item) => (
-          <div>
-            <h5>
-              <b>Comparecimento </b>
-              por faixa etária
-            </h5>
-            <HorizontalBar data={item} options={options} />
-          </div>
-        ))}
-
         <div>
           <h5>
             <b>Comparecimento </b>
-            por faixa etária
+            Por Faixa Etária
           </h5>
           <Bar data={faixaEtariaPorComparecimentoComparativo} />
         </div>
-        <div>
-          <h5>
-            <b>Abstenção </b>
-            por faixa etária
-          </h5>
-          <Bar data={faixaEtariaPorAbstencao} />
-        </div>
-        {/*estadoCivilPorComparecimento.map((item) => (
-          <div>
-            <h5>
-              <b>Comparecimento </b>
-              por Estado civil
-            </h5>
-            <HorizontalBar data={item} options={options} />
-        </div>))}*/}
-        <div>
-          <h5>
-            <b>Comparecimento </b>
-            por Estado civil
-          </h5>
-          <Bar data={estadoCivilPorComparecimentoComparativo} />
-        </div>
-        <div>
-          <h5>
-            <b>Abstenção </b>
-            por Estado civil
-          </h5>
-          <Bar data={estadoCivilPorAbstencao} />
-        </div>
-        {/*
-        {escolaridadeDeclaradaPorComparecimento.map((item) => (
-          <div>
-            <h5>
-              <b>Comparecimento </b>
-              por Escolaridade Declarada
-            </h5>
-            <HorizontalBar data={item} options={options} />
-          </div>
-        ))} */}
 
         <div>
           <h5>
             <b>Comparecimento </b>
-            por Escolaridade Declarada
+            Por Estado Civil
+          </h5>
+          <Bar data={estadoCivilPorComparecimentoComparativo} />
+        </div>
+
+        <div>
+          <h5>
+            <b>Comparecimento </b>
+            Por Escolaridade Declarada
           </h5>
           <Bar data={escolaridadeDeclaradaPorComparecimentoComparativo} />
         </div>
+
+        <div>
+          <h5>
+            <b> Comparecimento </b>
+                  Total
+          </h5>
+          <Bar data={totalComparecimento} />
+        </div>
+
         <div>
           <h5>
             <b>Abstenção </b>
-            por Escolaridade Declarada
+            Por Faixa Etária
+          </h5>
+          <Bar data={faixaEtariaPorAbstencao} />
+        </div>
+
+        <div>
+          <h5>
+            <b>Abstenção </b>
+            Por Estado Civil
+          </h5>
+          <Bar data={estadoCivilPorAbstencao} />
+        </div>
+
+        <div>
+          <h5>
+            <b>Abstenção </b>
+            Por Escolaridade Declarada
           </h5>
           <Bar data={escolaridadeDeclaradaPorAbstencao} />
+        </div>
+
+        <div>
+          <h5>
+            <b> Abstenção </b>
+                  Total
+          </h5>
+          <Bar data={totalAbstencao} />
         </div>
       </div>
     );

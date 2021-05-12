@@ -10,14 +10,13 @@ function FilterProvider({ children }) {
     filtroAplicado,
     filtrarDados,
     faixaEtariaPorAbstencao,
-    faixaEtariaPorComparecimento,
     faixaEtariaPorComparecimentoComparativo,
     estadoCivilPorAbstencao,
-    estadoCivilPorComparecimento,
     estadoCivilPorComparecimentoComparativo,
     escolaridadeDeclaradaPorAbstencao,
-    escolaridadeDeclaradaPorComparecimento,
     escolaridadeDeclaradaPorComparecimentoComparativo,
+    totalAbstencao,
+    totalComparecimento,
   } = useFilter();
 
   return (
@@ -27,14 +26,13 @@ function FilterProvider({ children }) {
         filtroAplicado,
         loading,
         faixaEtariaPorAbstencao,
-        faixaEtariaPorComparecimento,
         faixaEtariaPorComparecimentoComparativo,
         estadoCivilPorAbstencao,
-        estadoCivilPorComparecimento,
         estadoCivilPorComparecimentoComparativo,
         escolaridadeDeclaradaPorAbstencao,
-        escolaridadeDeclaradaPorComparecimento,
         escolaridadeDeclaradaPorComparecimentoComparativo,
+        totalAbstencao,
+        totalComparecimento,
       }}
     >
       {children}
