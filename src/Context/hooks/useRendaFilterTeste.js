@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import api from "../../services/api";
 import renda from "../../controllers/renda_json";
+import { isJSDocPrivateTag } from "typescript";
 
 var randomColor = require("randomcolor");
 
@@ -60,12 +61,11 @@ export default function useFilter() {
           return value;
         }
       );
+      let global = municipios.concat(estado);
       return {
-        estado,
-        municipios,
+        global,
       };
     });
-    console.log(handlePIB); // ---------------------------
 
     const handleMaxPIB = data.map((item) => {
       const municipios = item.max_PIB.map((pibMax) => {
@@ -73,6 +73,7 @@ export default function useFilter() {
           max_PIB: pibMax.max_PIB,
           municipio: pibMax.municipio,
         };
+        console.log(municipios);
         return value;
       });
       return {
@@ -119,9 +120,10 @@ export default function useFilter() {
           return value;
         }
       );
+      let global = municipios.concat(estado);
+
       return {
-        estado,
-        municipios,
+        global,
       };
     });
 
@@ -184,26 +186,30 @@ export default function useFilter() {
     /* ----------------------- INICIO -----------------------  */
     const setdatasetPIB = PIB.map((item) => {
       var colors = randomColor({
-        count: item.municipios.length + 1,
-        luminosity: "light",
-        hue: "random",
-        a: 0.8,
-      });
-      var borderColors = randomColor({
-        count: item.municipios.length + 1,
+        count: item.global.length,
         luminosity: "bright",
         hue: "random",
-      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades +1(estado)
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: item.global.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
 
-      const dataset = item.municipios.map((value, index) => {
+      const dataset = item.global.map((value, index) => {
         return {
           label: value.municipio,
           data: [value.PIB],
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
-          borderWidth: 3,
+          borderWidth: 2,
         };
       });
+      console.log(dataset);
       return dataset;
     });
 
@@ -220,22 +226,26 @@ export default function useFilter() {
     const setdatasetMaxPIB = MaxPIB.map((item) => {
       var colors = randomColor({
         count: item.municipios.length,
-        luminosity: "light",
-        hue: "random",
-      });
-      var borderColors = randomColor({
-        count: item.municipios.length,
         luminosity: "bright",
         hue: "random",
-      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: item.municipios.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
 
       const dataset = item.municipios.map((value, index) => {
         return {
           label: value.municipio,
           data: [value.max_PIB],
-          backgroundColor: [colors[index], 0.5],
+          backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
-          borderWidth: 3,
+          borderWidth: 2,
         };
       });
       return dataset;
@@ -254,14 +264,18 @@ export default function useFilter() {
     const setdatasetMinPIB = MinPIB.map((item) => {
       var colors = randomColor({
         count: item.municipios.length,
-        luminosity: "light",
-        hue: "random",
-      });
-      var borderColors = randomColor({
-        count: item.municipios.length,
         luminosity: "bright",
         hue: "random",
-      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: item.municipios.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
 
       const dataset = item.municipios.map((value, index) => {
         return {
@@ -269,7 +283,7 @@ export default function useFilter() {
           data: [value.min_PIB],
           backgroundColor: [colors[index], 0.5],
           borderColor: [borderColors[index]],
-          borderWidth: 3,
+          borderWidth: 2,
         };
       });
       return dataset;
@@ -287,23 +301,27 @@ export default function useFilter() {
     /* ----------------------- INICIO -----------------------  */
     const setdatasetPIB_Percapta = PIB_Percapta.map((item) => {
       var colors = randomColor({
-        count: item.municipios.length + 1,
-        luminosity: "light",
-        hue: "random",
-      });
-      var borderColors = randomColor({
-        count: item.municipios.length + 1,
+        count: item.global.length,
         luminosity: "bright",
         hue: "random",
-      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades +1(estado)
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: item.global.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
 
-      const dataset = item.municipios.map((value, index) => {
+      const dataset = item.global.map((value, index) => {
         return {
           label: value.municipio,
           data: [value.PIB_percapita],
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
-          borderWidth: 3,
+          borderWidth: 2,
         };
       });
       return dataset;
@@ -321,14 +339,18 @@ export default function useFilter() {
     const setdatasetMaxPIB_Percapta = MaxPIB_Percapta.map((item) => {
       var colors = randomColor({
         count: item.municipios.length,
-        luminosity: "light",
-        hue: "random",
-      });
-      var borderColors = randomColor({
-        count: item.municipios.length,
         luminosity: "bright",
         hue: "random",
-      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: item.municipios.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
 
       const dataset = item.municipios.map((value, index) => {
         return {
@@ -336,7 +358,7 @@ export default function useFilter() {
           data: [value.max_PIB_percapita],
           backgroundColor: [colors[index], 0.5],
           borderColor: [borderColors[index]],
-          borderWidth: 3,
+          borderWidth: 2,
         };
       });
       return dataset;
@@ -355,14 +377,18 @@ export default function useFilter() {
     const setdatasetMinPIB_Percapta = MinPIB_Percapta.map((item) => {
       var colors = randomColor({
         count: item.municipios.length,
-        luminosity: "light",
-        hue: "random",
-      });
-      var borderColors = randomColor({
-        count: item.municipios.length,
         luminosity: "bright",
         hue: "random",
-      }); // gerando cores aleatóriamente de acordo com a quantidade de cidades
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: item.municipios.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
 
       const dataset = item.municipios.map((value, index) => {
         return {
@@ -370,7 +396,7 @@ export default function useFilter() {
           data: [value.min_PIB_percapita],
           backgroundColor: [colors[index], 0.5],
           borderColor: [borderColors[index]],
-          borderWidth: 3,
+          borderWidth: 2,
         };
       });
       return dataset;

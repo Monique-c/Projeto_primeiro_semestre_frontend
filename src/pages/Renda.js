@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 
-import { Bar, HorizontalBar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
 import { Context } from "../Context/RendaFilterContextTeste";
 
@@ -31,40 +31,7 @@ export default function Renda() {
     MinPIB_Percapta,
   } = useContext(Context);
 
-  // const [cidades, setCidades] = useState([
-  //   "Osasco",
-  //   "Bauru",
-  //   "Poa",
-  //   "Jaú",
-  //   "Jacarei",
-  // ]);
-
-  // const data = {
-  //   labels: [cidades[0], cidades[1], cidades[2], cidades[3], cidades[4]],
-  //   datasets: [
-  //     {
-  //       label: "PIB das Cidades",
-  //       data: { PIB },
-  //       backgroundColor: [
-  //         "rgba(255, 80, 132, 0.2)",
-  //         "rgba(54, 162, 235, 0.2)",
-  //         "rgba(255, 206, 86, 0.2)",
-  //         "rgba(75, 192, 192, 0.2)",
-  //         "rgba(153, 102, 255, 0.2)",
-  //         "rgba(255, 159, 64, 0.2)",
-  //       ],
-  //       borderColor: [
-  //         "rgba(255, 80, 132, 1)",
-  //         "rgba(54, 162, 235, 1)",
-  //         "rgba(255, 206, 86, 1)",
-  //         "rgba(75, 192, 192, 1)",
-  //         "rgba(153, 102, 255, 1)",
-  //         "rgba(255, 159, 64, 1)",
-  //       ],
-  //       borderWidth: 1,
-  //     },
-  //   ],
-  // };
+  const [DadosRelevantesButton, setDadosRelevantesButton] = useState(false);
 
   const options = {
     scales: {
@@ -101,6 +68,18 @@ export default function Renda() {
         </div>
         <div>
           <h5>
+            <b> PIB Percapita</b>
+          </h5>
+          <Bar data={PIB_Percapta} options={options} />
+        </div>
+      </div>
+    );
+  };
+  const ChartRelevantes = () => {
+    return (
+      <div>
+        <div>
+          <h5>
             <b> Maiores PIBs</b>
           </h5>
           <Bar data={MaxPIB} options={options} />
@@ -110,12 +89,6 @@ export default function Renda() {
             <b> Menores PIBs</b>
           </h5>
           <Bar data={MinPIB} options={options} />
-        </div>
-        <div>
-          <h5>
-            <b> PIB Percapita</b>
-          </h5>
-          <Bar data={PIB_Percapta} options={options} />
         </div>
         <div>
           <h5>
@@ -149,7 +122,7 @@ export default function Renda() {
           {loading ? (
             <Col>
               <Row
-                style={{ height: "30%", marginTop: "-4%" }}
+                style={{ height: "150px", marginTop: "-4%" }}
                 className="d-flex align-items-center mr-5"
               >
                 <div className="loading_lottie" ref={container} />
@@ -159,7 +132,38 @@ export default function Renda() {
             <>
               {filtroAplicado ? (
                 <Col>
-                  <Chart />
+                  <Chart className="charts" />
+                  {!DadosRelevantesButton ? (
+                    <Row className="d-flex justify-content-end mr-3">
+                      <Button
+                        onClick={() =>
+                          setDadosRelevantesButton(!DadosRelevantesButton)
+                        }
+                        style={{
+                          backgroundColor: "#214bb5",
+                        }}
+                      >
+                        Mostrar Dados Relevantes
+                      </Button>
+                    </Row>
+                  ) : (
+                    <div>
+                      <Row className="d-flex justify-content-end mr-3">
+                        <Button
+                          onClick={() =>
+                            setDadosRelevantesButton(!DadosRelevantesButton)
+                          }
+                          style={{
+                            backgroundColor: "#214bb5",
+                          }}
+                        >
+                          Esconder Dados Relevantes
+                        </Button>
+                      </Row>
+                      <h3 className="renda-title">Dados Relevantes</h3>
+                      <ChartRelevantes className="charts" />
+                    </div>
+                  )}
                 </Col>
               ) : (
                 <Col>
