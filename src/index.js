@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import { FilterProvider as FPAbs } from "./Context/AbstencaoFilterContext";
-import { FilterProvider as FPRenda } from "./Context/RendaFilterContextTeste";
+import { RendaProvider } from "./Context/RendaFilterContext";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
@@ -29,21 +28,14 @@ ReactDOM.render(
           render={(props) => <Eleitorado {...props} />}
         />
 
-        <Route
-          path="/abstencao"
-          render={(props) => (
-            <FPAbs>
-              <Abstencao {...props} />
-            </FPAbs>
-          )}
-        />
+        <Route path="/abstencao" render={(props) => <Abstencao {...props} />} />
 
         <Route
           path="/renda"
           render={(props) => (
-            <FPRenda>
+            <RendaProvider>
               <Renda {...props} />
-            </FPRenda>
+            </RendaProvider>
           )}
         />
 

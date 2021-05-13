@@ -4,7 +4,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 
 import { Bar } from "react-chartjs-2";
 
-import { Context } from "../Context/RendaFilterContextTeste";
+import { Context } from "../Context/RendaFilterContext";
 
 import lottie from "lottie-web";
 import loading_lottie from "../assets/lottieJSONs/loading_lottie.json";
@@ -131,7 +131,7 @@ export default function Renda() {
           ) : (
             <>
               {filtroAplicado ? (
-                <Col>
+                <Col lg="8">
                   <Chart className="charts" />
                   {!DadosRelevantesButton ? (
                     <Row className="d-flex justify-content-end mr-3">

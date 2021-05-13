@@ -1,10 +1,10 @@
 import React, { createContext } from "react";
 
-import useFilter from "./hooks/useRendaFilterTeste";
+import useFilter from "./hooks/useRendaFilter";
 
 const Context = createContext();
 
-function FilterProvider({ children }) {
+function RendaProvider({ children }) {
   const {
     loading,
     filtrarDados,
@@ -36,4 +36,4 @@ function FilterProvider({ children }) {
   );
 }
 
-export { Context, FilterProvider };
+export { Context, RendaProvider };

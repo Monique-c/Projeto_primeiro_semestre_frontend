@@ -17,7 +17,7 @@ import {
 import "../../assets/styles/renda.css";
 
 import ibge from "../../services/api_ibge";
-import { Context } from "../../Context/RendaFilterContextTeste";
+import { Context } from "../../Context/RendaFilterContext";
 
 export default function RendaFilter() {
   const [cidade, setCidade] = useState("");

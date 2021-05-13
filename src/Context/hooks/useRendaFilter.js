@@ -73,7 +73,6 @@ export default function useFilter() {
           max_PIB: pibMax.max_PIB,
           municipio: pibMax.municipio,
         };
-        console.log(municipios);
         return value;
       });
       return {
@@ -209,7 +208,6 @@ export default function useFilter() {
           borderWidth: 2,
         };
       });
-      console.log(dataset);
       return dataset;
     });
 
