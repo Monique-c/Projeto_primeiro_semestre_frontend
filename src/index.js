@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { FilterProvider } from "./Context/AbstencaoFilterContext";
-import { FilterProviderRelevante } from "./Context/GráficosRelevantesFilterContext";
+import { EleitoradoProvider} from "./Context/EleitoradoFilterContext";
+import { RendaProvider } from "./Context/RendaFilterContext";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
@@ -26,19 +27,28 @@ ReactDOM.render(
 
         <Route
           path="/eleitorado"
-          render={(props) => <Eleitorado {...props} />}
-        />
-
-        <Route
-          path="/abstencao"
           render={(props) => (
-            <FilterProvider>
-              <Abstencao {...props} />
-            </FilterProvider>
+            <EleitoradoProvider>
+             <Eleitorado {...props} />
+            </EleitoradoProvider>
           )}
         />
 
-        <Route path="/renda" render={(props) => <Renda {...props} />} />
+        <Route path="/abstencao" render={(props) => (
+          <FilterProvider>
+            <Abstencao {...props} />
+          </FilterProvider>
+          )}
+        />
+
+        <Route
+          path="/renda"
+          render={(props) => (
+            <RendaProvider>
+              <Renda {...props} />
+            </RendaProvider>
+          )}
+        />
 
         <Route
           path="/relevantes"

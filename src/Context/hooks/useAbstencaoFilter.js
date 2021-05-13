@@ -333,7 +333,13 @@ export default function useFilter() {
       ),
     };
 
-    setFaixaEtariaPorComparecimentoComparativo(datasetComparecimentoPorFaixaEtariaComparativo);
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setFaixaEtariaPorComparecimento(
+      setDatasetComparecimentoPorFaixaEtariaMunicipios
+    );
+    setFaixaEtariaPorComparecimentoComparativo (
+      datasetComparecimentoPorFaixaEtariaComparativo
+    );
     /*    ----------------------- FIM Faixa etária -----------------------  */
 
     // Adicione aqui a modelagem das outras categorias (estado civil por exemplo)
