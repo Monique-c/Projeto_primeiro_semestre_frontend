@@ -73,7 +73,6 @@ export default function useFilter() {
           max_PIB: pibMax.max_PIB,
           municipio: pibMax.municipio,
         };
-        console.log(municipios);
         return value;
       });
       return {
