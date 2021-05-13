@@ -192,7 +192,7 @@ export default function useFilter() {
     setFaixaEtariaPorComparecimento(
       setDatasetComparecimentoPorFaixaEtariaMunicipios
     );
-    setFaixaEtariaPorComparecimentoComparativo(
+    setFaixaEtariaPorComparecimentoComparativo (
       datasetComparecimentoPorFaixaEtariaComparativo
     );
     /*    ----------------------- FIM Faixa etária -----------------------  */

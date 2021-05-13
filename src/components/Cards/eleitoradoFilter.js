@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   Button,
@@ -14,12 +14,14 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 
-import api from "../../services/api";
+import { Context2 } from "../../Context/EleitoradoFilterContext";
+
+//import api from "../../services/api";
 import ibge from "../../services/api_ibge";
 
 import "../../assets/styles/eleitorado.css";
 
-export default function EleitoradoFilter(callback) {
+export default function EleitoradoFilter() {
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
   const [representanteEleito, setRepresentanteEleito] = useState(false);
 
@@ -36,6 +38,8 @@ export default function EleitoradoFilter(callback) {
   const [deficiencia, setDeficiencia] = useState(false);
   const [nomeSocial, setNomeSocial] = useState(true);
 
+  const { filtrarDados } = useContext(Context2);
+
   useEffect(() => {
     (async () => {
       const { data } = await ibge.get();
@@ -44,27 +48,6 @@ export default function EleitoradoFilter(callback) {
       setCidades(nomeCidades);
     })();
   }, []);
-
-  async function filtrarDados() {
-    // alert(`cidade: ${cidade}\n cidadeComparada: ${cidadeComparada}`)
-
-    const data = {
-      municipios: [
-        "SÃO PAULO",
-        "SÃO JOSÉ DOS CAMPOS",
-        "CARAPICUIBA",
-        "BARUERI",
-      ],
-      colunas: [
-        "QT_ELEITORES_PERFIL",
-        "QT_ELEITORES_INC_NM_SOCIAL",
-        "QT_ELEITORES_DEFICIENCIA",
-      ],
-    };
-    const response = await api.post("pesquisas-eleitorado", data);
-
-    console.log(response.data);
-  }
 
   async function limparDados() {
     setCidade("");
@@ -257,7 +240,7 @@ export default function EleitoradoFilter(callback) {
 
               <div className="d-flex justify-content-end">
                 <Button
-                  onClick={() => filtrarDados()}
+                  onClick={(filtrarDados)}
                   style={{
                     backgroundColor: "#214bb5",
                   }}
