@@ -1,107 +1,180 @@
-import React, { useState,useRef,useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 
-// reactstrap components
-import {
-  Button,
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  CardText,
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
+
+import { Bar } from "react-chartjs-2";
+
+import { Context } from "../Context/RendaFilterContext";
 
 import lottie from "lottie-web";
 import loading_lottie from "../assets/lottieJSONs/loading_lottie.json";
 
-import "../assets/styles/homepage.css"
-import "../assets/styles/renda.css"
-
-import SemFiltro from "assets/img/Icons/semFiltro.svg";
+import "../assets/styles/homepage.css";
+import "../assets/styles/renda.css";
 
 // core components
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footers/Footer.js";
 import RendaFilter from "components/Cards/rendaFilter";
+import InfoFilter from "components/Cards/infoFilter";
 
-
-function Renda() {
-  const [filtroAplicado, setFiltroAplicado] = useState(false);
-
-  const [load, setLoad] = useState(false);
+export default function Renda() {
   const container = useRef(null);
+  const {
+    loading,
+    filtroAplicado,
+    PIB,
+    MaxPIB,
+    MinPIB,
+    PIB_Percapta,
+    MaxPIB_Percapta,
+    MinPIB_Percapta,
+  } = useContext(Context);
+
+  const [DadosRelevantesButton, setDadosRelevantesButton] = useState(false);
+
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  };
 
   useEffect(() => {
-    if (load === true) {
+    if (loading) {
       lottie.loadAnimation({
         container: container.current,
         renderer: "svg",
         loop: true,
         autoplay: true,
-        animationData: loading_lottie
-      })
+        animationData: loading_lottie,
+      });
     }
-  }, [load]);
+  }, [loading]);
+
+  const Chart = () => {
+    return (
+      <div>
+        <div>
+          <h5>
+            <b>PIB</b>
+          </h5>
+          <Bar data={PIB} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> PIB Percapita</b>
+          </h5>
+          <Bar data={PIB_Percapta} options={options} />
+        </div>
+      </div>
+    );
+  };
+  const ChartRelevantes = () => {
+    return (
+      <div>
+        <div>
+          <h5>
+            <b> Maiores PIBs</b>
+          </h5>
+          <Bar data={MaxPIB} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores PIBs</b>
+          </h5>
+          <Bar data={MinPIB} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores PIBs Percapita</b>
+          </h5>
+          <Bar data={MaxPIB_Percapta} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores PIBs Percapita</b>
+          </h5>
+          <Bar data={MinPIB_Percapta} options={options} />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
       <Navbar />
       <Container style={{ minHeight: "82vh" }} fluid>
-
-        <div className='text-center my-5'>
-          <span className='renda-title'>Renda</span>
+        <div className="text-center my-5">
+          <span className="renda-title">Renda</span>
         </div>
 
         <Row>
-          <Col lg="3">
-            <RendaFilter/>
+          <Col lg="4">
+            <RendaFilter />
           </Col>
 
-          {load ?
-            (<>
-              <Col>
-                <Row
-                  style={{ height: "50%", marginTop: "-4%" }}
-                  className='d-flex align-items-center mr-5'
-                >
-                  <div className="loading_lottie" ref={container} />
-                </Row>
-              </Col>
-            </>
-            ) : (
-              <>
-                {/* -----------------------------------------------*/}
-                {filtroAplicado ?
-                  (<>
-                    <span>filtro aplicado :)</span>
-                  </>)
-                  :
-                  (<>
-                    <Col>
-                      <Row
-                        style={{ height: "50%", marginLeft: "15%" }}
-                        className='mt-5 d-flex align-items-center mr-5'
+          {loading ? (
+            <Col>
+              <Row
+                style={{ height: "150px", marginTop: "-4%" }}
+                className="d-flex align-items-center mr-5"
+              >
+                <div className="loading_lottie" ref={container} />
+              </Row>
+            </Col>
+          ) : (
+            <>
+              {filtroAplicado ? (
+                <Col lg="8">
+                  <Chart className="charts" />
+                  {!DadosRelevantesButton ? (
+                    <Row className="d-flex justify-content-end mr-3">
+                      <Button
+                        onClick={() =>
+                          setDadosRelevantesButton(!DadosRelevantesButton)
+                        }
+                        style={{
+                          backgroundColor: "#214bb5",
+                        }}
                       >
-                        <img src={SemFiltro} width='230px' height='230px' alt="Realize um filtro"/>
-                        <span id='mensagem-sem-filtro'>
-                          Realize um filtro <br />
-                          no lado esquerdo <br />
-                          para iniciar sua busca.
-                        </span>
+                        Mostrar Dados Relevantes
+                      </Button>
+                    </Row>
+                  ) : (
+                    <div>
+                      <Row className="d-flex justify-content-end mr-3">
+                        <Button
+                          onClick={() =>
+                            setDadosRelevantesButton(!DadosRelevantesButton)
+                          }
+                          style={{
+                            backgroundColor: "#214bb5",
+                          }}
+                        >
+                          Esconder Dados Relevantes
+                        </Button>
                       </Row>
-                    </Col>
-                  </>)
-                }
-                {/*    ----------------------------------------------  */}
-              </>
-            )}
+                      <h3 className="renda-title">Dados Relevantes</h3>
+                      <ChartRelevantes className="charts" />
+                    </div>
+                  )}
+                </Col>
+              ) : (
+                <Col>
+                  <InfoFilter />
+                </Col>
+              )}
+            </>
+          )}
         </Row>
       </Container>
       <Footer />
     </>
   );
 }
-
-export default Renda;

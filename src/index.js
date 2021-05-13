@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { FilterProvider } from "./Context/AbstencaoFilterContext";
 import { EleitoradoProvider} from "./Context/EleitoradoFilterContext";
+import { RendaProvider } from "./Context/RendaFilterContext";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
@@ -33,16 +34,16 @@ ReactDOM.render(
           )}
         />
 
+        <Route path="/abstencao" render={(props) => <Abstencao {...props} />} />
+
         <Route
-          path="/abstencao"
+          path="/renda"
           render={(props) => (
-            <FilterProvider>
-              <Abstencao {...props} />
-            </FilterProvider>
+            <RendaProvider>
+              <Renda {...props} />
+            </RendaProvider>
           )}
         />
-
-        <Route path="/renda" render={(props) => <Renda {...props} />} />
 
         <Route
           path="/relevantes"
