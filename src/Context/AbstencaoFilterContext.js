@@ -4,14 +4,19 @@ import useFilter from "./hooks/useAbstencaoFilter";
 
 const Context = createContext();
 
-function FilterProvider({ children }) {
+function AbstencaoProvider({ children }) {
   const {
     loading,
     filtroAplicado,
     filtrarDados,
     faixaEtariaPorAbstencao,
-    faixaEtariaPorComparecimento,
     faixaEtariaPorComparecimentoComparativo,
+    estadoCivilPorAbstencao,
+    estadoCivilPorComparecimentoComparativo,
+    escolaridadeDeclaradaPorAbstencao,
+    escolaridadeDeclaradaPorComparecimentoComparativo,
+    totalAbstencao,
+    totalComparecimento,
   } = useFilter();
 
   return (
@@ -21,8 +26,13 @@ function FilterProvider({ children }) {
         filtroAplicado,
         loading,
         faixaEtariaPorAbstencao,
-        faixaEtariaPorComparecimento,
         faixaEtariaPorComparecimentoComparativo,
+        estadoCivilPorAbstencao,
+        estadoCivilPorComparecimentoComparativo,
+        escolaridadeDeclaradaPorAbstencao,
+        escolaridadeDeclaradaPorComparecimentoComparativo,
+        totalAbstencao,
+        totalComparecimento,
       }}
     >
       {children}
@@ -30,4 +40,4 @@ function FilterProvider({ children }) {
   );
 }
 
-export { Context, FilterProvider };
+export { Context, AbstencaoProvider };

@@ -24,8 +24,13 @@ export default function Abstencao() {
     loading,
     filtroAplicado,
     faixaEtariaPorAbstencao,
-    faixaEtariaPorComparecimento,
     faixaEtariaPorComparecimentoComparativo,
+    estadoCivilPorAbstencao,
+    estadoCivilPorComparecimentoComparativo,
+    escolaridadeDeclaradaPorAbstencao,
+    escolaridadeDeclaradaPorComparecimentoComparativo,
+    totalAbstencao,
+    totalComparecimento,
   } = useContext(Context);
 
   const [dados, setDados] = useState({});
@@ -59,31 +64,68 @@ export default function Abstencao() {
   const Chart = () => {
     return (
       <div>
-        {/*
-        deixei comentado para mostrar uma abordagem para o time ou Gabriel
-        {faixaEtariaPorComparecimento.map((item) => (
-          <div>
-            <h5>
-              <b>Comparecimento </b>
-              por faixa etária
-            </h5>
-            <HorizontalBar data={item} options={options} />
-          </div>
-        ))} */}
+        <div>
+          <h5>
+            <b>Comparecimento </b>
+            Por Faixa Etária
+          </h5>
+          <Bar data={faixaEtariaPorComparecimentoComparativo} />
+        </div>
 
         <div>
           <h5>
             <b>Comparecimento </b>
-            por faixa etária
+            Por Estado Civil
           </h5>
-          <Bar data={faixaEtariaPorComparecimentoComparativo} />
+          <Bar data={estadoCivilPorComparecimentoComparativo} />
         </div>
+
+        <div>
+          <h5>
+            <b>Comparecimento </b>
+            Por Escolaridade Declarada
+          </h5>
+          <Bar data={escolaridadeDeclaradaPorComparecimentoComparativo} />
+        </div>
+
+        <div>
+          <h5>
+            <b> Comparecimento </b>
+                  Total
+          </h5>
+          <Bar data={totalComparecimento} />
+        </div>
+
         <div>
           <h5>
             <b>Abstenção </b>
-            por faixa etária
+            Por Faixa Etária
           </h5>
           <Bar data={faixaEtariaPorAbstencao} />
+        </div>
+
+        <div>
+          <h5>
+            <b>Abstenção </b>
+            Por Estado Civil
+          </h5>
+          <Bar data={estadoCivilPorAbstencao} />
+        </div>
+
+        <div>
+          <h5>
+            <b>Abstenção </b>
+            Por Escolaridade Declarada
+          </h5>
+          <Bar data={escolaridadeDeclaradaPorAbstencao} />
+        </div>
+
+        <div>
+          <h5>
+            <b> Abstenção </b>
+                  Total
+          </h5>
+          <Bar data={totalAbstencao} />
         </div>
       </div>
     );
@@ -114,7 +156,7 @@ export default function Abstencao() {
           ) : (
             <>
               {filtroAplicado ? (
-                <Col>
+                <Col lg='7'>
                   <Chart />
                 </Col>
               ) : (
