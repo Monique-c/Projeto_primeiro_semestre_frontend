@@ -1,47 +1,31 @@
 import React from "react";
 // reactstrap components
-import {
+import { Navbar, Row } from "reactstrap";
 
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+import { Link } from "react-router-dom";
 
-import './../../assets/styles/navbar.css';
+import "./../../assets/styles/navbar.css";
 
 function Example() {
   return (
     <>
-      <Navbar style={{ height: '88px' }} className="bg-white navbar-container">
+      <Navbar style={{ height: "88px" }} className="bg-white navbar-container">
         <Row>
-          <a href="/">
+          <Link to="/">
             <span className="navbar-initialPage"> PÁGINA INICIAL</span>
-          </a>
+          </Link>
           &emsp; &emsp;
-
-          <a href="/eleitorado">
+          <Link to="/eleitorado">
             <span className="navbar-items"> ELEITORADO</span>
-          </a>
+          </Link>
           &emsp; &emsp;
-
-          <a href="/abstencao">
+          <Link to="/abstencao">
             <span className="navbar-items"> ABSTENÇÃO</span>
-          </a>
+          </Link>
           &emsp; &emsp;
-
-          <a href="/renda">
+          <Link to="/renda">
             <span className="navbar-items"> RENDA </span>
-          </a>
-          &emsp; &emsp;
-
-          <a href="/relevantes">
-            <span className="navbar-items"> GRÁFICOS RELEVANTES </span>
-          </a>
+          </Link>
         </Row>
       </Navbar>
     </>
