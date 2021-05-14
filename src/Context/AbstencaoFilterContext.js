@@ -4,7 +4,7 @@ import useFilter from "./hooks/useAbstencaoFilter";
 
 const Context = createContext();
 
-function FilterProvider({ children }) {
+function AbstencaoProvider({ children }) {
   const {
     loading,
     filtroAplicado,
@@ -40,4 +40,4 @@ function FilterProvider({ children }) {
   );
 }
 
-export { Context, FilterProvider };
+export { Context, AbstencaoProvider };
