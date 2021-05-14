@@ -12,6 +12,10 @@ import {
   DropdownToggle,
   DropdownMenu,
   UncontrolledDropdown,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  CustomInput,
 } from "reactstrap";
 
 import { Context2 } from "../../Context/EleitoradoFilterContext";
@@ -26,6 +30,7 @@ export default function EleitoradoFilter() {
   const [representanteEleito, setRepresentanteEleito] = useState(false);
 
   const [cidades, setCidades] = useState([]);
+  const [cidadesSelecionadas, setCidadesSelecionadas] = useState([]);
   const [cidade, setCidade] = useState("");
   const [cidadeComparada, setCidadeComparada] = useState("");
   const [cidadeSelecionada, setCidadeSelecionada] = useState("");
@@ -52,7 +57,7 @@ export default function EleitoradoFilter() {
   async function limparDados() {
     setCidade("");
     setCidadeComparada("");
-    setCidadeSelecionada("");
+    setCidadesSelecionadas([]);
     setOpcoes([]);
   }
 
@@ -65,6 +70,23 @@ export default function EleitoradoFilter() {
     let arrayPivot = opcoes;
     setOpcoes(arrayPivot.filter((item) => item !== opcao));
     alert(`RETIRADO\n\nopçoes: \n [ ${opcoes} ]`);
+  }
+
+  function adicionaCidadeSelecionada(nomeCidade) {
+    let duplicidade = false;
+    cidadesSelecionadas.forEach((nome) => {
+      if (nome === nomeCidade[0]) {
+        duplicidade = true;
+      }
+    });
+    if (!duplicidade) {
+      setCidadesSelecionadas([...cidadesSelecionadas, nomeCidade[0]]);
+    }
+  }
+
+  function removeCidades(nomeCidade) {
+    let arrayPivot = cidadesSelecionadas;
+    setCidadesSelecionadas(arrayPivot.filter((nome) => nome !== nomeCidade));
   }
 
   return (
@@ -203,44 +225,45 @@ export default function EleitoradoFilter() {
 
               {comparacaoAtiva ? (
                 <>
-                  <FormGroup className="mt-3">
-                    <label htmlFor="cidadeComparada">Comparar com</label>
-                    <select
-                      name="cidadeComparada"
-                      className="form-control mt-2"
-                      style={{
-                        width: "100%",
-                        borderRadius: "3%",
-                        color: "#32325d",
-                      }}
+                  <Row>
+                    {cidadesSelecionadas.map((nomeCidade, index) => (
+                      <InputGroup key={index} style={{ width: "50%" }}>
+                        <Input disabled type="text" value={nomeCidade}></Input>
+                        <InputGroupAddon addonType="append">
+                          <InputGroupText
+                            onClick={() => removeCidades(nomeCidade)}
+                            style={{ cursor: "pointer", width: "30%" }}
+                          >
+                            <i className="now-ui-icons ui-1_simple-remove text-danger"></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                      </InputGroup>
+                    ))}
+                  </Row>
+                  <FormGroup check className="ml-3">
+                    <CustomInput
+                      type="select"
+                      name="customSelect"
+                      multiple
                       onChange={(event) => {
                         const value = event.target.value.split(",");
-                        setCidadeComparada(value);
+                        adicionaCidadeSelecionada(value);
                       }}
                     >
+                      <option>Todos as cidades</option>
                       {cidades.map((cidade, index) => (
-                        <option key={index} value={cidade}>
-                          {cidade}
-                        </option>
+                        <>
+                          <option>{cidade}</option>
+                        </>
                       ))}
-                    </select>
+                    </CustomInput>
                   </FormGroup>
                 </>
               ) : null}
 
-              <Label check className="mt-4 ml-3">
-                <Input
-                  type="checkbox"
-                  value={representanteEleito}
-                  onClick={() => setRepresentanteEleito(!representanteEleito)}
-                />
-                <span className="form-check-sign"></span>
-                Representante Eleito
-              </Label>
-
               <div className="d-flex justify-content-end">
                 <Button
-                  onClick={(filtrarDados)}
+                  onClick={filtrarDados}
                   style={{
                     backgroundColor: "#214bb5",
                   }}
