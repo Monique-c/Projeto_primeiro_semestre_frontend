@@ -59,7 +59,7 @@ npm start
 | src/components    | Código fonte dos componentes do projeto como o Card de filtro das páginas, Navbars, Footers, etc.                                                                                  |
 | src/pages         | Código fonte das páginas do projeto                                                                                                                                                |
 | src/services      | Arquivo de serviços externos utilizados no projeto como a API do IBGE e a nossa API                                                                                                |
-| src/store         | Pasta contendo toda a configuração dos React-Redux utilizados para a sintonização entre os componentes filhos para pais (Card de filtro para página)                               |
+| src/Context       | Pasta contendo toda a configuração dos Contexts utilizados para a sintonização entre os componentes filhos para pais (Card de filtro para página)                                  |
 | src/index.js      | Principal arquivo do projeto onde está configurado o sistema de rotas, é neste arquivo que você deve importar uma página nova para que ela possa ser visualizada em seu navegador. |
 | package.json      | Contém metadados relevantes para o projeto e é usado para gerenciar as dependências do projeto, scripts, versão e muito mais                                                       |
 | node_modules      | Armazena as bibliotecas (dependências) do projeto                                                                                                                                  |
