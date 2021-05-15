@@ -1,32 +1,16 @@
-.eleitorado-title{
-   font-family: Roboto;
-   font-style: normal;
-   font-weight: bold;
-   font-size: 24px;
-   line-height: 28px;
-   letter-spacing: 0.4px;
-   color: #0A3143;
-   margin-bottom: 15%;
+.eleitorado-title {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 0.4px;
+  color: #0a3143;
+  margin-bottom: 15%;
 }
 .eleitorado-container {
   min-height: 75vh;
   margin: 5% 50px;
-}
-
-.card-filtro-container {
-  margin: 30px;
-}
-
-
-.limpar-font {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  letter-spacing: 0.2px;
-  color: #214BB5;
-  cursor: pointer;
 }
 
 .title {
@@ -36,7 +20,7 @@
   font-size: 24px;
   line-height: 28px;
   letter-spacing: 0.4px;
-  color: #0A3143;
+  color: #0a3143;
   margin-bottom: 15%;
 }
 
@@ -48,7 +32,7 @@
   line-height: 21px;
   letter-spacing: 0.2px;
 
-  color: #0A3143;
+  color: #0a3143;
 }
 
 #mensagem-sem-filtro {
@@ -59,28 +43,28 @@
   line-height: 1.8rem;
   letter-spacing: 0.05em;
 
-  color: #C9CBCF;
+  color: #c9cbcf;
   margin-left: 40px;
 }
 
 .loading_lottie {
-  width:80%;
-  height:80%
+  width: 80%;
+  height: 80%;
 }
 
-.gráfico{
+.gráfico {
   width: 90%;
   margin-top: -2%;
 }
 
-.gráfico h1{
+.gráfico h1 {
   font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.4px;
-  color: #0A3143;
+  color: #0a3143;
   margin-bottom: -1%;
   margin-left: 2%;
 }

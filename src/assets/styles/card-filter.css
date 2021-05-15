@@ -1,0 +1,72 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.card-container {
+  width: 300px;
+  padding: 10px 20px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-header h3 {
+  font-family: Roboto;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+
+  color: #0a3143;
+}
+
+.card-header span {
+  font-family: Roboto;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  color: #214bb5;
+  cursor: pointer;
+}
+
+.card-header span:hover {
+  filter: brightness(50%);
+}
+
+.select-cities {
+  border-radius: 3%;
+  color: #32325d;
+}
+
+.select-cities:focus {
+  border-color: #0a3143;
+}
+
+.button-dropdown {
+  width: 100%;
+  border-radius: 3%;
+}
+
+select option {
+  font-family: Roboto;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+
+  color: #0a3143;
+}
+
+label {
+  font-family: Roboto;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+
+  color: #0a3143;
+}
+
+span {
+  font-family: Roboto;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+
+  color: #0a3143;
+}
