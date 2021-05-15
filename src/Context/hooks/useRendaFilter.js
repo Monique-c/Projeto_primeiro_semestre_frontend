@@ -17,15 +17,11 @@ export default function useFilter() {
   const [MaxPIB_Percapta, setMaxPIB_Percapta] = useState([]);
   const [MinPIB_Percapta, setMinPIB_Percapta] = useState([]);
 
-  async function filtrarDados() {
+  async function filtrarDados(form) {
     setLoading(true);
     setFiltroAplicado(false);
 
     try {
-      const form = {
-        municipios: ["São José dos Campos", "Jacareí"],
-      };
-
       const { data } = await api.post("pesquisas-renda", form);
       return handleData([data]);
     } catch (err) {

@@ -9,28 +9,25 @@ import {
   FormGroup,
   Input,
   Label,
-  DropdownToggle,
-  DropdownMenu,
-  UncontrolledDropdown,
+  Badge,
+  CustomInput,
 } from "reactstrap";
 
-import "../../assets/styles/renda.css";
+import "../../assets/styles/card-filter.css";
 
 import ibge from "../../services/api_ibge";
 import { Context } from "../../Context/RendaFilterContext";
 
 export default function RendaFilter() {
-  const [cidade, setCidade] = useState("");
-  const [cidadeComparada, setCidadeComparada] = useState("");
+  const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
 
+  const [cidade, setCidade] = useState("");
   const [cidades, setCidades] = useState([]);
-  const [cidadeEscolhida, setCidadeEscolhida] = useState([]);
+  const [cidadesSelecionadas, setCidadesSelecionadas] = useState([]);
+
+  const [fadeComparacao, setFadeComparacao] = useState(false);
 
   const { filtrarDados } = useContext(Context);
-
-  function setCities() {
-    setCidades(...(cidadeEscolhida + cidades));
-  }
 
   useEffect(() => {
     (async () => {
@@ -41,87 +38,154 @@ export default function RendaFilter() {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!cidade == "") {
+      return setFadeComparacao(true);
+    }
+    setFadeComparacao(false);
+    setComparacaoAtiva(false);
+  }, [cidade]);
+
   async function limparDados() {
     setCidade("");
-    setCidadeComparada("");
-    setCidades([]);
+    setCidadesSelecionadas([]);
   }
 
-  async function adicionarRegiao(regiao) {
-    setCidades([...cidades, regiao]);
-    alert(`ADICIONADO\n\ncidades: \n [ ${cidades} ]`);
+  function verificaDuplicidade(nomeCidade) {
+    let duplicidade = false;
+    cidadesSelecionadas.forEach((nome) => {
+      if (nome === nomeCidade) {
+        duplicidade = true;
+      }
+    });
+
+    return duplicidade;
   }
 
-  async function retirarRegiao(regiao) {
-    let arrayPivot = cidades;
-    setCidades(arrayPivot.filter((item) => item !== regiao));
-    alert(`RETIRADO\n\ncidades: \n [ ${cidades} ]`);
+  function adicionaCidadeSelecionada(nomeCidade) {
+    const duplicidade = verificaDuplicidade(nomeCidade[0]);
+    if (!duplicidade) {
+      setCidadesSelecionadas([...cidadesSelecionadas, nomeCidade[0]]);
+    }
+  }
+
+  function removeCidades(nomeCidade) {
+    let arrayPivot = cidadesSelecionadas;
+    setCidadesSelecionadas(arrayPivot.filter((nome) => nome !== nomeCidade));
+  }
+
+  function onSubmitForm(e) {
+    e.preventDefault();
+
+    const duplicidade = verificaDuplicidade(cidade[0]);
+    if (!duplicidade) {
+      setCidadesSelecionadas([...cidadesSelecionadas, cidade[0]]);
+    }
+
+    const form = {
+      municipios: cidadesSelecionadas,
+    };
+
+    filtrarDados(form);
   }
 
   return (
-    <Card style={{ width: "300px", marginLeft: "10px" }}>
-      <div className="card-filtro-container">
-        <Row className="mb-5">
-          <Col
-            lg="11"
-            className="d-flex"
-            style={{
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span className="subtitle">
-              <b> Filtros </b>
-            </span>
-            <span onClick={() => limparDados()} className="limpar-font">
-              Limpar
-            </span>
-          </Col>
-        </Row>
-        <label htmlFor="cidades">
-          <b>Estado de São Paulo</b>
-        </label>
+    <Card className="card-container">
+      <section className="card-header">
+        <h3> Filtros </h3>
+        <span onClick={() => limparDados()}>Limpar</span>
+      </section>
 
-        <Row>
-          <Col className="d-flex">
-            <Form style={{ width: "100%", marginTop: "-0.5px" }}>
-              <FormGroup>
-                <label htmlFor="cidades">Cidades:</label>
-                <select
-                  name="cidades"
-                  className="form-control mt-2"
-                  style={{
-                    width: "100%",
-                    borderRadius: "3%",
-                    color: "#32325d",
-                  }}
-                  onChange={(event) => {
-                    const value = event.target.value.split(",");
-                    setCidade(value);
-                  }}
-                >
-                  {cidades.map((cidade, index) => (
-                    <option key={index} value={cidade}>
-                      {cidade}
-                    </option>
+      <Col>
+        <Form onSubmit={onSubmitForm} className="card-form">
+          <FormGroup>
+            <label htmlFor="cidades">Cidades</label>
+            <select
+              name="cidades"
+              className="form-control select-cities"
+              onChange={(event) => {
+                const value = event.target.value.split(",");
+                setCidade(value);
+              }}
+            >
+              <option>Estado de SP</option>
+              {cidades.map((cidade, index) => (
+                <option key={index} value={cidade}>
+                  {cidade}
+                </option>
+              ))}
+            </select>
+          </FormGroup>
+
+          {fadeComparacao ? (
+            <Col>
+              <Label check>
+                <Input
+                  type="checkbox"
+                  value={comparacaoAtiva}
+                  onClick={() => setComparacaoAtiva(!comparacaoAtiva)}
+                />
+                <span className="form-check-sign" />
+                <span>Adicionar comparação</span>
+              </Label>
+            </Col>
+          ) : null}
+
+          <Col>
+            {comparacaoAtiva ? (
+              <>
+                <span>Comparar com:</span>
+                <br />
+                <Row className="mt-2">
+                  {cidadesSelecionadas.map((nomeCidade, index) => (
+                    <Badge
+                      color="info"
+                      key={index}
+                      className="d-flex justify-content-center align-items-center"
+                    >
+                      {nomeCidade}
+                      &emsp;
+                      <i
+                        onClick={() => removeCidades(nomeCidade)}
+                        style={{ cursor: "pointer" }}
+                        className="now-ui-icons ui-1_simple-remove "
+                      ></i>
+                    </Badge>
                   ))}
-                </select>
-              </FormGroup>
-
-              <div className="d-flex justify-content-end">
-                <Button
-                  onClick={() => filtrarDados()}
-                  style={{
-                    backgroundColor: "#214bb5",
-                  }}
-                >
-                  Aplicar
-                </Button>
-              </div>
-            </Form>
+                </Row>
+                <FormGroup>
+                  <CustomInput
+                    type="select"
+                    name="customSelect"
+                    multiple
+                    onChange={(event) => {
+                      const value = event.target.value.split(",");
+                      adicionaCidadeSelecionada(value);
+                    }}
+                  >
+                    {cidades.map((cidade, index) => (
+                      <>
+                        <option>{cidade}</option>
+                      </>
+                    ))}
+                  </CustomInput>
+                </FormGroup>
+              </>
+            ) : null}
           </Col>
-        </Row>
-      </div>
+
+          <div className="d-flex justify-content-end">
+            <Button
+              type="submit"
+              style={{
+                backgroundColor: "#214bb5",
+              }}
+            >
+              Aplicar
+            </Button>
+          </div>
+        </Form>
+      </Col>
     </Card>
   );
 }
