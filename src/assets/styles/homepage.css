@@ -1,36 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
 .homepage-container {
-  min-height: 71.2vh;
-  width: 850px;
-  margin-top: 5%;
+  height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .homepage-card-container {
-  background-color: #0A6893;
+  background-color: #0a6893;
   border-radius: 10px;
   width: 275px;
-  height: 100%;
-  transition: background .4s;
+  transition: background 0.4s;
+
+  text-align: center;
 }
 
 .homepage-card-container:hover {
   background-color: #2983ad;
 }
 
-.homepage-large-card-container {
-  margin-top: 20px;
-  background-color: #0A6893;
-  border-radius: 10px;
-  width: 101.7%;
-  height: 150px;
-  transition: background .4s;
-}
-
-.homepage-large-card-container:hover {
-  background-color: #2983ad;
-}
-
 .card-title {
-  font-family: 'Mulish', sans-serif;
+  font-family: "Mulish", sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 22px;
@@ -38,51 +31,7 @@
 
   letter-spacing: 0.3px;
 
-  color: #FFFFFF;
+  color: #ffffff;
 
   align-self: flex-end;
-}
-
-#grafico_relevante{
-  margin-top: 6px;
-}
-
-.modal-container{
-  margin-top: -7%;
-  margin-left: 38.5%;
-}
-
-.modal-container button{
-  background-color: #0A6893;
-  border-radius: 20px;
-  color: #FFFFFF;
-  font-style: normal;
-  transition: background .4s;
-  border: none;
-  outline: none;
-}
-
-.modal-container button:hover{
-  background-color: #2983ad;
-}
-
-.modal-close button {
-  border-radius: 5px;
-  width: 4vw;
-  background-color: #0A6893;
-  border: none;
-  box-shadow: 0 0 0 1px gray;
-  padding: 0.5%;
-  cursor: pointer;
-  color: #FFFFFF;
-  transition: background .4s;
-  outline: none;
-}
-
-.modal-close button:hover{
-  background-color: #4aa1ca;
-}
-
-.modal-filter{
-  margin-left: -2%;
 }

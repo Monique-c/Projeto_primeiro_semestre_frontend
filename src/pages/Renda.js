@@ -109,7 +109,7 @@ export default function Renda() {
   return (
     <>
       <Navbar />
-      <Container style={{ minHeight: "82vh" }} fluid>
+      <Container style={{ minHeight: "90vh" }} fluid>
         <div className="text-center my-5">
           <span className="renda-title">Renda</span>
         </div>

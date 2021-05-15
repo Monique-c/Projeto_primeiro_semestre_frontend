@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import api from "../../services/api";
 import renda from "../../controllers/renda_json";
-import { isJSDocPrivateTag } from "typescript";
 
 var randomColor = require("randomcolor");
 
@@ -18,20 +17,16 @@ export default function useFilter() {
   const [MaxPIB_Percapta, setMaxPIB_Percapta] = useState([]);
   const [MinPIB_Percapta, setMinPIB_Percapta] = useState([]);
 
-  async function filtrarDados() {
+  async function filtrarDados(form) {
     setLoading(true);
     setFiltroAplicado(false);
 
-    // const form = {
-    //   municipios: ["São José dos Campos", "São Paulo"],
-    //   colunas: ["PIB", "PIB_percapita"],
-    // };
-
-    // const { data } = await api.post("pesquisas-abstencao", form);
-    // console.log(data);
-    // Para teste estou usando  dados que estão em src/controllers/abstencao
-    // Estes dados são os mesmos retornados do banco de dados
-    return handleData(renda);
+    try {
+      // const { data } = await api.post("pesquisas-renda", form);
+      return handleData(renda);
+    } catch (err) {
+      console.log("err: " + err);
+    }
   }
 
   function handleData(data) {

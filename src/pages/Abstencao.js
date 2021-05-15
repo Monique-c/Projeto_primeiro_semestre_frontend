@@ -23,6 +23,7 @@ export default function Abstencao() {
   const {
     loading,
     filtroAplicado,
+    opcoesVisiveis,
     faixaEtariaPorAbstencao,
     faixaEtariaPorComparecimentoComparativo,
     estadoCivilPorAbstencao,
@@ -64,66 +65,77 @@ export default function Abstencao() {
   const Chart = () => {
     return (
       <div>
-        <div>
-          <h5>
-            <b>Comparecimento </b>
-            Por Faixa Etária
-          </h5>
-          <Bar data={faixaEtariaPorComparecimentoComparativo} />
-        </div>
+        {opcoesVisiveis.faixa_etaria ? (
+          <div>
+            <h5>
+              <b>Comparecimento </b>
+              Por Faixa Etária
+            </h5>
+            <Bar data={faixaEtariaPorComparecimentoComparativo} />
+          </div>
+        ) : null}
 
-        <div>
-          <h5>
-            <b>Comparecimento </b>
-            Por Estado Civil
-          </h5>
-          <Bar data={estadoCivilPorComparecimentoComparativo} />
-        </div>
+        {opcoesVisiveis.estado_civil ? (
+          <div>
+            <h5>
+              <b>Comparecimento </b>
+              Por Estado Civil
+            </h5>
+            <Bar data={estadoCivilPorComparecimentoComparativo} />
+          </div>
+        ) : null}
 
-        <div>
-          <h5>
-            <b>Comparecimento </b>
-            Por Escolaridade Declarada
-          </h5>
-          <Bar data={escolaridadeDeclaradaPorComparecimentoComparativo} />
-        </div>
+        {opcoesVisiveis.escolaridade_publica ? (
+          <div>
+            <h5>
+              <b>Comparecimento </b>
+              Por Escolaridade Declarada
+            </h5>
+            <Bar data={escolaridadeDeclaradaPorComparecimentoComparativo} />
+          </div>
+        ) : null}
 
         <div>
           <h5>
             <b> Comparecimento </b>
-                  Total
+            Total
           </h5>
           <Bar data={totalComparecimento} />
         </div>
+        {opcoesVisiveis.faixa_etaria ? (
+          <div>
+            <h5>
+              <b>Abstenção </b>
+              Por Faixa Etária
+            </h5>
+            <Bar data={faixaEtariaPorAbstencao} />
+          </div>
+        ) : null}
 
-        <div>
-          <h5>
-            <b>Abstenção </b>
-            Por Faixa Etária
-          </h5>
-          <Bar data={faixaEtariaPorAbstencao} />
-        </div>
+        {opcoesVisiveis.estado_civil ? (
+          <div>
+            <h5>
+              <b>Abstenção </b>
+              Por Estado Civil
+            </h5>
+            <Bar data={estadoCivilPorAbstencao} />
+          </div>
+        ) : null}
 
-        <div>
-          <h5>
-            <b>Abstenção </b>
-            Por Estado Civil
-          </h5>
-          <Bar data={estadoCivilPorAbstencao} />
-        </div>
-
-        <div>
-          <h5>
-            <b>Abstenção </b>
-            Por Escolaridade Declarada
-          </h5>
-          <Bar data={escolaridadeDeclaradaPorAbstencao} />
-        </div>
+        {opcoesVisiveis.escolaridade_publica ? (
+          <div>
+            <h5>
+              <b>Abstenção </b>
+              Por Escolaridade Declarada
+            </h5>
+            <Bar data={escolaridadeDeclaradaPorAbstencao} />
+          </div>
+        ) : null}
 
         <div>
           <h5>
             <b> Abstenção </b>
-                  Total
+            Total
           </h5>
           <Bar data={totalAbstencao} />
         </div>
@@ -134,7 +146,7 @@ export default function Abstencao() {
   return (
     <>
       <Navbar />
-      <Container style={{ minHeight: "82vh" }} fluid>
+      <Container style={{ minHeight: "90vh" }} fluid>
         <div className="text-center my-5">
           <span className="abstencao-title">Comparecimento/Abstenção</span>
         </div>
@@ -156,7 +168,7 @@ export default function Abstencao() {
           ) : (
             <>
               {filtroAplicado ? (
-                <Col lg='7'>
+                <Col lg="7">
                   <Chart />
                 </Col>
               ) : (

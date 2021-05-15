@@ -23,15 +23,12 @@ export default function Eleitorado() {
   const {
     loading,
     filtroAplicado,
+    opcoesVisiveis,
     faixaEtariaEleitorado,
     estadoCivilEleitorado,
     grauEscolarEleitorado,
     NomeSocialEleitorado,
-
   } = useContext(Context2);
-
-  //const [dados, setDados] = useState({});
-  //const [qtEleitores, setQtEleitores] = useState({});
 
   useEffect(() => {
     if (loading) {
@@ -45,42 +42,10 @@ export default function Eleitorado() {
     }
   }, [loading]);
 
-  const data = {
-    labels: ["aaaaaaaaaaaaaaaa"],
-    datasets: [
-      {
-        label: ["aaaaaaaaaaaaaaaaaaa"],
-        data: {faixaEtariaEleitorado},
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-
   const options = {
     maintainAspectRatio: true,
     scales: {
-      xAxes: [
-        {
-
-
-        }
-      ],
+      xAxes: [{}],
       yAxes: [
         {
           ticks: {
@@ -94,34 +59,42 @@ export default function Eleitorado() {
   const Chart = () => {
     return (
       <div>
-        <div>
-          <h5>
-            <b>Eleitorado </b>
-            por faixa etária
-          </h5>
-          <Bar data={faixaEtariaEleitorado} options= {options} />
-        </div>
-        <div>
-          <h5>
-            <b>Eleitorado </b>
-            por Estado Civil
-          </h5>
-          <HorizontalBar data={estadoCivilEleitorado} />
-        </div>
-        <div>
-          <h5>
-            <b>Eleitorado </b>
-            por Grau de Escolariade
-          </h5>
-          <HorizontalBar data={grauEscolarEleitorado} />
-        </div>
-        <div>
-          <h5>
-            <b>Eleitorado </b>
-            por Nome Social
-          </h5>
-          <Bar data={NomeSocialEleitorado} />
-        </div>
+        {opcoesVisiveis.faixa_etaria ? (
+          <div>
+            <h5>
+              <b>Eleitorado </b>
+              por faixa etária
+            </h5>
+            <Bar data={faixaEtariaEleitorado} options={options} />
+          </div>
+        ) : null}
+        {opcoesVisiveis.estado_civil ? (
+          <div>
+            <h5>
+              <b>Eleitorado </b>
+              por Estado Civil
+            </h5>
+            <HorizontalBar data={estadoCivilEleitorado} />
+          </div>
+        ) : null}
+        {opcoesVisiveis.escolaridade_publica ? (
+          <div>
+            <h5>
+              <b>Eleitorado </b>
+              por Grau de Escolariade
+            </h5>
+            <HorizontalBar data={grauEscolarEleitorado} />
+          </div>
+        ) : null}
+        {opcoesVisiveis.nome_social ? (
+          <div>
+            <h5>
+              <b>Eleitorado </b>
+              por Nome Social
+            </h5>
+            <Bar data={NomeSocialEleitorado} />
+          </div>
+        ) : null}
       </div>
     );
   };
@@ -129,7 +102,7 @@ export default function Eleitorado() {
   return (
     <>
       <Navbar />
-      <Container style={{ minHeight: "82vh" }} fluid>
+      <Container style={{ minHeight: "90vh" }} fluid>
         <div className="text-center my-5">
           <span className="eleitorado-title">Perfil do Eleitorado</span>
         </div>
@@ -151,7 +124,7 @@ export default function Eleitorado() {
           ) : (
             <>
               {filtroAplicado ? (
-                <Col lg='8'>
+                <Col lg="8">
                   <Chart />
                 </Col>
               ) : (
@@ -167,5 +140,3 @@ export default function Eleitorado() {
     </>
   );
 }
-
-

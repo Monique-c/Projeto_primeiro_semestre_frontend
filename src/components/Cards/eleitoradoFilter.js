@@ -9,9 +9,11 @@ import {
   FormGroup,
   Input,
   Label,
-  DropdownToggle,
-  DropdownMenu,
   UncontrolledDropdown,
+  DropdownMenu,
+  DropdownToggle,
+  Badge,
+  CustomInput,
 } from "reactstrap";
 
 import { Context2 } from "../../Context/EleitoradoFilterContext";
@@ -19,24 +21,21 @@ import { Context2 } from "../../Context/EleitoradoFilterContext";
 //import api from "../../services/api";
 import ibge from "../../services/api_ibge";
 
-import "../../assets/styles/eleitorado.css";
+import "../../assets/styles/card-filter.css";
 
 export default function EleitoradoFilter() {
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
-  const [representanteEleito, setRepresentanteEleito] = useState(false);
 
-  const [cidades, setCidades] = useState([]);
   const [cidade, setCidade] = useState("");
-  const [cidadeComparada, setCidadeComparada] = useState("");
-  const [cidadeSelecionada, setCidadeSelecionada] = useState("");
+  const [cidades, setCidades] = useState([]);
+  const [cidadesSelecionadas, setCidadesSelecionadas] = useState([]);
 
-  const [opcoes, setOpcoes] = useState([]);
   const [faixaEtária, setFaixaEtaria] = useState(true);
   const [estadoCivil, setEstadoCivil] = useState(true);
   const [escolaridadePublica, setEscolaridadePublica] = useState(true);
-  const [genero, setGenero] = useState(false);
-  const [deficiencia, setDeficiencia] = useState(false);
   const [nomeSocial, setNomeSocial] = useState(true);
+
+  const [fadeComparacao, setFadeComparacao] = useState(false);
 
   const { filtrarDados } = useContext(Context2);
 
@@ -49,209 +48,230 @@ export default function EleitoradoFilter() {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!cidade == "") {
+      return setFadeComparacao(true);
+    }
+    setFadeComparacao(false);
+    setComparacaoAtiva(false);
+  }, [cidade]);
+
   async function limparDados() {
     setCidade("");
-    setCidadeComparada("");
-    setCidadeSelecionada("");
-    setOpcoes([]);
+    setCidadesSelecionadas([]);
+    setFaixaEtaria(true);
+    setEstadoCivil(true);
+    setEscolaridadePublica(true);
+    setNomeSocial(true);
   }
 
-  async function adicionarOpcao(opcao) {
-    setOpcoes([...opcoes, opcao]);
-    alert(`ADICIONADO\n\nopçoes: \n [ ${opcoes} ]`);
+  function verificaDuplicidade(nomeCidade) {
+    let duplicidade = false;
+    cidadesSelecionadas.forEach((nome) => {
+      if (nome === nomeCidade) {
+        duplicidade = true;
+      }
+    });
+
+    return duplicidade;
   }
 
-  async function retirarOpcao(opcao) {
-    let arrayPivot = opcoes;
-    setOpcoes(arrayPivot.filter((item) => item !== opcao));
-    alert(`RETIRADO\n\nopçoes: \n [ ${opcoes} ]`);
+  function adicionaCidadeSelecionada(nomeCidade) {
+    const duplicidade = verificaDuplicidade(nomeCidade[0]);
+    if (!duplicidade) {
+      setCidadesSelecionadas([...cidadesSelecionadas, nomeCidade[0]]);
+    }
+  }
+
+  function removeCidades(nomeCidade) {
+    let arrayPivot = cidadesSelecionadas;
+    setCidadesSelecionadas(arrayPivot.filter((nome) => nome !== nomeCidade));
+  }
+
+  function onSubmitForm(e) {
+    e.preventDefault();
+
+    const duplicidade = verificaDuplicidade(cidade[0]);
+    if (!duplicidade) {
+      setCidadesSelecionadas([...cidadesSelecionadas, cidade[0]]);
+    }
+
+    const form = {
+      municipios: cidadesSelecionadas,
+      colunas: ["QT_ELEITORES_PERFIL", "QT_ELEITORES_INC_NM_SOCIAL"],
+    };
+
+    const opcoes = {
+      faixa_etaria: faixaEtária,
+      estado_civil: estadoCivil,
+      escolaridade_publica: escolaridadePublica,
+      nome_social: nomeSocial,
+    };
+
+    filtrarDados(form, opcoes);
   }
 
   return (
-    <Card style={{ width: "300px", marginLeft: "10px" }}>
-      <div className="card-filtro-container">
-        <Row className="mb-5">
-          <Col
-            lg="11"
-            className="d-flex"
-            style={{
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span className="subtitle"> Filtros </span>
-            <span onClick={() => limparDados()} className="limpar-font">
-              Limpar
-            </span>
-          </Col>
-        </Row>
+    <Card className="card-container">
+      <section className="card-header">
+        <h3> Filtros </h3>
+        <span onClick={() => limparDados()}>Limpar</span>
+      </section>
 
-        <Row>
-          <Col>
-            <Form>
-              <FormGroup>
-                <label htmlFor="cidades">Cidades</label>
-                <select
-                  name="cidades"
-                  className="form-control mt-2"
-                  style={{
-                    width: "100%",
-                    borderRadius: "3%",
-                    color: "#32325d",
-                  }}
-                  onChange={(event) => {
-                    const value = event.target.value.split(",");
-                    setCidade(value);
-                  }}
-                >
-                  {cidades.map((cidade, index) => (
-                    <option key={index} value={cidade}>
-                      {cidade}
-                    </option>
-                  ))}
-                </select>
-              </FormGroup>
+      <Col>
+        <Form onSubmit={onSubmitForm} className="card-form">
+          <FormGroup>
+            <label htmlFor="cidades">Cidades</label>
+            <select
+              name="cidades"
+              className="form-control select-cities"
+              onChange={(event) => {
+                const value = event.target.value.split(",");
+                setCidade(value);
+              }}
+            >
+              <option>Estado de SP</option>
+              {cidades.map((cidade, index) => (
+                <option key={index} value={cidade}>
+                  {cidade}
+                </option>
+              ))}
+            </select>
+          </FormGroup>
 
-              <label htmlFor="opcoes">Opções</label>
-              <UncontrolledDropdown>
-                <DropdownToggle
-                  caret
-                  className="btn-round w-100"
-                  color="info"
-                  id="opcoes"
-                >
-                  Opções de Filtro
-                </DropdownToggle>
-                <DropdownMenu aria-labelledby="dropdownMenuButton">
-                  <FormGroup check className="ml-3">
-                    <Label check>
-                      <Input
-                        checked={faixaEtária}
-                        type="checkbox"
-                        value={faixaEtária}
-                        onChange={() => {
-                          setFaixaEtaria(!faixaEtária);
-                          faixaEtária
-                            ? adicionarOpcao("faixaEtária")
-                            : retirarOpcao("faixaEtária");
-                        }}
-                      />
-                      <span className="form-check-sign" />
-                      Faixa Etária
-                    </Label>
+          <label>Opções</label>
+          <UncontrolledDropdown group className="w-100">
+            <DropdownToggle caret color="info" style={{ fontSize: 14 }}>
+              Filtros
+            </DropdownToggle>
+            <DropdownMenu>
+              <Col>
+                <FormGroup check>
+                  <Label check>
+                    <Input
+                      checked={faixaEtária}
+                      type="checkbox"
+                      value={faixaEtária}
+                      onChange={() => {
+                        setFaixaEtaria(!faixaEtária);
+                      }}
+                    />
+                    <span className="form-check-sign" />
+                    <span>Faixa Etária</span>
+                  </Label>
 
-                    <Label check>
-                      <Input
-                        checked={estadoCivil}
-                        type="checkbox"
-                        value={estadoCivil}
-                        onChange={() => {
-                          setEstadoCivil(!estadoCivil);
-                          estadoCivil
-                            ? adicionarOpcao("estadoCivil")
-                            : retirarOpcao("estadoCivil");
-                        }}
-                      />
-                      <span className="form-check-sign" />
-                      Estado civil
-                    </Label>
+                  <Label check>
+                    <Input
+                      checked={estadoCivil}
+                      type="checkbox"
+                      value={estadoCivil}
+                      onChange={() => {
+                        setEstadoCivil(!estadoCivil);
+                      }}
+                    />
+                    <span className="form-check-sign" />
+                    <span>Estado civil</span>
+                  </Label>
 
-                    <Label check>
-                      <Input
-                        checked={escolaridadePublica}
-                        type="checkbox"
-                        value={escolaridadePublica}
-                        onChange={() => {
-                          setEscolaridadePublica(!escolaridadePublica);
-                          escolaridadePublica
-                            ? adicionarOpcao("escolaridadePublica")
-                            : retirarOpcao("escolaridadePublica");
-                        }}
-                      />
-                      <span className="form-check-sign" />
-                      Escolaridade Declarada
-                    </Label>
+                  <Label check>
+                    <Input
+                      checked={escolaridadePublica}
+                      type="checkbox"
+                      value={escolaridadePublica}
+                      onChange={() => {
+                        setEscolaridadePublica(!escolaridadePublica);
+                      }}
+                    />
+                    <span className="form-check-sign" />
+                    <span>Escolaridade Declarada</span>
+                  </Label>
 
-                    <Label check>
-                      <Input
-                        checked={nomeSocial}
-                        type="checkbox"
-                        value={nomeSocial}
-                        onChange={() => {
-                          setNomeSocial(!nomeSocial);
-                          nomeSocial
-                            ? adicionarOpcao("nomeSocial")
-                            : retirarOpcao("nomeSocial");
-                        }}
-                      />
-                      <span className="form-check-sign" />
-                      Nome social
-                    </Label>
-                  </FormGroup>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+                  <Label check>
+                    <Input
+                      checked={nomeSocial}
+                      type="checkbox"
+                      value={nomeSocial}
+                      onChange={() => {
+                        setNomeSocial(!nomeSocial);
+                      }}
+                    />
+                    <span className="form-check-sign" />
+                    <span>Nome social</span>
+                  </Label>
+                </FormGroup>
+              </Col>
+            </DropdownMenu>
+          </UncontrolledDropdown>
 
-              <Label check className="mt-4 ml-3">
+          {fadeComparacao ? (
+            <Col>
+              <Label check>
                 <Input
                   type="checkbox"
                   value={comparacaoAtiva}
                   onClick={() => setComparacaoAtiva(!comparacaoAtiva)}
                 />
                 <span className="form-check-sign" />
-                Adicionar comparação
+                <span>Adicionar comparação</span>
               </Label>
+            </Col>
+          ) : null}
 
-              {comparacaoAtiva ? (
-                <>
-                  <FormGroup className="mt-3">
-                    <label htmlFor="cidadeComparada">Comparar com</label>
-                    <select
-                      name="cidadeComparada"
-                      className="form-control mt-2"
-                      style={{
-                        width: "100%",
-                        borderRadius: "3%",
-                        color: "#32325d",
-                      }}
-                      onChange={(event) => {
-                        const value = event.target.value.split(",");
-                        setCidadeComparada(value);
-                      }}
+          <Col>
+            {comparacaoAtiva ? (
+              <>
+                <span>Comparar com:</span>
+                <br />
+                <Row className="mt-2">
+                  {cidadesSelecionadas.map((nomeCidade, index) => (
+                    <Badge
+                      color="info"
+                      key={index}
+                      className="d-flex justify-content-center align-items-center"
                     >
-                      {cidades.map((cidade, index) => (
-                        <option key={index} value={cidade}>
-                          {cidade}
-                        </option>
-                      ))}
-                    </select>
-                  </FormGroup>
-                </>
-              ) : null}
-
-              <Label check className="mt-4 ml-3">
-                <Input
-                  type="checkbox"
-                  value={representanteEleito}
-                  onClick={() => setRepresentanteEleito(!representanteEleito)}
-                />
-                <span className="form-check-sign"></span>
-                Representante Eleito
-              </Label>
-
-              <div className="d-flex justify-content-end">
-                <Button
-                  onClick={(filtrarDados)}
-                  style={{
-                    backgroundColor: "#214bb5",
-                  }}
-                >
-                  Aplicar
-                </Button>
-              </div>
-            </Form>
+                      {nomeCidade}
+                      &emsp;
+                      <i
+                        onClick={() => removeCidades(nomeCidade)}
+                        style={{ cursor: "pointer" }}
+                        className="now-ui-icons ui-1_simple-remove "
+                      ></i>
+                    </Badge>
+                  ))}
+                </Row>
+                <FormGroup>
+                  <CustomInput
+                    type="select"
+                    name="customSelect"
+                    multiple
+                    onChange={(event) => {
+                      const value = event.target.value.split(",");
+                      adicionaCidadeSelecionada(value);
+                    }}
+                  >
+                    {cidades.map((cidade, index) => (
+                      <>
+                        <option>{cidade}</option>
+                      </>
+                    ))}
+                  </CustomInput>
+                </FormGroup>
+              </>
+            ) : null}
           </Col>
-        </Row>
-      </div>
+
+          <div className="d-flex justify-content-end">
+            <Button
+              type="submit"
+              style={{
+                backgroundColor: "#214bb5",
+              }}
+            >
+              Aplicar
+            </Button>
+          </div>
+        </Form>
+      </Col>
     </Card>
   );
 }
