@@ -14,7 +14,6 @@ import {
   DropdownToggle,
   Badge,
   CustomInput,
-  Fade,
 } from "reactstrap";
 
 import { Context2 } from "../../Context/EleitoradoFilterContext";
@@ -51,7 +50,6 @@ export default function EleitoradoFilter() {
 
   useEffect(() => {
     if (!cidade == "") {
-      console.log("a");
       return setFadeComparacao(true);
     }
     setFadeComparacao(false);

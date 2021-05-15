@@ -1,39 +1,40 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import {
-  Button,
-  Card,
   Row,
   Col,
   Form,
   FormGroup,
+  Card,
   Input,
+  Button,
   Label,
+  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  UncontrolledDropdown,
+  Badge,
+  CustomInput,
 } from "reactstrap";
 
 import { Context } from "../../Context/AbstencaoFilterContext";
 
-import "../../assets/styles/abstenção.css";
+import "../../assets/styles/card-filter.css";
 
 import ibge from "../../services/api_ibge";
 
 export default function AbstençãoFilter() {
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);
 
-  const [cidades, setCidades] = useState([]);
   const [cidade, setCidade] = useState("");
-  const [cidadeComparada, setCidadeComparada] = useState("");
+  const [cidades, setCidades] = useState([]);
+  const [cidadesSelecionadas, setCidadesSelecionadas] = useState([]);
 
-  const [opcoes, setOpcoes] = useState([]);
   const [faixaEtária, setFaixaEtaria] = useState(true);
   const [estadoCivil, setEstadoCivil] = useState(true);
   const [escolaridadePublica, setEscolaridadePublica] = useState(true);
   const [nomeSocial, setNomeSocial] = useState(true);
-  const [genero, setGenero] = useState(false);
-  const [deficiencia, setDeficiencia] = useState(false);
+
+  const [fadeComparacao, setFadeComparacao] = useState(false);
 
   const { filtrarDados } = useContext(Context);
 
@@ -46,185 +47,230 @@ export default function AbstençãoFilter() {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!cidade == "") {
+      return setFadeComparacao(true);
+    }
+    setFadeComparacao(false);
+    setComparacaoAtiva(false);
+  }, [cidade]);
+
   async function limparDados() {
     setCidade("");
-    setCidadeComparada("");
-    setOpcoes([]);
+    setCidadesSelecionadas([]);
+    setFaixaEtaria(true);
+    setEstadoCivil(true);
+    setEscolaridadePublica(true);
+    setNomeSocial(true);
   }
 
-  async function adicionarOpcao(opcao) {
-    setOpcoes([...opcoes, opcao]);
-    alert(`ADICIONADO\n\nopçoes: \n [ ${opcoes} ]`);
+  function verificaDuplicidade(nomeCidade) {
+    let duplicidade = false;
+    cidadesSelecionadas.forEach((nome) => {
+      if (nome === nomeCidade) {
+        duplicidade = true;
+      }
+    });
+
+    return duplicidade;
   }
 
-  async function retirarOpcao(opcao) {
-    let arrayPivot = opcoes;
-    setOpcoes(arrayPivot.filter((item) => item !== opcao));
-    alert(`RETIRADO\n\nopçoes: \n [ ${opcoes} ]`);
+  function adicionaCidadeSelecionada(nomeCidade) {
+    const duplicidade = verificaDuplicidade(nomeCidade[0]);
+    if (!duplicidade) {
+      setCidadesSelecionadas([...cidadesSelecionadas, nomeCidade[0]]);
+    }
+  }
+
+  function removeCidades(nomeCidade) {
+    let arrayPivot = cidadesSelecionadas;
+    setCidadesSelecionadas(arrayPivot.filter((nome) => nome !== nomeCidade));
+  }
+
+  function onSubmitForm(e) {
+    e.preventDefault();
+
+    const duplicidade = verificaDuplicidade(cidade[0]);
+    if (!duplicidade) {
+      setCidadesSelecionadas([...cidadesSelecionadas, cidade[0]]);
+    }
+
+    const form = {
+      municipios: cidadesSelecionadas,
+      colunas: ["QT_ABSTENCAO", "QT_COMPARECIMENTO"],
+    };
+
+    const opcoes = {
+      faixa_etaria: faixaEtária,
+      estado_civil: estadoCivil,
+      escolaridade_publica: escolaridadePublica,
+      nome_social: nomeSocial,
+    };
+
+    filtrarDados(form, opcoes);
   }
 
   return (
-    <Card style={{ maxWidth: "300px" }}>
-      <div className="card-filtro-container">
-        <Row className="mb-5">
-          <Col
-            lg="11"
-            className="d-flex"
-            style={{
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span className="subtitle"> Filtros </span>
-            <span onClick={() => limparDados()} className="limpar-font">
-              Limpar
-            </span>
-          </Col>
-        </Row>
+    <Card className="card-container">
+      <section className="card-header">
+        <h3> Filtros </h3>
+        <span onClick={() => limparDados()}>Limpar</span>
+      </section>
 
-        <Row>
-          <Col className="d-flex">
-            <Form>
-              <FormGroup>
-                <label htmlFor="cidades">Cidades</label>
-                <select
-                  name="cidades"
-                  className="form-control mt-2"
-                  style={{
-                    width: "100%",
-                    borderRadius: "3%",
-                    color: "#32325d",
-                  }}
-                  onChange={(event) => {
-                    const value = event.target.value.split(",");
-                    setCidade(value);
-                  }}
-                >
-                  {cidades.map((cidade, index) => (
-                    <option key={index} value={cidade}>
-                      {cidade}
-                    </option>
-                  ))}
-                </select>
-              </FormGroup>
+      <Col>
+        <Form onSubmit={onSubmitForm} className="card-form">
+          <FormGroup>
+            <label htmlFor="cidades">Cidades</label>
+            <select
+              name="cidades"
+              className="form-control select-cities"
+              onChange={(event) => {
+                const value = event.target.value.split(",");
+                setCidade(value);
+              }}
+            >
+              <option>Estado de SP</option>
+              {cidades.map((cidade, index) => (
+                <option key={index} value={cidade}>
+                  {cidade}
+                </option>
+              ))}
+            </select>
+          </FormGroup>
 
-              <label htmlFor="opcoes">Opções</label>
-              <UncontrolledDropdown>
-                <DropdownToggle
-                  style={{ width: "100%", marginTop: "-0.5px" }}
-                  aria-expanded={false}
-                  caret
-                  className="btn-round"
-                  color="info"
-                  id="opcoes"
-                  type="button"
-                >
-                  Opções de Filtro
-                </DropdownToggle>
-                <DropdownMenu aria-labelledby="dropdownMenuButton">
-                  <FormGroup check className="ml-3">
-                    <Label check>
-                      <Input
-                        checked={faixaEtária}
-                        type="checkbox"
-                        value={faixaEtária}
-                        onChange={() => {
-                          setFaixaEtaria(!faixaEtária);
-                          faixaEtária
-                            ? adicionarOpcao("faixaEtária")
-                            : retirarOpcao("faixaEtária");
-                        }}
-                      />
-                      <span className="form-check-sign"></span>
-                      Faixa Etária
-                    </Label>
+          <label>Opções</label>
+          <UncontrolledDropdown group className="w-100">
+            <DropdownToggle caret color="info" style={{ fontSize: 14 }}>
+              Filtros
+            </DropdownToggle>
+            <DropdownMenu>
+              <Col>
+                <FormGroup check>
+                  <Label check>
+                    <Input
+                      checked={faixaEtária}
+                      type="checkbox"
+                      value={faixaEtária}
+                      onChange={() => {
+                        setFaixaEtaria(!faixaEtária);
+                      }}
+                    />
+                    <span className="form-check-sign" />
+                    <span>Faixa Etária</span>
+                  </Label>
 
-                    <Label check>
-                      <Input
-                        checked={estadoCivil}
-                        type="checkbox"
-                        value={estadoCivil}
-                        onChange={() => {
-                          setEstadoCivil(!estadoCivil);
-                          estadoCivil
-                            ? adicionarOpcao("estadoCivil")
-                            : retirarOpcao("estadoCivil");
-                        }}
-                      />
-                      <span className="form-check-sign"></span>
-                      Estado civil
-                    </Label>
+                  <Label check>
+                    <Input
+                      checked={estadoCivil}
+                      type="checkbox"
+                      value={estadoCivil}
+                      onChange={() => {
+                        setEstadoCivil(!estadoCivil);
+                      }}
+                    />
+                    <span className="form-check-sign" />
+                    <span>Estado civil</span>
+                  </Label>
 
-                    <Label check>
-                      <Input
-                        checked={escolaridadePublica}
-                        type="checkbox"
-                        value={escolaridadePublica}
-                        onChange={() => {
-                          setEscolaridadePublica(!escolaridadePublica);
-                          escolaridadePublica
-                            ? adicionarOpcao("escolaridadePublica")
-                            : retirarOpcao("escolaridadePublica");
-                        }}
-                      />
-                      <span className="form-check-sign"></span>
-                      Escolaridade Declarada
-                    </Label>
-                  </FormGroup>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+                  <Label check>
+                    <Input
+                      checked={escolaridadePublica}
+                      type="checkbox"
+                      value={escolaridadePublica}
+                      onChange={() => {
+                        setEscolaridadePublica(!escolaridadePublica);
+                      }}
+                    />
+                    <span className="form-check-sign" />
+                    <span>Escolaridade Declarada</span>
+                  </Label>
 
-              <Label check className="mt-4 ml-3">
+                  <Label check>
+                    <Input
+                      checked={nomeSocial}
+                      type="checkbox"
+                      value={nomeSocial}
+                      onChange={() => {
+                        setNomeSocial(!nomeSocial);
+                      }}
+                    />
+                    <span className="form-check-sign" />
+                    <span>Nome social</span>
+                  </Label>
+                </FormGroup>
+              </Col>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+
+          {fadeComparacao ? (
+            <Col>
+              <Label check>
                 <Input
                   type="checkbox"
                   value={comparacaoAtiva}
                   onClick={() => setComparacaoAtiva(!comparacaoAtiva)}
                 />
-                <span className="form-check-sign"></span>
-                Adicionar comparação
+                <span className="form-check-sign" />
+                <span>Adicionar comparação</span>
               </Label>
+            </Col>
+          ) : null}
 
-              {comparacaoAtiva ? (
-                <>
-                  <FormGroup className="mt-3">
-                    <label htmlFor="cidadeComparada">Comparar com</label>
-                    <select
-                      name="cidadeComparada"
-                      className="form-control mt-2"
-                      style={{
-                        width: "100%",
-                        borderRadius: "3%",
-                        color: "#32325d",
-                      }}
-                      onChange={(event) => {
-                        const value = event.target.value.split(",");
-                        setCidadeComparada(value);
-                      }}
+          <Col>
+            {comparacaoAtiva ? (
+              <>
+                <span>Comparar com:</span>
+                <br />
+                <Row className="mt-2">
+                  {cidadesSelecionadas.map((nomeCidade, index) => (
+                    <Badge
+                      color="info"
+                      key={index}
+                      className="d-flex justify-content-center align-items-center"
                     >
-                      {cidades.map((cidade, index) => (
-                        <option key={index} value={cidade}>
-                          {cidade}
-                        </option>
-                      ))}
-                    </select>
-                  </FormGroup>
-                </>
-              ) : null}
-
-              <div className="d-flex justify-content-end">
-                <Button
-                  onClick={filtrarDados}
-                  style={{
-                    backgroundColor: "#214bb5",
-                  }}
-                >
-                  Aplicar
-                </Button>
-              </div>
-            </Form>
+                      {nomeCidade}
+                      &emsp;
+                      <i
+                        onClick={() => removeCidades(nomeCidade)}
+                        style={{ cursor: "pointer" }}
+                        className="now-ui-icons ui-1_simple-remove "
+                      ></i>
+                    </Badge>
+                  ))}
+                </Row>
+                <FormGroup>
+                  <CustomInput
+                    type="select"
+                    name="customSelect"
+                    multiple
+                    onChange={(event) => {
+                      const value = event.target.value.split(",");
+                      adicionaCidadeSelecionada(value);
+                    }}
+                  >
+                    {cidades.map((cidade, index) => (
+                      <>
+                        <option>{cidade}</option>
+                      </>
+                    ))}
+                  </CustomInput>
+                </FormGroup>
+              </>
+            ) : null}
           </Col>
-        </Row>
-      </div>
+
+          <div className="d-flex justify-content-end">
+            <Button
+              type="submit"
+              style={{
+                backgroundColor: "#214bb5",
+              }}
+            >
+              Aplicar
+            </Button>
+          </div>
+        </Form>
+      </Col>
     </Card>
   );
 }

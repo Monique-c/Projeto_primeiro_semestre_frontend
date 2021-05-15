@@ -9,6 +9,7 @@ var randomColor = require("randomcolor");
 export default function useFilter() {
   const [loading, setLoading] = useState(false);
   const [filtroAplicado, setFiltroAplicado] = useState(false);
+  const [opcoesVisiveis, setOpcoesVisiveis] = useState({});
 
   const [faixaEtariaPorAbstencao, setFaixaEtariaPorAbstencao] = useState([]);
   const [estadoCivilPorAbstencao, setEstadoCivilPorAbstencao] = useState([]);
@@ -35,25 +36,17 @@ export default function useFilter() {
   const [totalAbstencao, setTotalAbstencao] = useState([]);
   const [totalComparecimento, setTotalComparecimento] = useState([]);
 
-  async function filtrarDados() {
+  async function filtrarDados(form, opcoes) {
     setLoading(true);
     setFiltroAplicado(false);
+    setOpcoesVisiveis(opcoes);
 
-    const form = {
-      municipios: ["SÃO JOSÉ DOS CAMPOS", "SÃO PAULO"],
-      colunas: [
-        "QT_ABSTENCAO",
-        "QT_COMPARECIMENTO",
-        "QT_ABSTENCAO_DEFICIENTE",
-        "QT_COMPARECIMENTO_DEFICIENTE",
-      ],
-    };
-
-    // const { data } = await api.post("pesquisas-abstencao", form);
-    // console.log(data);
-    // Para teste estou usando  dados que estão em src/controllers/abstencao
-    // Estes dados são os mesmos retornados do banco de dados
-    return handleData(abstencao);
+    try {
+      const { data } = await api.post("pesquisas-abstencao", form);
+      return handleData(data);
+    } catch (err) {
+      console.log("err: " + err);
+    }
   }
 
   function handleData(data) {
@@ -452,6 +445,7 @@ export default function useFilter() {
     filtrarDados,
     loading,
     filtroAplicado,
+    opcoesVisiveis,
     faixaEtariaPorAbstencao,
     faixaEtariaPorComparecimentoComparativo,
     estadoCivilPorAbstencao,
