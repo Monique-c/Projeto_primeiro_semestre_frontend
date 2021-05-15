@@ -91,13 +91,15 @@ export default function EleitoradoFilter() {
   function onSubmitForm(e) {
     e.preventDefault();
 
+    let arrayPivot = cidadesSelecionadas;
+
     const duplicidade = verificaDuplicidade(cidade[0]);
     if (!duplicidade) {
-      setCidadesSelecionadas([...cidadesSelecionadas, cidade[0]]);
+      arrayPivot = [...arrayPivot, cidade[0]];
     }
 
     const form = {
-      municipios: cidadesSelecionadas,
+      municipios: arrayPivot,
       colunas: ["QT_ELEITORES_PERFIL", "QT_ELEITORES_INC_NM_SOCIAL"],
     };
 
