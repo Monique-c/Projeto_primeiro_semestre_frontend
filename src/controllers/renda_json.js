@@ -8,14 +8,19 @@ const data = [
     ],
     media_PIB_percapta_MUNICIPIO: [
       {
+        municipio: "Bragança Paulista",
+        PIB: 2389080.0,
+        PIB_percapita: 16375,
+      },
+      {
+        municipio: "Taubaté",
+        PIB: 8324690.0,
+        PIB_percapita: 30446,
+      },
+      {
         municipio: "São José dos Campos",
         PIB: 22018000.0,
         PIB_percapita: 35751,
-      },
-      {
-        municipio: "São Paulo",
-        PIB: 389317000.0,
-        PIB_percapita: 35272,
       },
     ],
     max_PIB: [
