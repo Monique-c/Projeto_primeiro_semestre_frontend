@@ -22,8 +22,8 @@ export default function useFilter() {
     setFiltroAplicado(false);
 
     try {
-      const { data } = await api.post("pesquisas-renda", form);
-      return handleData([data]);
+      // const { data } = await api.post("pesquisas-renda", form);
+      return handleData(renda);
     } catch (err) {
       console.log("err: " + err);
     }

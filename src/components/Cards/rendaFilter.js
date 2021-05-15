@@ -90,7 +90,7 @@ export default function RendaFilter() {
   }
 
   return (
-    <Card className="card-container">
+    <Card className="card-container ">
       <section className="card-header">
         <h3> Filtros </h3>
         <span onClick={() => limparDados()}>Limpar</span>

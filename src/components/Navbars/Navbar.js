@@ -9,7 +9,7 @@ import "./../../assets/styles/navbar.css";
 function Example() {
   return (
     <>
-      <Navbar style={{ height: "88px" }} className="bg-white navbar-container">
+      <Navbar className="bg-white navbar-container fixed-top" expand="lg">
         <Row>
           <Link to="/">
             <span className="navbar-initialPage"> PÁGINA INICIAL</span>

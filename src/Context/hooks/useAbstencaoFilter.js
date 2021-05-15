@@ -42,8 +42,8 @@ export default function useFilter() {
     setOpcoesVisiveis(opcoes);
 
     try {
-      const { data } = await api.post("pesquisas-abstencao", form);
-      return handleData(data);
+      // const { data } = await api.post("pesquisas-abstencao", form);
+      return handleData(abstencao);
     } catch (err) {
       console.log("err: " + err);
     }

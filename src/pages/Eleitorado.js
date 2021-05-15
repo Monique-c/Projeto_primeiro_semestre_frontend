@@ -102,7 +102,7 @@ export default function Eleitorado() {
   return (
     <>
       <Navbar />
-      <Container style={{ minHeight: "82vh" }} fluid>
+      <Container style={{ minHeight: "90vh" }} fluid>
         <div className="text-center my-5">
           <span className="eleitorado-title">Perfil do Eleitorado</span>
         </div>
