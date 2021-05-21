@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import api from "../../services/api";
-import eleitorado from "../../controllers/eleitorado_json";
+import eleitorado from "../../controllers/eleitorado_atualizado_json";
 
 var randomColor = require("randomcolor");
 
@@ -14,6 +14,9 @@ export default function useFilter() {
   const [estadoCivilEleitorado, setEleitoradoPorEstadoCivil] = useState([]);
   const [grauEscolarEleitorado, setEleitoradoPorGrauEscolar] = useState([]);
   const [NomeSocialEleitorado, setEleitoradoPorNomeSocial] = useState([]);
+
+  const [MaxEleitJovens, setMaxEleitJovens] = useState([]);
+  const [MinEleitJovens, setMinEleitJovens] = useState([]);
 
   async function filtrarDados(form, opcoes) {
     setLoading(true);
@@ -31,7 +34,7 @@ export default function useFilter() {
 
   function handleData(data) {
     var colors = randomColor({
-      count: data.length,
+      count: data.eleitorado.length,
       luminosity: "bright",
       hue: "random",
       format: "rgba",
@@ -45,14 +48,13 @@ export default function useFilter() {
       alpha: 1,
     };
 
-    const handleFaixaEleitorado = data.map((item) => {
+    const handleFaixaEleitorado = data.eleitorado.map((item) => {
       const valores = item.faixa_etaria.map(
         (elt) => elt.soma_eleitores_perfil //para x valor
       );
       const index = item.faixa_etaria.map(
         (elt) => elt.desc_faixa_etaria.trim() //para y titulo
       );
-
       return {
         municipio: item.municipio,
         valores,
@@ -60,7 +62,7 @@ export default function useFilter() {
       };
     });
 
-    const handleEstadoCivilEleitorado = data.map((item) => {
+    const handleEstadoCivilEleitorado = data.eleitorado.map((item) => {
       const valores = item.estado_civil.map(
         (elt) => elt.soma_eleitores_perfil //para x valor
       );
@@ -75,7 +77,7 @@ export default function useFilter() {
       };
     });
 
-    const handleGrauEscolarEleitorado = data.map((item) => {
+    const handleGrauEscolarEleitorado = data.eleitorado.map((item) => {
       const valores = item.grau_escolaridade.map(
         (elt) => elt.soma_eleitores_perfil //para x valor
       );
@@ -90,7 +92,7 @@ export default function useFilter() {
       };
     });
 
-    const handleNomeSocialEleitorado = data.map((item) => {
+    const handleNomeSocialEleitorado = data.eleitorado.map((item) => {
       const valores = {
         NomeSocial: item.QT_ELEITORES_INC_NM_SOCIAL,
         municipio: item.municipio,
@@ -98,10 +100,32 @@ export default function useFilter() {
       return valores;
     });
 
+    const handleMaxEleitoradoJovens = data.max_eleitorado_jovens.map(
+      (eleMaxJov) => {
+        const municipios = {
+          max_eleitorado_jovens: eleMaxJov.porcentagem_eleitorado_jovens,
+          municipio: eleMaxJov.municipio,
+        };
+        return municipios;
+      }
+    );
+    const handleMinEleitoradoJovens = data.min_eleitorado_jovens.map(
+      (eleMinJov) => {
+        const municipios = {
+          min_eleitorado_jovens: eleMinJov.porcentagem_eleitorado_jovens,
+          municipio: eleMinJov.municipio,
+        };
+        console.log(municipios);
+        return municipios;
+      }
+    );
+
     handleDataNomeSocial(handleNomeSocialEleitorado, colors, borderColors);
     handleDataGrauEscolar(handleGrauEscolarEleitorado, colors, borderColors);
     handleDataEstadoCivil(handleEstadoCivilEleitorado, colors, borderColors);
     handleDataEleitorado(handleFaixaEleitorado, colors, borderColors);
+    handleDataMaxEleitoradoJovens(handleMaxEleitoradoJovens);
+    handleDataMinEleitoradoJovens(handleMinEleitoradoJovens);
 
     setFiltroAplicado(true);
     setTimeout(function () {
@@ -203,7 +227,84 @@ export default function useFilter() {
 
     setEleitoradoPorNomeSocial(DatasetEleitoradoNomeSocial);
   }
+  //---------------------------------------------------------------------------------------------
+  function handleDataMaxEleitoradoJovens(MaxEleitJovens) {
+    /* ----------------------- INICIO -----------------------  */
+    const setdatasetMaxEleitJovens = MaxEleitJovens.map((item) => {
+      console.log(MaxEleitJovens);
+      var colors = randomColor({
+        count: MaxEleitJovens.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: MaxEleitJovens.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const dataset = MaxEleitJovens.map((municipios, index) => {
+        console.log(municipios);
+        return {
+          label: municipios.municipio,
+          data: [municipios.max_eleitorado_jovens],
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return dataset;
+    });
 
+    const datasetMaxEleitJovens = {
+      labels: [""],
+      datasets: setdatasetMaxEleitJovens[0],
+    };
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setMaxEleitJovens(datasetMaxEleitJovens);
+  }
+  //---------------------------------------------------------------------------------------------
+  function handleDataMinEleitoradoJovens(MinEleitJovens) {
+    /* ----------------------- INICIO -----------------------  */
+    const setdatasetMinEleitJovens = MinEleitJovens.map((item) => {
+      var colors = randomColor({
+        count: MinEleitJovens.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: MinEleitJovens.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+
+      const dataset = MinEleitJovens.map((municipios, index) => {
+        return {
+          label: municipios.municipio,
+          data: [municipios.min_eleitorado_jovens],
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return dataset;
+    });
+
+    const datasetMinEleitJovens = {
+      labels: [""],
+      datasets: setdatasetMinEleitJovens[0],
+    };
+    // Passando o gráfico modelado à variável que irá mostrá-lo em tela
+    setMinEleitJovens(datasetMinEleitJovens);
+  }
+  //---------------------------------------------------------------------------------------------
   return {
     filtroAplicado,
     opcoesVisiveis,
@@ -213,5 +314,7 @@ export default function useFilter() {
     estadoCivilEleitorado,
     grauEscolarEleitorado,
     NomeSocialEleitorado,
+    MaxEleitJovens,
+    MinEleitJovens,
   };
 }

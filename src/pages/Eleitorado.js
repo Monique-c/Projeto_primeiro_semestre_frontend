@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 
 import { Bar, HorizontalBar } from "react-chartjs-2";
 
@@ -28,6 +28,8 @@ export default function Eleitorado() {
     estadoCivilEleitorado,
     grauEscolarEleitorado,
     NomeSocialEleitorado,
+    MaxEleitJovens,
+    MinEleitJovens,
   } = useContext(Context2);
 
   useEffect(() => {
@@ -42,8 +44,9 @@ export default function Eleitorado() {
     }
   }, [loading]);
 
+  const [DadosRelevantesButton, setDadosRelevantesButton] = useState(false);
+
   const options = {
-    maintainAspectRatio: true,
     scales: {
       xAxes: [{}],
       yAxes: [
@@ -98,11 +101,29 @@ export default function Eleitorado() {
       </div>
     );
   };
+  const ChartRelevantes = () => {
+    return (
+      <div>
+        <div>
+          <h5>
+            <b> Maiores Eleitorados Jovens</b>
+          </h5>
+          <Bar data={MaxEleitJovens} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Eleitorados Jovens</b>
+          </h5>
+          <Bar data={MinEleitJovens} options={options} />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
       <Navbar />
-      <Container style={{ minHeight: "90vh" }} fluid>
+      <Container style={{ minHeight: "90vh", marginTop: "8%" }} fluid>
         <div className="text-center my-5">
           <span className="eleitorado-title">Perfil do Eleitorado</span>
         </div>
@@ -126,6 +147,37 @@ export default function Eleitorado() {
               {filtroAplicado ? (
                 <Col lg="8">
                   <Chart />
+                  {!DadosRelevantesButton ? (
+                    <Row className="d-flex justify-content-start mr-3">
+                      <Button
+                        onClick={() =>
+                          setDadosRelevantesButton(!DadosRelevantesButton)
+                        }
+                        style={{
+                          backgroundColor: "#214bb5",
+                        }}
+                      >
+                        Mostrar Dados Relevantes
+                      </Button>
+                    </Row>
+                  ) : (
+                    <div>
+                      <Row className="d-flex justify-content-start mr-3">
+                        <Button
+                          onClick={() =>
+                            setDadosRelevantesButton(!DadosRelevantesButton)
+                          }
+                          style={{
+                            backgroundColor: "#214bb5",
+                          }}
+                        >
+                          Esconder Dados Relevantes
+                        </Button>
+                      </Row>
+                      <h3 className="renda-title">Dados Relevantes</h3>
+                      <ChartRelevantes className="charts" />
+                    </div>
+                  )}
                 </Col>
               ) : (
                 <Col>

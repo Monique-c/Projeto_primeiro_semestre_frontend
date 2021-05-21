@@ -14,6 +14,8 @@ function EleitoradoProvider({ children }) {
     estadoCivilEleitorado,
     grauEscolarEleitorado,
     NomeSocialEleitorado,
+    MaxEleitJovens,
+    MinEleitJovens,
   } = useFilter();
 
   return (
@@ -27,6 +29,8 @@ function EleitoradoProvider({ children }) {
         estadoCivilEleitorado,
         grauEscolarEleitorado,
         NomeSocialEleitorado,
+        MaxEleitJovens,
+        MinEleitJovens,
       }}
     >
       {children}
