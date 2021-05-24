@@ -185,7 +185,7 @@ export default function useFilter() {
         return valores;
       }
     );
-    const handleAbstencaoMax = data.comparecimento_abstencao.map((item) => {
+    const handleAbstencaoMax = data.maiores_abstencoes.map((item) => {
       const valores = {
         Abstencaomax: item.max_abstencao,
         municipio: item.municipio,
@@ -342,14 +342,14 @@ export default function useFilter() {
     /*    --------------------------- FIM Total -----------------------------  */
     const setDatasetMaxAbstencao = maioresAbstencao.map((valores, index) => {
       const newDataset = {
-        data: [valores.MaioresAbstencao],
+        data: valores.max_abstencao,
         label: valores.municipio,
         backgroundColor: colors[index],
         borderWidth: 1,
         hoverBackgroundColor: colors[index],
         hoverBorderColor: colors[index],
       };
-      console.log(valores);
+      console.log(newDataset);
       return {
         datasets: newDataset,
       };
