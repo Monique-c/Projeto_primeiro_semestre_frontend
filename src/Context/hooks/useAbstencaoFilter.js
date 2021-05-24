@@ -342,7 +342,7 @@ export default function useFilter() {
     /*    --------------------------- FIM Total -----------------------------  */
     const setDatasetMaxAbstencao = maioresAbstencao.map((valores, index) => {
       const newDataset = {
-        data: valores.max_abstencao,
+        data: [valores.Abstencaomax],
         label: valores.municipio,
         backgroundColor: colors[index],
         borderWidth: 1,
