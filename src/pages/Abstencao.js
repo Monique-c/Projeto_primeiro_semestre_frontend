@@ -32,6 +32,7 @@ export default function Abstencao() {
     escolaridadeDeclaradaPorComparecimentoComparativo,
     totalAbstencao,
     totalComparecimento,
+    MaxAbsten,
   } = useContext(Context);
 
   const [dados, setDados] = useState({});
@@ -138,6 +139,13 @@ export default function Abstencao() {
             Total
           </h5>
           <Bar data={totalAbstencao} />
+        </div>
+        <div>
+          <h5>
+            <b> Abstenção </b>
+            max
+          </h5>
+          <Bar data={MaxAbsten} />
         </div>
       </div>
     );

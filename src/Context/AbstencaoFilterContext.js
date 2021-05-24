@@ -18,6 +18,7 @@ function AbstencaoProvider({ children }) {
     escolaridadeDeclaradaPorComparecimentoComparativo,
     totalAbstencao,
     totalComparecimento,
+    MaxAbsten,
   } = useFilter();
 
   return (
@@ -35,6 +36,7 @@ function AbstencaoProvider({ children }) {
         escolaridadeDeclaradaPorComparecimentoComparativo,
         totalAbstencao,
         totalComparecimento,
+        MaxAbsten,
       }}
     >
       {children}

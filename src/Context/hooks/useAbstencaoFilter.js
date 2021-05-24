@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import api from "../../services/api";
-import abstencao from "../../controllers/abstencao_json";
+import abstencao from "../../controllers/abstencao_atualizao_json";
 import { NewLineKind } from "typescript";
 
 var randomColor = require("randomcolor");
@@ -36,6 +36,8 @@ export default function useFilter() {
   const [totalAbstencao, setTotalAbstencao] = useState([]);
   const [totalComparecimento, setTotalComparecimento] = useState([]);
 
+  const [MaxAbsten, setMaxAbstencao] = useState([]);
+
   async function filtrarDados(form, opcoes) {
     setLoading(true);
     setFiltroAplicado(false);
@@ -51,106 +53,120 @@ export default function useFilter() {
 
   function handleData(data) {
     var colors = randomColor({
-      count: data.length,
+      count: data.comparecimento_abstencao.length,
       luminosity: "bright",
       hue: "random",
     }); // gerando cores aleatóriamente
 
     // Crie constantes para lidar com cada categoria e tema,
     // ex: categoria faixa etaria tema abstenção
-    const handleFaixaEtariaAbstencao = data.map((item) => {
-      //filtre os dados aqui
-      const valores = item.faixa_etaria.map(
-        // data de acordo os valores
-        (abs) => abs.qt_abstencao
-      );
+    const handleFaixaEtariaAbstencao = data.comparecimento_abstencao.map(
+      (item) => {
+        //filtre os dados aqui
+        const valores = item.faixa_etaria.map(
+          // data de acordo os valores
+          (abs) => abs.qt_abstencao
+        );
 
-      const categorias = item.faixa_etaria.map(
-        // Labels do eixo das categorias ou eixo x
-        (abs) => abs.desc_faixa_etaria
-      );
+        const categorias = item.faixa_etaria.map(
+          // Labels do eixo das categorias ou eixo x
+          (abs) => abs.desc_faixa_etaria
+        );
 
-      return {
-        municipio: item.municipio,
-        categorias,
-        valores,
-      };
-    });
+        return {
+          municipio: item.municipio,
+          categorias,
+          valores,
+        };
+      }
+    );
 
-    const handleFaixaEtariaComparecimento = data.map((item) => {
-      const valores = item.faixa_etaria.map(
-        // data de acordo os valores
-        (abs) => abs.qt_comparecimento
-      );
+    const handleFaixaEtariaComparecimento = data.comparecimento_abstencao.map(
+      (item) => {
+        const valores = item.faixa_etaria.map(
+          // data de acordo os valores
+          (abs) => abs.qt_comparecimento
+        );
 
-      const categorias = item.faixa_etaria.map(
-        // Labels do eixo das categorias ou eixo x
-        (abs) => abs.desc_faixa_etaria
-      );
+        const categorias = item.faixa_etaria.map(
+          // Labels do eixo das categorias ou eixo x
+          (abs) => abs.desc_faixa_etaria
+        );
 
-      return {
-        municipio: item.municipio,
-        categorias,
-        valores,
-      };
-    });
+        return {
+          municipio: item.municipio,
+          categorias,
+          valores,
+        };
+      }
+    );
 
     // crie outras const abaixo
-    const handleEstadoCivilAbstencao = data.map((item) => {
-      const valores = item.estado_civil.map((abs) => abs.qt_abstencao);
+    const handleEstadoCivilAbstencao = data.comparecimento_abstencao.map(
+      (item) => {
+        const valores = item.estado_civil.map((abs) => abs.qt_abstencao);
 
-      const categorias = item.estado_civil.map((abs) => abs.desc_estado_civil);
+        const categorias = item.estado_civil.map(
+          (abs) => abs.desc_estado_civil
+        );
 
-      return {
-        municipio: item.municipio,
-        categorias,
-        valores,
-      };
-    });
+        return {
+          municipio: item.municipio,
+          categorias,
+          valores,
+        };
+      }
+    );
 
-    const handleEstadoCivilComparecimento = data.map((item) => {
-      const valores = item.estado_civil.map((abs) => abs.qt_comparecimento);
+    const handleEstadoCivilComparecimento = data.comparecimento_abstencao.map(
+      (item) => {
+        const valores = item.estado_civil.map((abs) => abs.qt_comparecimento);
 
-      const categorias = item.estado_civil.map((abs) => abs.desc_estado_civil);
+        const categorias = item.estado_civil.map(
+          (abs) => abs.desc_estado_civil
+        );
 
-      return {
-        municipio: item.municipio,
-        categorias,
-        valores,
-      };
-    });
+        return {
+          municipio: item.municipio,
+          categorias,
+          valores,
+        };
+      }
+    );
 
-    const handleEscolaridadeDeclaradaAbstencao = data.map((item) => {
-      const valores = item.grau_escolaridade.map((abs) => abs.qt_abstencao);
+    const handleEscolaridadeDeclaradaAbstencao =
+      data.comparecimento_abstencao.map((item) => {
+        const valores = item.grau_escolaridade.map((abs) => abs.qt_abstencao);
 
-      const categorias = item.grau_escolaridade.map(
-        (abs) => abs.desc_grau_escolaridade
-      );
+        const categorias = item.grau_escolaridade.map(
+          (abs) => abs.desc_grau_escolaridade
+        );
 
-      return {
-        municipio: item.municipio,
-        categorias,
-        valores,
-      };
-    });
+        return {
+          municipio: item.municipio,
+          categorias,
+          valores,
+        };
+      });
 
-    const handleEscolaridadeDeclaradaComparecimento = data.map((item) => {
-      const valores = item.grau_escolaridade.map(
-        (abs) => abs.qt_comparecimento
-      );
+    const handleEscolaridadeDeclaradaComparecimento =
+      data.comparecimento_abstencao.map((item) => {
+        const valores = item.grau_escolaridade.map(
+          (abs) => abs.qt_comparecimento
+        );
 
-      const categorias = item.grau_escolaridade.map(
-        (abs) => abs.desc_grau_escolaridade
-      );
+        const categorias = item.grau_escolaridade.map(
+          (abs) => abs.desc_grau_escolaridade
+        );
 
-      return {
-        municipio: item.municipio,
-        categorias,
-        valores,
-      };
-    });
+        return {
+          municipio: item.municipio,
+          categorias,
+          valores,
+        };
+      });
 
-    const handleAbstencaoTotal = data.map((item) => {
+    const handleAbstencaoTotal = data.comparecimento_abstencao.map((item) => {
       const valores = {
         AbstencaoTotal: item.QT_ABSTENCAO,
         municipio: item.municipio,
@@ -159,9 +175,19 @@ export default function useFilter() {
       return valores;
     });
 
-    const handleComparecimentoTotal = data.map((item) => {
+    const handleComparecimentoTotal = data.comparecimento_abstencao.map(
+      (item) => {
+        const valores = {
+          ComparecimentoTotal: item.QT_COMPARECIMENTO,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      }
+    );
+    const handleAbstencaoMax = data.comparecimento_abstencao.map((item) => {
       const valores = {
-        ComparecimentoTotal: item.QT_COMPARECIMENTO,
+        Abstencaomax: item.max_abstencao,
         municipio: item.municipio,
       };
 
@@ -180,6 +206,7 @@ export default function useFilter() {
       handleEstadoCivilAbstencao,
       handleEscolaridadeDeclaradaAbstencao,
       handleAbstencaoTotal,
+      handleAbstencaoMax,
       colors
     );
     handleDataComparecimento(
@@ -210,6 +237,7 @@ export default function useFilter() {
     estadoCivil,
     escolaridadeDeclarada,
     abstencaoTotal,
+    maioresAbstencao,
     colors
   ) {
     /* ----------------------- INICIO Faixa etária -----------------------  */
@@ -312,7 +340,29 @@ export default function useFilter() {
     setTotalAbstencao(datasetAbstencaoTotal);
 
     /*    --------------------------- FIM Total -----------------------------  */
+    const setDatasetMaxAbstencao = maioresAbstencao.map((valores, index) => {
+      const newDataset = {
+        data: [valores.MaioresAbstencao],
+        label: valores.municipio,
+        backgroundColor: colors[index],
+        borderWidth: 1,
+        hoverBackgroundColor: colors[index],
+        hoverBorderColor: colors[index],
+      };
+      console.log(valores);
+      return {
+        datasets: newDataset,
+      };
+    });
+
+    const datasetMaxAbstencao = {
+      labels: [""],
+      datasets: setDatasetMaxAbstencao.map((item) => item.datasets),
+    };
+
+    setMaxAbstencao(datasetMaxAbstencao);
   }
+
   // Modelando dados de Comparecimento
   function handleDataComparecimento(
     faixaEtaria,
@@ -454,6 +504,7 @@ export default function useFilter() {
     escolaridadeDeclaradaPorComparecimentoComparativo,
     totalAbstencao,
     totalComparecimento,
+    MaxAbsten,
   };
   // dados e funções que são utilizados em
   // outros componentes e paginas por exemplo
