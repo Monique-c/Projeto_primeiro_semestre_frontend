@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import api from "../../services/api";
-import eleitorado from "../../controllers/eleitorado_atualizado_json";
+import eleitorado from "../../controllers/eleitorado_json";
 
 var randomColor = require("randomcolor");
 
