@@ -21,17 +21,36 @@ import InfoFilter from "components/Cards/infoFilter";
 export default function Eleitorado() {
   const container = useRef(null);
   const {
-    loading,
     filtroAplicado,
     opcoesVisiveis,
+    loading,
+    //---------------------------------
     faixaEtariaEleitorado,
     estadoCivilEleitorado,
     grauEscolarEleitorado,
     NomeSocialEleitorado,
+    //---------------------------------
     MaxEleitJovens,
     MinEleitJovens,
+    MaxEleitAdultos,
+    MinEleitAdultos,
+    MaxEleitIdosos,
+    MinEleitIdosos,
+    //---------------------------------
+    MaxEleitSupComp,
+    MinEleitSupComp,
+    MaxEleitMedComp,
+    MinEleitMedComp,
+    MaxEleitAnalfabeto,
+    MinEleitAnalfabeto,
+    //---------------------------------
+    MaxEleitCasados,
+    MinEleitCasados,
+    MaxEleitSolteiros,
+    MinEleitSolteiros,
   } = useContext(Context2);
-
+  //---------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------
   useEffect(() => {
     if (loading) {
       lottie.loadAnimation({
@@ -43,9 +62,16 @@ export default function Eleitorado() {
       });
     }
   }, [loading]);
-
-  const [DadosRelevantesButton, setDadosRelevantesButton] = useState(false);
-
+  //---------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------
+  const [DadosRelevantesFxEtButton, setDadosRelevantesFxEtButton] =
+    useState(false);
+  const [DadosRelevantesEscButton, setDadosRelevantesEscButton] =
+    useState(false);
+  const [DadosRelevantesEstCvButton, setDadosRelevantesEstCvButton] =
+    useState(false);
+  //---------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------
   const options = {
     scales: {
       xAxes: [{}],
@@ -58,7 +84,8 @@ export default function Eleitorado() {
       ],
     },
   };
-
+  //---------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------
   const Chart = () => {
     return (
       <div>
@@ -101,25 +128,125 @@ export default function Eleitorado() {
       </div>
     );
   };
-  const ChartRelevantes = () => {
+  //---------------------------------------------------------------------------------------------
+  const ChartRelevantesFxEt = () => {
     return (
       <div>
         <div>
           <h5>
-            <b> Maiores Eleitorados Jovens</b>
+            <b> Maiores Eleitorados de Jovens (%)</b>
           </h5>
           <Bar data={MaxEleitJovens} options={options} />
         </div>
         <div>
           <h5>
-            <b> Menores Eleitorados Jovens</b>
+            <b> Menores Eleitorados de Jovens (%)</b>
           </h5>
           <Bar data={MinEleitJovens} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Eleitorados de Adultos (%)</b>
+          </h5>
+          <Bar data={MaxEleitAdultos} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Eleitorados de Adultos (%)</b>
+          </h5>
+          <Bar data={MinEleitAdultos} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Eleitorados de Idosos (%)</b>
+          </h5>
+          <Bar data={MaxEleitIdosos} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Eleitorados de Idosos (%)</b>
+          </h5>
+          <Bar data={MinEleitIdosos} options={options} />
         </div>
       </div>
     );
   };
-
+  //---------------------------------------------------------------------------------------------
+  const ChartRelevantesEsc = () => {
+    return (
+      <div>
+        <div>
+          <h5>
+            <b> Maiores Eleitorados com Ens. Superior Completo (%)</b>
+          </h5>
+          <Bar data={MaxEleitSupComp} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Eleitorados com Ens. Superior Completo (%)</b>
+          </h5>
+          <Bar data={MinEleitSupComp} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Eleitorados com Ens. Médio Completo (%)</b>
+          </h5>
+          <Bar data={MaxEleitMedComp} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Eleitorados com Ens. Médio Completo (%)</b>
+          </h5>
+          <Bar data={MinEleitMedComp} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Eleitorados de Analfabetos (%)</b>
+          </h5>
+          <Bar data={MaxEleitAnalfabeto} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Eleitorados de Analfabetos (%)</b>
+          </h5>
+          <Bar data={MinEleitAnalfabeto} options={options} />
+        </div>
+      </div>
+    );
+  };
+  //---------------------------------------------------------------------------------------------
+  const ChartRelevantesEstCv = () => {
+    return (
+      <div>
+        <div>
+          <h5>
+            <b> Maiores Eleitorados de Casados (%)</b>
+          </h5>
+          <Bar data={MaxEleitCasados} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Eleitorados de Casados (%)</b>
+          </h5>
+          <Bar data={MinEleitCasados} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Eleitorados de Solteiros (%)</b>
+          </h5>
+          <Bar data={MaxEleitSolteiros} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Eleitorados de Solteiros (%)</b>
+          </h5>
+          <Bar data={MinEleitSolteiros} options={options} />
+        </div>
+      </div>
+    );
+  };
+  //---------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------
   return (
     <>
       <Navbar />
@@ -127,17 +254,15 @@ export default function Eleitorado() {
         <div className="text-center my-5">
           <span className="eleitorado-title">Perfil do Eleitorado</span>
         </div>
-
         <Row>
           <Col lg="4">
             <EleitoradoFilter />
           </Col>
-
           {loading ? (
             <Col>
               <Row
                 style={{ height: "30%", marginTop: "-4%" }}
-                className="d-flex align-items-center mr-5"
+                className="d-flex align-items-start mr-5"
               >
                 <div className="loading_lottie" ref={container} />
               </Row>
@@ -147,17 +272,19 @@ export default function Eleitorado() {
               {filtroAplicado ? (
                 <Col lg="8">
                   <Chart />
-                  {!DadosRelevantesButton ? (
+                  {!DadosRelevantesFxEtButton ? (
                     <Row className="d-flex justify-content-start mr-3">
                       <Button
                         onClick={() =>
-                          setDadosRelevantesButton(!DadosRelevantesButton)
+                          setDadosRelevantesFxEtButton(
+                            !DadosRelevantesFxEtButton
+                          )
                         }
                         style={{
                           backgroundColor: "#214bb5",
                         }}
                       >
-                        Mostrar Dados Relevantes
+                        Mostrar Dados Relevantes - Faixa Etária
                       </Button>
                     </Row>
                   ) : (
@@ -165,17 +292,93 @@ export default function Eleitorado() {
                       <Row className="d-flex justify-content-start mr-3">
                         <Button
                           onClick={() =>
-                            setDadosRelevantesButton(!DadosRelevantesButton)
+                            setDadosRelevantesFxEtButton(
+                              !DadosRelevantesFxEtButton
+                            )
                           }
                           style={{
                             backgroundColor: "#214bb5",
                           }}
                         >
-                          Esconder Dados Relevantes
+                          Esconder Dados Relevantes - Faixa Etária
                         </Button>
                       </Row>
-                      <h3 className="renda-title">Dados Relevantes</h3>
-                      <ChartRelevantes className="charts" />
+                      <h3 className="renda-title">
+                        Dados Relevantes - Faixa Etária
+                      </h3>
+                      <ChartRelevantesFxEt className="charts" />
+                    </div>
+                  )}
+                  {!DadosRelevantesEscButton ? (
+                    <Row className="d-flex justify-content-start mr-3">
+                      <Button
+                        onClick={() =>
+                          setDadosRelevantesEscButton(!DadosRelevantesEscButton)
+                        }
+                        style={{
+                          backgroundColor: "#214bb5",
+                        }}
+                      >
+                        Mostrar Dados Relevantes - Escolaridade
+                      </Button>
+                    </Row>
+                  ) : (
+                    <div>
+                      <Row className="d-flex justify-content-start mr-3">
+                        <Button
+                          onClick={() =>
+                            setDadosRelevantesEscButton(
+                              !DadosRelevantesEscButton
+                            )
+                          }
+                          style={{
+                            backgroundColor: "#214bb5",
+                          }}
+                        >
+                          Esconder Dados Relevantes - Escolaridade
+                        </Button>
+                      </Row>
+                      <h3 className="renda-title">
+                        Dados Relevantes - Escolaridade
+                      </h3>
+                      <ChartRelevantesEsc className="charts" />
+                    </div>
+                  )}
+                  {!DadosRelevantesEstCvButton ? (
+                    <Row className="d-flex justify-content-start mr-3">
+                      <Button
+                        onClick={() =>
+                          setDadosRelevantesEstCvButton(
+                            !DadosRelevantesEstCvButton
+                          )
+                        }
+                        style={{
+                          backgroundColor: "#214bb5",
+                        }}
+                      >
+                        Mostrar Dados Relevantes - Estado Cívil
+                      </Button>
+                    </Row>
+                  ) : (
+                    <div>
+                      <Row className="d-flex justify-content-start mr-3">
+                        <Button
+                          onClick={() =>
+                            setDadosRelevantesEstCvButton(
+                              !DadosRelevantesEstCvButton
+                            )
+                          }
+                          style={{
+                            backgroundColor: "#214bb5",
+                          }}
+                        >
+                          Esconder Dados Relevantes - Estado Cívil
+                        </Button>
+                      </Row>
+                      <h3 className="renda-title">
+                        Dados Relevantes - Estado Cívil
+                      </h3>
+                      <ChartRelevantesEstCv className="charts" />
                     </div>
                   )}
                 </Col>
