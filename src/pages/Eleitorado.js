@@ -4,7 +4,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 
 import { Bar, HorizontalBar } from "react-chartjs-2";
 
-import { Context2 } from "../Context/EleitoradoFilterContext";
+import { Context } from "../Context/EleitoradoFilterContext";
 
 import lottie from "lottie-web";
 import loading_lottie from "../assets/lottieJSONs/loading_lottie.json";
@@ -48,7 +48,7 @@ export default function Eleitorado() {
     MinEleitCasados,
     MaxEleitSolteiros,
     MinEleitSolteiros,
-  } = useContext(Context2);
+  } = useContext(Context);
   //---------------------------------------------------------------------------------------------
   //---------------------------------------------------------------------------------------------
   useEffect(() => {

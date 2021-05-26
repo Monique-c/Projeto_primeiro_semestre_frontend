@@ -16,7 +16,7 @@ import {
   CustomInput,
 } from "reactstrap";
 
-import { Context2 } from "../../Context/EleitoradoFilterContext";
+import { Context } from "../../Context/EleitoradoFilterContext";
 
 //import api from "../../services/api";
 import ibge from "../../services/api_ibge";
@@ -37,7 +37,7 @@ export default function EleitoradoFilter() {
 
   const [fadeComparacao, setFadeComparacao] = useState(false);
 
-  const { filtrarDados } = useContext(Context2);
+  const { filtrarDados } = useContext(Context);
 
   useEffect(() => {
     (async () => {

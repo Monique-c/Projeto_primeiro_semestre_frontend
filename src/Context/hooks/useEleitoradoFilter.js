@@ -141,7 +141,6 @@ export default function useFilter() {
           min_eleitorado_jovens: eleMinJov.porcentagem_eleitorado_jovens,
           municipio: eleMinJov.municipio,
         };
-        console.log(municipios);
         return municipios;
       }
     );
@@ -162,7 +161,6 @@ export default function useFilter() {
           min_eleitorado_adultos: eleMinAdu.porcentagem_eleitorado_adultos,
           municipio: eleMinAdu.municipio,
         };
-        console.log(municipios);
         return municipios;
       }
     );
@@ -183,7 +181,6 @@ export default function useFilter() {
           min_eleitorado_idosos: eleMinIdo.porcentagem_eleitorado_idosos,
           municipio: eleMinIdo.municipio,
         };
-        console.log(municipios);
         return municipios;
       }
     );
@@ -205,7 +202,6 @@ export default function useFilter() {
             eleMinSupComp.porcentagem_eleitorado_superior_completo,
           municipio: eleMinSupComp.municipio,
         };
-        console.log(municipios);
         return municipios;
       });
 
@@ -227,7 +223,6 @@ export default function useFilter() {
             eleMinMedComp.porcentagem_eleitorado_medio_completo,
           municipio: eleMinMedComp.municipio,
         };
-        console.log(municipios);
         return municipios;
       }
     );
@@ -250,7 +245,6 @@ export default function useFilter() {
             eleMinAnf.porcentagem_eleitorado_analfabeto,
           municipio: eleMinAnf.municipio,
         };
-        console.log(municipios);
         return municipios;
       }
     );
@@ -271,7 +265,6 @@ export default function useFilter() {
           min_eleitorado_casados: eleMinCasados.porcentagem_eleitorado_casados,
           municipio: eleMinCasados.municipio,
         };
-        console.log(municipios);
         return municipios;
       }
     );
@@ -294,7 +287,6 @@ export default function useFilter() {
             eleMinSolteiros.porcentagem_eleitorado_solteiros,
           municipio: eleMinSolteiros.municipio,
         };
-        console.log(municipios);
         return municipios;
       }
     );
@@ -425,7 +417,6 @@ export default function useFilter() {
   //---------------------------------------------------------------------------------------------
   function handleDataMaxEleitoradoJovens(MaxEleitJovens) {
     const setdatasetMaxEleitJovens = MaxEleitJovens.map((item) => {
-      console.log(MaxEleitJovens);
       var colors = randomColor({
         count: MaxEleitJovens.length,
         luminosity: "bright",
@@ -441,7 +432,6 @@ export default function useFilter() {
         alpha: 1,
       };
       const dataset = MaxEleitJovens.map((municipios, index) => {
-        console.log(municipios);
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_jovens],
@@ -498,7 +488,6 @@ export default function useFilter() {
   //---------------------------------------------------------------------------------------------
   function handleDataMaxEleitoradoAdultos(MaxEleitAdultos) {
     const setdatasetMaxEleitAdultos = MaxEleitAdultos.map((item) => {
-      console.log(MaxEleitAdultos);
       var colors = randomColor({
         count: MaxEleitAdultos.length,
         luminosity: "bright",
@@ -514,7 +503,6 @@ export default function useFilter() {
         alpha: 1,
       };
       const dataset = MaxEleitAdultos.map((municipios, index) => {
-        console.log(municipios);
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_adultos],
@@ -571,7 +559,6 @@ export default function useFilter() {
   //---------------------------------------------------------------------------------------------
   function handleDataMaxEleitoradoIdosos(MaxEleitIdosos) {
     const setdatasetMaxEleitIdosos = MaxEleitIdosos.map((item) => {
-      console.log(MaxEleitIdosos);
       var colors = randomColor({
         count: MaxEleitIdosos.length,
         luminosity: "bright",
@@ -587,7 +574,6 @@ export default function useFilter() {
         alpha: 1,
       };
       const dataset = MaxEleitIdosos.map((municipios, index) => {
-        console.log(municipios);
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_idosos],
@@ -645,7 +631,6 @@ export default function useFilter() {
   //---------------------------------------------------------------------------------------------
   function handleDataMaxEleitoradoSupComp(MaxEleitSupComp) {
     const setdatasetMaxEleitSupComp = MaxEleitSupComp.map((item) => {
-      console.log(MaxEleitSupComp);
       var colors = randomColor({
         count: MaxEleitSupComp.length,
         luminosity: "bright",
@@ -661,7 +646,6 @@ export default function useFilter() {
         alpha: 1,
       };
       const dataset = MaxEleitSupComp.map((municipios, index) => {
-        console.log(municipios);
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_superior_completo],
@@ -718,7 +702,6 @@ export default function useFilter() {
   //---------------------------------------------------------------------------------------------
   function handleDataMaxEleitoradoMedComp(MaxEleitMedComp) {
     const setdatasetMaxEleitMedComp = MaxEleitMedComp.map((item) => {
-      console.log(MaxEleitMedComp);
       var colors = randomColor({
         count: MaxEleitMedComp.length,
         luminosity: "bright",
@@ -734,7 +717,6 @@ export default function useFilter() {
         alpha: 1,
       };
       const dataset = MaxEleitMedComp.map((municipios, index) => {
-        console.log(municipios);
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_medio_completo],
@@ -791,7 +773,6 @@ export default function useFilter() {
   //---------------------------------------------------------------------------------------------
   function handleDataMaxEleitoradoAnalfabeto(MaxEleitAnalfabeto) {
     const setdatasetMaxEleitAnalfabeto = MaxEleitAnalfabeto.map((item) => {
-      console.log(MaxEleitAnalfabeto);
       var colors = randomColor({
         count: MaxEleitAnalfabeto.length,
         luminosity: "bright",
@@ -807,7 +788,6 @@ export default function useFilter() {
         alpha: 1,
       };
       const dataset = MaxEleitAnalfabeto.map((municipios, index) => {
-        console.log(municipios);
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_analfabeto],
@@ -865,7 +845,6 @@ export default function useFilter() {
   //---------------------------------------------------------------------------------------------
   function handleDataMaxEleitoradoCasados(MaxEleitCasados) {
     const setdatasetMaxEleitCasados = MaxEleitCasados.map((item) => {
-      console.log(MaxEleitCasados);
       var colors = randomColor({
         count: MaxEleitCasados.length,
         luminosity: "bright",
@@ -881,7 +860,6 @@ export default function useFilter() {
         alpha: 1,
       };
       const dataset = MaxEleitCasados.map((municipios, index) => {
-        console.log(municipios);
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_casados],
@@ -938,7 +916,6 @@ export default function useFilter() {
   //---------------------------------------------------------------------------------------------
   function handleDataMaxEleitoradoSolteiros(MaxEleitSolteiros) {
     const setdatasetMaxEleitSolteiros = MaxEleitSolteiros.map((item) => {
-      console.log(MaxEleitSolteiros);
       var colors = randomColor({
         count: MaxEleitSolteiros.length,
         luminosity: "bright",
@@ -954,7 +931,6 @@ export default function useFilter() {
         alpha: 1,
       };
       const dataset = MaxEleitSolteiros.map((municipios, index) => {
-        console.log(municipios);
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_solteiros],

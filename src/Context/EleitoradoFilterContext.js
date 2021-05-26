@@ -2,7 +2,7 @@ import React, { createContext } from "react";
 
 import useFilter from "./hooks/useEleitoradoFilter";
 
-const Context2 = createContext();
+const Context = createContext();
 
 function EleitoradoProvider({ children }) {
   const {
@@ -37,7 +37,7 @@ function EleitoradoProvider({ children }) {
   } = useFilter();
 
   return (
-    <Context2.Provider
+    <Context.Provider
       value={{
         filtroAplicado,
         opcoesVisiveis,
@@ -70,8 +70,8 @@ function EleitoradoProvider({ children }) {
       }}
     >
       {children}
-    </Context2.Provider>
+    </Context.Provider>
   );
 }
 
-export { Context2, EleitoradoProvider };
+export { Context, EleitoradoProvider };
