@@ -274,7 +274,7 @@ export default function useFilter() {
         return {
           label: value.municipio,
           data: [value.min_PIB],
-          backgroundColor: [colors[index], 0.5],
+          backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
         };
@@ -349,7 +349,7 @@ export default function useFilter() {
         return {
           label: value.municipio,
           data: [value.max_PIB_percapita],
-          backgroundColor: [colors[index], 0.5],
+          backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
         };
@@ -387,7 +387,7 @@ export default function useFilter() {
         return {
           label: value.municipio,
           data: [value.min_PIB_percapita],
-          backgroundColor: [colors[index], 0.5],
+          backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
         };
