@@ -19,6 +19,24 @@ function AbstencaoProvider({ children }) {
     totalAbstencao,
     totalComparecimento,
     MaxAbsten,
+    MinAbsten,
+
+    Maxjovens,
+    Minjovens,
+    MaxAdultos,
+    MinAdultos,
+    MinIdosos,
+    MaxIdosos,
+    MaxAnalfabeto,
+    MinAnalfabeto,
+    MaxMedioCompleto,
+    MinMedioCompleto,
+    MaxSuperiorCompleto,
+    MinSuperiorCompleto,
+    MinCasados,
+    MaxCasados,
+    MinSolteiros,
+    MaxSolteiros,
   } = useFilter();
 
   return (
@@ -37,6 +55,24 @@ function AbstencaoProvider({ children }) {
         totalAbstencao,
         totalComparecimento,
         MaxAbsten,
+        MinAbsten,
+
+        Maxjovens,
+        Minjovens,
+        MaxAdultos,
+        MinAdultos,
+        MinIdosos,
+        MaxIdosos,
+        MaxAnalfabeto,
+        MinAnalfabeto,
+        MaxMedioCompleto,
+        MinMedioCompleto,
+        MaxSuperiorCompleto,
+        MinSuperiorCompleto,
+        MinCasados,
+        MaxCasados,
+        MinSolteiros,
+        MaxSolteiros,
       }}
     >
       {children}

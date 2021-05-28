@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 
 import { Bar, HorizontalBar } from "react-chartjs-2";
 
@@ -33,10 +33,29 @@ export default function Abstencao() {
     totalAbstencao,
     totalComparecimento,
     MaxAbsten,
+    MinAbsten,
+    Maxjovens,
+    Minjovens,
+    MaxAdultos,
+    MinAdultos,
+    MinIdosos,
+    MaxIdosos,
+    MaxAnalfabeto,
+    MinAnalfabeto,
+    MaxMedioCompleto,
+    MinMedioCompleto,
+    MaxSuperiorCompleto,
+    MinSuperiorCompleto,
+    MinCasados,
+    MaxCasados,
+    MinSolteiros,
+    MaxSolteiros,
   } = useContext(Context);
 
   const [dados, setDados] = useState({});
   const [qtEleitores, setQtEleitores] = useState({});
+
+  const [DadosRelevantesButton, setDadosRelevantesButton] = useState(false);
 
   useEffect(() => {
     if (loading) {
@@ -140,12 +159,120 @@ export default function Abstencao() {
           </h5>
           <Bar data={totalAbstencao} />
         </div>
+      </div>
+    );
+  };
+
+  const ChartRelevantes = () => {
+    return (
+      <div>
         <div>
           <h5>
-            <b> Abstenção </b>
-            max
+            <b> Maiores Abstenções </b>
           </h5>
-          <Bar data={MaxAbsten} />
+          <Bar data={MaxAbsten} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Abstenções </b>
+          </h5>
+          <Bar data={MinAbsten} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Abstenções entre jovens </b>
+          </h5>
+          <Bar data={Maxjovens} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Abstenções entre jovens </b>
+          </h5>
+          <Bar data={Minjovens} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Abstenções entre adultos </b>
+          </h5>
+          <Bar data={MaxAdultos} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Abstenções entre adultos </b>
+          </h5>
+          <Bar data={MinAdultos} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Abstenções entre idosos </b>
+          </h5>
+          <Bar data={MinIdosos} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Abstenções entre idosos </b>
+          </h5>
+          <Bar data={MaxIdosos} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Abstenções entre analfabetos</b>
+          </h5>
+          <Bar data={MaxAnalfabeto} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Abstenções entre analfabetos</b>
+          </h5>
+          <Bar data={MinAnalfabeto} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Abstenções por Ensino Médio Completo</b>
+          </h5>
+          <Bar data={MaxMedioCompleto} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Abstenções por Ensino Médio Completo </b>
+          </h5>
+          <Bar data={MinMedioCompleto} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Abstenções por Superior Completo </b>
+          </h5>
+          <Bar data={MaxSuperiorCompleto} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Abstenções por Superior Completo </b>
+          </h5>
+          <Bar data={MinSuperiorCompleto} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Abstenções entre casados </b>
+          </h5>
+          <Bar data={MinCasados} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Abstenções entre casados </b>
+          </h5>
+          <Bar data={MaxCasados} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Menores Abstenções entre solteiros </b>
+          </h5>
+          <Bar data={MinSolteiros} options={options} />
+        </div>
+        <div>
+          <h5>
+            <b> Maiores Abstenções entre solteiros </b>
+          </h5>
+          <Bar data={MaxSolteiros} options={options} />
         </div>
       </div>
     );
@@ -154,7 +281,7 @@ export default function Abstencao() {
   return (
     <>
       <Navbar />
-      <Container style={{ minHeight: "90vh" }} fluid>
+      <Container style={{ minHeight: "90vh", marginTop: "8%" }} fluid>
         <div className="text-center my-5">
           <span className="abstencao-title">Comparecimento/Abstenção</span>
         </div>
@@ -178,6 +305,37 @@ export default function Abstencao() {
               {filtroAplicado ? (
                 <Col lg="7">
                   <Chart />
+                  {!DadosRelevantesButton ? (
+                    <Row className="d-flex justify-content-start mr-3">
+                      <Button
+                        onClick={() =>
+                          setDadosRelevantesButton(!DadosRelevantesButton)
+                        }
+                        style={{
+                          backgroundColor: "#214bb5",
+                        }}
+                      >
+                        Mostrar Dados Relevantes
+                      </Button>
+                    </Row>
+                  ) : (
+                    <div>
+                      <Row className="d-flex justify-content-start mr-3">
+                        <Button
+                          onClick={() =>
+                            setDadosRelevantesButton(!DadosRelevantesButton)
+                          }
+                          style={{
+                            backgroundColor: "#214bb5",
+                          }}
+                        >
+                          Esconder Dados Relevantes
+                        </Button>
+                      </Row>
+                      <h3 className="renda-title">Dados Relevantes</h3>
+                      <ChartRelevantes className="charts" />
+                    </div>
+                  )}
                 </Col>
               ) : (
                 <Col>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import api from "../../services/api";
-import abstencao from "../../controllers/abstencao_atualizao_json";
+import abstencao from "../../controllers/abstencao_atualizado_json";
 import { NewLineKind } from "typescript";
 
 var randomColor = require("randomcolor");
@@ -37,6 +37,24 @@ export default function useFilter() {
   const [totalComparecimento, setTotalComparecimento] = useState([]);
 
   const [MaxAbsten, setMaxAbstencao] = useState([]);
+  const [MinAbsten, setMinAbstencao] = useState([]);
+
+  const [Maxjovens, setMinJovensAbstencao] = useState([]);
+  const [Minjovens, setMaxJovensAbstencao] = useState([]);
+  const [MaxAdultos, setMaxAdultosAbstencao] = useState([]);
+  const [MinAdultos, setMinAdultosAbstencao] = useState([]);
+  const [MinIdosos, setMinIdososAbstencao] = useState([]);
+  const [MaxIdosos, setMaxIdososAbstencao] = useState([]);
+  const [MaxAnalfabeto, setMaxAnalfabetoAbstencao] = useState([]);
+  const [MinAnalfabeto, setMinAnalfabetoAbstencao] = useState([]);
+  const [MaxMedioCompleto, setMaxMedioCompletoAbstencao] = useState([]);
+  const [MinMedioCompleto, setMinMedioCompletoAbstencao] = useState([]);
+  const [MaxSuperiorCompleto, setMaxSuperiorCompletoAbstencao] = useState([]);
+  const [MinSuperiorCompleto, setMinSuperiorCompletoAbstencao] = useState([]);
+  const [MinCasados, setMinCasadosAbstencao] = useState([]);
+  const [MaxCasados, setMaxCasadosAbstencao] = useState([]);
+  const [MinSolteiros, setMinSolteirosAbstencao] = useState([]);
+  const [MaxSolteiros, setMaxSolteirosAbstencao] = useState([]);
 
   async function filtrarDados(form, opcoes) {
     setLoading(true);
@@ -56,7 +74,16 @@ export default function useFilter() {
       count: data.comparecimento_abstencao.length,
       luminosity: "bright",
       hue: "random",
+      format: "rgba",
+      alpha: 0.4,
     }); // gerando cores aleatóriamente
+    var borderColors = {
+      count: data.length,
+      luminosity: "bright",
+      hue: colors.hue,
+      format: "rgba",
+      alpha: 1,
+    };
 
     // Crie constantes para lidar com cada categoria e tema,
     // ex: categoria faixa etaria tema abstenção
@@ -187,12 +214,182 @@ export default function useFilter() {
     );
     const handleAbstencaoMax = data.maiores_abstencoes.map((item) => {
       const valores = {
-        Abstencaomax: item.max_abstencao,
+        AbstencaoRelevantes: item.min_abstencao,
         municipio: item.municipio,
       };
 
       return valores;
     });
+    const handleAbstencaoMin = data.menores_abstencoes.map((item) => {
+      const valores = {
+        AbstencaoRelevantes: item.min_abstencao,
+        municipio: item.municipio,
+      };
+
+      return valores;
+    });
+    //---------------------------------------------------------------------------------------\\
+    const handleRelevantesMINJovens = data.min_abstencoes_jovens.map((item) => {
+      const valores = {
+        AbstencaoRelevantes: item.abstencao_jovens,
+        municipio: item.municipio,
+      };
+
+      return valores;
+    });
+    const handleRelevantesMAXJovens = data.max_abstencoes_jovens.map((item) => {
+      const valores = {
+        AbstencaoRelevantes: item.abstencao_jovens,
+        municipio: item.municipio,
+      };
+
+      return valores;
+    });
+
+    const handleRelevantesMINadultos = data.min_abstencoes_adultos.map(
+      (item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_adultos,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      }
+    );
+
+    const handleRelevantesMAXadultos = data.max_abstencoes_adultos.map(
+      (item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_adultos,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      }
+    );
+
+    const handleRelevantesMINidosos = data.min_abstencoes_idosos.map((item) => {
+      const valores = {
+        AbstencaoRelevantes: item.abstencao_idosos,
+        municipio: item.municipio,
+      };
+
+      return valores;
+    });
+    const handleRelevantesMAXidosos = data.max_abstencoes_idosos.map((item) => {
+      const valores = {
+        AbstencaoRelevantes: item.abstencao_idosos,
+        municipio: item.municipio,
+      };
+
+      return valores;
+    });
+    //--------------------------------------------------------------------------------------\\
+    const handleRelevantesMINanalfabeto = data.min_abstencoes_analfabeto.map(
+      (item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_analfabetos,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      }
+    );
+
+    const handleRelevantesMAXanalfabeto = data.max_abstencoes_analfabeto.map(
+      (item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_analfabetos,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      }
+    );
+
+    const handleRelevantesMINmedioCompleto =
+      data.min_abstencoes_medio_completo.map((item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_medio_completo,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      });
+
+    const handleRelevantesMAXmedioCompleto =
+      data.max_abstencoes_medio_completo.map((item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_medio_completo,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      });
+
+    const handleRelevantesMINsuperiorCompleto =
+      data.min_abstencoes_superior_completo.map((item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_superior_completo,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      });
+
+    const handleRelevantesMAXsuperiorCompleto =
+      data.max_abstencoes_superior_completo.map((item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_superior_completo,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      });
+
+    const handleRelevantesMINcasados = data.min_abstencoes_casados.map(
+      (item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_casados,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      }
+    );
+
+    const handleRelevantesMAXcasados = data.max_abstencoes_casados.map(
+      (item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_casados,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      }
+    );
+
+    const handleRelevantesMINsolteiros = data.min_abstencoes_solteiros.map(
+      (item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_solteiros,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      }
+    );
+
+    const handleRelevantesMAXsolteiros = data.max_abstencoes_solteiros.map(
+      (item) => {
+        const valores = {
+          AbstencaoRelevantes: item.abstencao_solteiros,
+          municipio: item.municipio,
+        };
+
+        return valores;
+      }
+    );
 
     /* Chamando funções:
       Passe os dados "tratados" em funções diferentes para cada tema.
@@ -207,7 +404,28 @@ export default function useFilter() {
       handleEscolaridadeDeclaradaAbstencao,
       handleAbstencaoTotal,
       handleAbstencaoMax,
-      colors
+      handleAbstencaoMin,
+      //-------------RELEVANTES---------------\\
+      handleRelevantesMINJovens,
+      handleRelevantesMAXJovens,
+      handleRelevantesMAXadultos,
+      handleRelevantesMINadultos,
+      handleRelevantesMAXidosos,
+      handleRelevantesMINidosos,
+
+      handleRelevantesMAXanalfabeto,
+      handleRelevantesMINanalfabeto,
+      handleRelevantesMAXmedioCompleto,
+      handleRelevantesMINmedioCompleto,
+      handleRelevantesMAXsuperiorCompleto,
+      handleRelevantesMINsuperiorCompleto,
+
+      handleRelevantesMINcasados,
+      handleRelevantesMAXcasados,
+      handleRelevantesMINsolteiros,
+      handleRelevantesMAXsolteiros,
+      colors,
+      borderColors
     );
     handleDataComparecimento(
       handleFaixaEtariaComparecimento,
@@ -238,6 +456,27 @@ export default function useFilter() {
     escolaridadeDeclarada,
     abstencaoTotal,
     maioresAbstencao,
+    menoresAbstencao,
+
+    maxjovens,
+    minjovens,
+    maxadultos,
+    minadultos,
+    maxidosos,
+    minidosos,
+
+    maxanalfabeto,
+    minanalfabeto,
+    maxEMcompleto,
+    minEMcompleto,
+    maxSPRcompleto,
+    minSPRcompleto,
+
+    mincasados,
+    maxcasados,
+    minsolteiros,
+    maxsolteiros,
+
     colors
   ) {
     /* ----------------------- INICIO Faixa etária -----------------------  */
@@ -340,27 +579,627 @@ export default function useFilter() {
     setTotalAbstencao(datasetAbstencaoTotal);
 
     /*    --------------------------- FIM Total -----------------------------  */
-    const setDatasetMaxAbstencao = maioresAbstencao.map((valores, index) => {
-      const newDataset = {
-        data: [valores.Abstencaomax],
-        label: valores.municipio,
-        backgroundColor: colors[index],
-        borderWidth: 1,
-        hoverBackgroundColor: colors[index],
-        hoverBorderColor: colors[index],
+
+    /*    --------------------------- INICIO Max -----------------------------  */
+    const setDatasetMaxAbstencao = maioresAbstencao.map((item) => {
+      var colors = randomColor({
+        count: maioresAbstencao.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: maioresAbstencao.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
       };
-      console.log(newDataset);
-      return {
-        datasets: newDataset,
-      };
+      const newDataset = maioresAbstencao.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
     });
 
     const datasetMaxAbstencao = {
       labels: [""],
-      datasets: setDatasetMaxAbstencao.map((item) => item.datasets),
+      datasets: setDatasetMaxAbstencao[0],
     };
 
     setMaxAbstencao(datasetMaxAbstencao);
+    /*    --------------------------- FIM Max -----------------------------  */
+
+    /*    --------------------------- INICIO Min -----------------------------  */
+
+    const setDatasetMinAbstencao = menoresAbstencao.map((item) => {
+      var colors = randomColor({
+        count: menoresAbstencao.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: menoresAbstencao.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = menoresAbstencao.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMinAbstencao = {
+      labels: [""],
+      datasets: setDatasetMinAbstencao[0],
+    };
+
+    setMinAbstencao(datasetMinAbstencao);
+    /*    --------------------------- FIM Min -----------------------------  */
+
+    const setDatasetMaxjovensAbstencao = maxjovens.map((item) => {
+      var colors = randomColor({
+        count: maxjovens.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: maxjovens.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = maxjovens.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMaxjovensAbstencao = {
+      labels: [""],
+      datasets: setDatasetMaxjovensAbstencao[0],
+    };
+
+    setMaxJovensAbstencao(datasetMaxjovensAbstencao);
+
+    const setDatasetMinjovensAbstencao = minjovens.map((item) => {
+      var colors = randomColor({
+        count: minjovens.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: minjovens.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = minjovens.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMinjovensAbstencao = {
+      labels: [""],
+      datasets: setDatasetMinjovensAbstencao[0],
+    };
+
+    setMinJovensAbstencao(datasetMinjovensAbstencao);
+
+    const setDatasetMaxadultosAbstencao = maxadultos.map((item) => {
+      var colors = randomColor({
+        count: maxadultos.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: maxadultos.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = maxadultos.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMaxadultosAbstencao = {
+      labels: [""],
+      datasets: setDatasetMaxadultosAbstencao[0],
+    };
+
+    setMaxAdultosAbstencao(datasetMaxadultosAbstencao);
+
+    const setDatasetMinadultosAbstencao = minadultos.map((item) => {
+      var colors = randomColor({
+        count: minadultos.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: minadultos.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = minadultos.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMinadultosAbstencao = {
+      labels: [""],
+      datasets: setDatasetMinadultosAbstencao[0],
+    };
+
+    setMinAdultosAbstencao(datasetMinadultosAbstencao);
+
+    const setDatasetMaxidososAbstencao = maxidosos.map((item) => {
+      var colors = randomColor({
+        count: maxidosos.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: maxidosos.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = maxidosos.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMAXidososbstencao = {
+      labels: [""],
+      datasets: setDatasetMaxidososAbstencao[0],
+    };
+
+    setMaxIdososAbstencao(datasetMAXidososbstencao);
+
+    const setDatasetMinidososAbstencao = minidosos.map((item) => {
+      var colors = randomColor({
+        count: minidosos.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: minidosos.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = minidosos.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMINidososbstencao = {
+      labels: [""],
+      datasets: setDatasetMinidososAbstencao[0],
+    };
+
+    setMinIdososAbstencao(datasetMINidososbstencao);
+
+    const setDatasetMaxAnalfabetoAbstencao = maxanalfabeto.map((item) => {
+      var colors = randomColor({
+        count: maxanalfabeto.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: maxanalfabeto.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = maxanalfabeto.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMAXanalfabetobstencao = {
+      labels: [""],
+      datasets: setDatasetMaxAnalfabetoAbstencao[0],
+    };
+
+    setMaxAnalfabetoAbstencao(datasetMAXanalfabetobstencao);
+
+    const setDatasetMinAnalfabetoAbstencao = minanalfabeto.map((item) => {
+      var colors = randomColor({
+        count: minanalfabeto.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: minanalfabeto.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = minanalfabeto.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMINanalfabetobstencao = {
+      labels: [""],
+      datasets: setDatasetMinAnalfabetoAbstencao[0],
+    };
+
+    setMinAnalfabetoAbstencao(datasetMINanalfabetobstencao);
+
+    const setDatasetMAXmedioCompletoAbstencao = maxEMcompleto.map((item) => {
+      var colors = randomColor({
+        count: maxEMcompleto.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: maxEMcompleto.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = maxEMcompleto.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMaxMedioCompletoAbstencao = {
+      labels: [""],
+      datasets: setDatasetMAXmedioCompletoAbstencao[0],
+    };
+
+    setMaxMedioCompletoAbstencao(datasetMaxMedioCompletoAbstencao);
+
+    const setDatasetMINmedioCompletoAbstencao = minEMcompleto.map((item) => {
+      var colors = randomColor({
+        count: minEMcompleto.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: minEMcompleto.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = minEMcompleto.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMinMedioCompletoAbstencao = {
+      labels: [""],
+      datasets: setDatasetMINmedioCompletoAbstencao[0],
+    };
+
+    setMinMedioCompletoAbstencao(datasetMinMedioCompletoAbstencao);
+
+    const setDatasetMAXsuperiorCompletoAbstencao = maxSPRcompleto.map(
+      (item) => {
+        var colors = randomColor({
+          count: maxSPRcompleto.length,
+          luminosity: "bright",
+          hue: "random",
+          format: "rgba",
+          alpha: 0.4,
+        });
+        var borderColors = {
+          count: maxSPRcompleto.length,
+          luminosity: "bright",
+          hue: colors.hue,
+          format: "rgba",
+          alpha: 1,
+        };
+        const newDataset = maxSPRcompleto.map((valores, index) => {
+          return {
+            data: [valores.AbstencaoRelevantes],
+            label: valores.municipio,
+            backgroundColor: [colors[index]],
+            borderColor: [borderColors[index]],
+            borderWidth: 2,
+          };
+        });
+        return newDataset;
+      }
+    );
+
+    const datasetMaxSuperiorCompletoAbstencao = {
+      labels: [""],
+      datasets: setDatasetMAXsuperiorCompletoAbstencao[0],
+    };
+
+    setMaxSuperiorCompletoAbstencao(datasetMaxSuperiorCompletoAbstencao);
+
+    const setDatasetMINsuperiorCompletoAbstencao = minSPRcompleto.map(
+      (item) => {
+        var colors = randomColor({
+          count: minSPRcompleto.length,
+          luminosity: "bright",
+          hue: "random",
+          format: "rgba",
+          alpha: 0.4,
+        });
+        var borderColors = {
+          count: minSPRcompleto.length,
+          luminosity: "bright",
+          hue: colors.hue,
+          format: "rgba",
+          alpha: 1,
+        };
+        const newDataset = minSPRcompleto.map((valores, index) => {
+          return {
+            data: [valores.AbstencaoRelevantes],
+            label: valores.municipio,
+            backgroundColor: [colors[index]],
+            borderColor: [borderColors[index]],
+            borderWidth: 2,
+          };
+        });
+        return newDataset;
+      }
+    );
+
+    const datasetMinSuperiorCompletoAbstencao = {
+      labels: [""],
+      datasets: setDatasetMINsuperiorCompletoAbstencao[0],
+    };
+
+    setMinSuperiorCompletoAbstencao(datasetMinSuperiorCompletoAbstencao);
+
+    const setDatasetMincasadosAbstencao = mincasados.map((item) => {
+      var colors = randomColor({
+        count: mincasados.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: mincasados.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = mincasados.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMINcasadosbstencao = {
+      labels: [""],
+      datasets: setDatasetMincasadosAbstencao[0],
+    };
+
+    setMinCasadosAbstencao(datasetMINcasadosbstencao);
+
+    const setDatasetMaxcasadosAbstencao = maxcasados.map((item) => {
+      var colors = randomColor({
+        count: maxcasados.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: maxcasados.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = maxcasados.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMAXcasadosbstencao = {
+      labels: [""],
+      datasets: setDatasetMaxcasadosAbstencao[0],
+    };
+
+    setMaxCasadosAbstencao(datasetMAXcasadosbstencao);
+
+    const setDatasetMinsolteirosAbstencao = minsolteiros.map((item) => {
+      var colors = randomColor({
+        count: minsolteiros.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: minsolteiros.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = minsolteiros.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMINsolteirosbstencao = {
+      labels: [""],
+      datasets: setDatasetMinsolteirosAbstencao[0],
+    };
+
+    setMinSolteirosAbstencao(datasetMINsolteirosbstencao);
+
+    const setDatasetMaxsolteirosAbstencao = maxsolteiros.map((item) => {
+      var colors = randomColor({
+        count: maxsolteiros.length,
+        luminosity: "bright",
+        hue: "random",
+        format: "rgba",
+        alpha: 0.4,
+      });
+      var borderColors = {
+        count: maxsolteiros.length,
+        luminosity: "bright",
+        hue: colors.hue,
+        format: "rgba",
+        alpha: 1,
+      };
+      const newDataset = maxsolteiros.map((valores, index) => {
+        return {
+          data: [valores.AbstencaoRelevantes],
+          label: valores.municipio,
+          backgroundColor: [colors[index]],
+          borderColor: [borderColors[index]],
+          borderWidth: 2,
+        };
+      });
+      return newDataset;
+    });
+
+    const datasetMAXsolteirosbstencao = {
+      labels: [""],
+      datasets: setDatasetMaxsolteirosAbstencao[0],
+    };
+
+    setMaxSolteirosAbstencao(datasetMAXsolteirosbstencao);
   }
 
   // Modelando dados de Comparecimento
@@ -505,6 +1344,24 @@ export default function useFilter() {
     totalAbstencao,
     totalComparecimento,
     MaxAbsten,
+    MinAbsten,
+
+    Maxjovens,
+    Minjovens,
+    MaxAdultos,
+    MinAdultos,
+    MinIdosos,
+    MaxIdosos,
+    MaxAnalfabeto,
+    MinAnalfabeto,
+    MaxMedioCompleto,
+    MinMedioCompleto,
+    MaxSuperiorCompleto,
+    MinSuperiorCompleto,
+    MinCasados,
+    MaxCasados,
+    MinSolteiros,
+    MaxSolteiros,
   };
   // dados e funções que são utilizados em
   // outros componentes e paginas por exemplo
