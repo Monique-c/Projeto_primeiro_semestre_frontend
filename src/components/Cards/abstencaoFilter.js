@@ -115,164 +115,146 @@ export default function AbstençãoFilter() {
   return (
     <Card className="card-container">
       <section className="card-header">
-        <h3> Filtros </h3>
+        <h2> Filtros </h2>
         <span onClick={() => limparDados()}>Limpar</span>
       </section>
 
-      <Col>
-        <Form onSubmit={onSubmitForm} className="card-form">
-          <FormGroup>
-            <label htmlFor="cidades">Cidades</label>
-            <select
-              name="cidades"
-              className="form-control select-cities"
-              onChange={(event) => {
-                const value = event.target.value.split(",");
-                setCidade(value);
-              }}
-            >
-              <option>Estado de SP</option>
-              {cidades.map((cidade, index) => (
-                <option key={index} value={cidade}>
-                  {cidade}
-                </option>
-              ))}
-            </select>
-          </FormGroup>
+      <Form onSubmit={onSubmitForm} className="card-form">
+        <FormGroup>
+          <h4 htmlFor="cidades">Cidades</h4>
+          <select
+            name="cidades"
+            className="form-control select-cities"
+            onChange={(event) => {
+              const value = event.target.value.split(",");
+              setCidade(value);
+            }}
+          >
+            <option>Estado de SP</option>
+            {cidades.map((cidade, index) => (
+              <option key={index} value={cidade}>
+                {cidade}
+              </option>
+            ))}
+          </select>
+        </FormGroup>
 
-          <label>Opções</label>
-          <UncontrolledDropdown group className="w-100">
-            <DropdownToggle caret color="info" style={{ fontSize: 14 }}>
-              Filtros
-            </DropdownToggle>
-            <DropdownMenu>
-              <Col>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      checked={faixaEtária}
-                      type="checkbox"
-                      value={faixaEtária}
-                      onChange={() => {
-                        setFaixaEtaria(!faixaEtária);
-                      }}
-                    />
-                    <span className="form-check-sign" />
-                    <span>Faixa Etária</span>
-                  </Label>
-
-                  <Label check>
-                    <Input
-                      checked={estadoCivil}
-                      type="checkbox"
-                      value={estadoCivil}
-                      onChange={() => {
-                        setEstadoCivil(!estadoCivil);
-                      }}
-                    />
-                    <span className="form-check-sign" />
-                    <span>Estado civil</span>
-                  </Label>
-
-                  <Label check>
-                    <Input
-                      checked={escolaridadePublica}
-                      type="checkbox"
-                      value={escolaridadePublica}
-                      onChange={() => {
-                        setEscolaridadePublica(!escolaridadePublica);
-                      }}
-                    />
-                    <span className="form-check-sign" />
-                    <span>Escolaridade Declarada</span>
-                  </Label>
-
-                  <Label check>
-                    <Input
-                      checked={nomeSocial}
-                      type="checkbox"
-                      value={nomeSocial}
-                      onChange={() => {
-                        setNomeSocial(!nomeSocial);
-                      }}
-                    />
-                    <span className="form-check-sign" />
-                    <span>Nome social</span>
-                  </Label>
-                </FormGroup>
-              </Col>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-
-          {fadeComparacao ? (
-            <Col>
+        <h4>Opções</h4>
+        <UncontrolledDropdown group className="dropdown-view">
+          <DropdownToggle caret className="dropdown">
+            Filtros
+          </DropdownToggle>
+          <DropdownMenu className="dropdown-menu">
+            <FormGroup check>
               <Label check>
                 <Input
+                  checked={faixaEtária}
                   type="checkbox"
-                  value={comparacaoAtiva}
-                  onClick={() => setComparacaoAtiva(!comparacaoAtiva)}
+                  value={faixaEtária}
+                  onChange={() => {
+                    setFaixaEtaria(!faixaEtária);
+                  }}
                 />
                 <span className="form-check-sign" />
-                <span>Adicionar comparação</span>
+                <span>Faixa Etária</span>
               </Label>
-            </Col>
-          ) : null}
 
+              <Label check>
+                <Input
+                  checked={estadoCivil}
+                  type="checkbox"
+                  value={estadoCivil}
+                  onChange={() => {
+                    setEstadoCivil(!estadoCivil);
+                  }}
+                />
+                <span className="form-check-sign" />
+                <span>Estado civil</span>
+              </Label>
+
+              <Label check>
+                <Input
+                  checked={escolaridadePublica}
+                  type="checkbox"
+                  value={escolaridadePublica}
+                  onChange={() => {
+                    setEscolaridadePublica(!escolaridadePublica);
+                  }}
+                />
+                <span className="form-check-sign" />
+                <span>Escolaridade Declarada</span>
+              </Label>
+
+              <Label check>
+                <Input
+                  checked={nomeSocial}
+                  type="checkbox"
+                  value={nomeSocial}
+                  onChange={() => {
+                    setNomeSocial(!nomeSocial);
+                  }}
+                />
+                <span className="form-check-sign" />
+                <span>Nome social</span>
+              </Label>
+            </FormGroup>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+
+        {fadeComparacao ? (
           <Col>
-            {comparacaoAtiva ? (
-              <>
-                <span>Comparar com:</span>
-                <br />
-                <Row className="mt-2">
-                  {cidadesSelecionadas.map((nomeCidade, index) => (
-                    <Badge
-                      color="info"
-                      key={index}
-                      className="d-flex justify-content-center align-items-center"
-                    >
-                      {nomeCidade}
-                      &emsp;
-                      <i
-                        onClick={() => removeCidades(nomeCidade)}
-                        style={{ cursor: "pointer" }}
-                        className="now-ui-icons ui-1_simple-remove "
-                      ></i>
-                    </Badge>
-                  ))}
-                </Row>
-                <FormGroup>
-                  <CustomInput
-                    type="select"
-                    name="customSelect"
-                    multiple
-                    onChange={(event) => {
-                      const value = event.target.value.split(",");
-                      adicionaCidadeSelecionada(value);
-                    }}
-                  >
-                    {cidades.map((cidade, index) => (
-                      <>
-                        <option>{cidade}</option>
-                      </>
-                    ))}
-                  </CustomInput>
-                </FormGroup>
-              </>
-            ) : null}
+            <Label check>
+              <Input
+                type="checkbox"
+                value={comparacaoAtiva}
+                onClick={() => setComparacaoAtiva(!comparacaoAtiva)}
+              />
+              <span className="form-check-sign" />
+              <span>Adicionar comparação</span>
+            </Label>
           </Col>
+        ) : null}
 
-          <div className="d-flex justify-content-end">
-            <Button
-              type="submit"
-              style={{
-                backgroundColor: "#214bb5",
-              }}
-            >
-              Aplicar
-            </Button>
-          </div>
-        </Form>
-      </Col>
+        {comparacaoAtiva ? (
+          <>
+            <span>Comparar com:</span>
+            <Row className="badge-content">
+              {cidadesSelecionadas.map((nomeCidade, index) => (
+                <Badge color="info" key={index} className="badge-item">
+                  {nomeCidade}
+                  &emsp;
+                  <i
+                    onClick={() => removeCidades(nomeCidade)}
+                    className="now-ui-icons ui-1_simple-remove "
+                  ></i>
+                </Badge>
+              ))}
+            </Row>
+            <FormGroup>
+              <CustomInput
+                type="select"
+                name="customSelect"
+                multiple
+                onChange={(event) => {
+                  const value = event.target.value.split(",");
+                  adicionaCidadeSelecionada(value);
+                }}
+              >
+                {cidades.map((cidade, index) => (
+                  <>
+                    <option>{cidade}</option>
+                  </>
+                ))}
+              </CustomInput>
+            </FormGroup>
+          </>
+        ) : null}
+        <div className="view-button">
+          <button type="submit" className="button button-primary">
+            Aplicar
+          </button>
+        </div>
+      </Form>
     </Card>
   );
 }

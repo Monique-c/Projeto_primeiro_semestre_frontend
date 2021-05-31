@@ -4,8 +4,9 @@
 }
 
 .card-container {
+  position: fixed;
   width: 300px;
-  padding: 10px 20px;
+  padding: 1rem 2rem;
 }
 
 .card-header {
@@ -13,19 +14,15 @@
   justify-content: space-between;
 }
 
-.card-header h3 {
-  font-family: Roboto;
-  font-size: 18px;
+.card-header h2 {
+  text-transform: none;
   letter-spacing: 0.2px;
-
-  color: #0a3143;
 }
 
 .card-header span {
-  font-family: Roboto;
   font-size: 14px;
   letter-spacing: 0.2px;
-  color: #214bb5;
+  color: var(--main-font-color-action);
   cursor: pointer;
 }
 
@@ -33,40 +30,90 @@
   filter: brightness(50%);
 }
 
-.select-cities {
-  border-radius: 3%;
-  color: #32325d;
+.card-form {
+  margin-top: 2rem;
 }
 
-.select-cities:focus {
-  border-color: #0a3143;
+.card-form .select-cities {
+  border-radius: 4pt;
+
+  font: var(--main-font-sz-regular);
+  text-align: left;
+  color: var(--main-font-color-primary);
 }
 
-.button-dropdown {
+.card-form .select-cities:focus,
+.card-form .select-cities:hover {
+  filter: brightness(95%);
+
+  border-color: var(--main-font-color-primary);
+}
+
+.card-form select option {
+  font-family: Roboto;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+
+  color: var(--main-font-color-primary);
+}
+
+.card-form .dropdown-view {
   width: 100%;
-  border-radius: 3%;
+  margin: 0;
 }
 
-select option {
-  font-family: Roboto;
-  font-size: 13px;
-  letter-spacing: 0.2px;
+.card-form .dropdown {
+  background-color: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 4pt;
 
-  color: #0a3143;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font: 400 0.8rem/1.5 "Roboto", sans-serif;
+  text-align: left;
+  color: var(--main-font-color-primary);
 }
 
-label {
-  font-family: Roboto;
-  font-size: 14px;
-  letter-spacing: 0.2px;
+.card-form .dropdown:hover {
+  filter: brightness(98%);
 
-  color: #0a3143;
+  background-color: var(--main-bg-color);
+  color: var(--main-font-color-primary);
+
+  border-color: #12516e;
 }
 
-span {
-  font-family: Roboto;
-  font-size: 13px;
-  letter-spacing: 0.2px;
+.card-form .dropdown-menu {
+  padding: 1rem;
 
-  color: #0a3143;
+  max-width: 10rem;
+}
+
+.card-form .badge-content {
+  margin: 1rem 0 1rem 0;
+}
+
+.card-form .badge-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-form .badge-item > i:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.card-form .view-button {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1024px) {
+  .card-container {
+    position: relative;
+  }
 }

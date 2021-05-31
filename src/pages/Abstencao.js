@@ -64,79 +64,55 @@ export default function Abstencao() {
 
   const Chart = () => {
     return (
-      <div>
+      <div className="chart-view">
         {opcoesVisiveis.faixa_etaria ? (
-          <div>
-            <h5>
-              <b>Comparecimento </b>
-              Por Faixa Etária
-            </h5>
+          <div className="chart-item">
+            <h2>Comparecimento Por Faixa Etária</h2>
             <Bar data={faixaEtariaPorComparecimentoComparativo} />
           </div>
         ) : null}
 
         {opcoesVisiveis.estado_civil ? (
-          <div>
-            <h5>
-              <b>Comparecimento </b>
-              Por Estado Civil
-            </h5>
+          <div className="chart-item">
+            <h2>Comparecimento Por Estado Civil</h2>
             <Bar data={estadoCivilPorComparecimentoComparativo} />
           </div>
         ) : null}
 
         {opcoesVisiveis.escolaridade_publica ? (
-          <div>
-            <h5>
-              <b>Comparecimento </b>
-              Por Escolaridade Declarada
-            </h5>
+          <div className="chart-item">
+            <h2>Comparecimento Por Escolaridade Declarada</h2>
             <Bar data={escolaridadeDeclaradaPorComparecimentoComparativo} />
           </div>
         ) : null}
 
-        <div>
-          <h5>
-            <b> Comparecimento </b>
-            Total
-          </h5>
+        <div className="chart-item">
+          <h2>Comparecimento Total</h2>
           <Bar data={totalComparecimento} />
         </div>
         {opcoesVisiveis.faixa_etaria ? (
-          <div>
-            <h5>
-              <b>Abstenção </b>
-              Por Faixa Etária
-            </h5>
+          <div className="chart-item">
+            <h2>Abstenção Por Faixa Etária</h2>
             <Bar data={faixaEtariaPorAbstencao} />
           </div>
         ) : null}
 
         {opcoesVisiveis.estado_civil ? (
-          <div>
-            <h5>
-              <b>Abstenção </b>
-              Por Estado Civil
-            </h5>
+          <div className="chart-item">
+            <h2>Abstenção Por Estado Civil</h2>
             <Bar data={estadoCivilPorAbstencao} />
           </div>
         ) : null}
 
         {opcoesVisiveis.escolaridade_publica ? (
-          <div>
-            <h5>
-              <b>Abstenção </b>
-              Por Escolaridade Declarada
-            </h5>
+          <div className="chart-item">
+            <h2>Abstenção Por Escolaridade Declarada</h2>
             <Bar data={escolaridadeDeclaradaPorAbstencao} />
           </div>
         ) : null}
 
-        <div>
-          <h5>
-            <b> Abstenção </b>
-            Total
-          </h5>
+        <div className="chart-item">
+          <h2>Abstenção Total</h2>
           <Bar data={totalAbstencao} />
         </div>
       </div>
@@ -147,9 +123,7 @@ export default function Abstencao() {
     <>
       <Navbar />
       <Container style={{ minHeight: "90vh" }} fluid>
-        <div className="text-center my-5">
-          <span className="abstencao-title">Comparecimento/Abstenção</span>
-        </div>
+        <h1 className="text-title text-center">Comparecimento/Abstenção</h1>
 
         <Row>
           <Col lg="4">
@@ -157,13 +131,8 @@ export default function Abstencao() {
           </Col>
 
           {loading ? (
-            <Col>
-              <Row
-                style={{ height: "30%", marginTop: "-4%" }}
-                className="d-flex align-items-center mr-5"
-              >
-                <div className="loading_lottie" ref={container} />
-              </Row>
+            <Col className="loading_lottie">
+              <div ref={container} />
             </Col>
           ) : (
             <>
