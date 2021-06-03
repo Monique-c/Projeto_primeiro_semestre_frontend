@@ -95,6 +95,33 @@ export default function Abstencao() {
     },
   };
 
+  const tooltip_inteiro = {
+    scales: {
+      xAxes: [{}],
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+    tooltips: {
+      callbacks: {
+        label: function (tooltipItem, data) {
+          let dataset = data.datasets[tooltipItem.datasetIndex];
+          let interger = data.datasets[tooltipItem.datasetIndex].valor_inteiro;
+          let currentValue = dataset.data[tooltipItem.index];
+
+          return interger + " (" + currentValue + "%)";
+        },
+        title: function (tooltipItem, data) {
+          return data.labels[tooltipItem[0].index];
+        },
+      },
+    },
+  };
+
   const Chart = () => {
     return (
       <div className="chart-view">
@@ -157,27 +184,27 @@ export default function Abstencao() {
       <div className="chart-view">
         <div className="chart-item">
           <h2>Maiores Abstenções entre jovens</h2>
-          <Bar data={Maxjovens} options={options} />
+          <Bar data={Maxjovens} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Abstenções entre jovens</h2>
-          <Bar data={Minjovens} options={options} />
+          <Bar data={Minjovens} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Abstenções entre adultos</h2>
-          <Bar data={MaxAdultos} options={options} />
+          <Bar data={MaxAdultos} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Abstenções entre adultos</h2>
-          <Bar data={MinAdultos} options={options} />
+          <Bar data={MinAdultos} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Abstenções entre idosos</h2>
-          <Bar data={MinIdosos} options={options} />
+          <Bar data={MinIdosos} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Abstenções entre idosos</h2>
-          <Bar data={MaxIdosos} options={options} />
+          <Bar data={MaxIdosos} options={tooltip_inteiro} />
         </div>
       </div>
     );
@@ -188,27 +215,27 @@ export default function Abstencao() {
       <div className="chart-view">
         <div className="chart-item">
           <h2>Maiores Abstenções entre analfabetos</h2>
-          <Bar data={MaxAnalfabeto} options={options} />
+          <Bar data={MaxAnalfabeto} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Abstenções entre analfabetos</h2>
-          <Bar data={MinAnalfabeto} options={options} />
+          <Bar data={MinAnalfabeto} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Abstenções por Ensino Médio Completo</h2>
-          <Bar data={MaxMedioCompleto} options={options} />
+          <Bar data={MaxMedioCompleto} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Abstenções por Ensino Médio Completo</h2>
-          <Bar data={MinMedioCompleto} options={options} />
+          <Bar data={MinMedioCompleto} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Abstenções por Superior Completo</h2>
-          <Bar data={MaxSuperiorCompleto} options={options} />
+          <Bar data={MaxSuperiorCompleto} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Abstenções por Superior Completo</h2>
-          <Bar data={MinSuperiorCompleto} options={options} />
+          <Bar data={MinSuperiorCompleto} options={tooltip_inteiro} />
         </div>
       </div>
     );
@@ -218,19 +245,19 @@ export default function Abstencao() {
       <div className="chart-view">
         <div className="chart-item">
           <h2>Menores Abstenções entre casados</h2>
-          <Bar data={MinCasados} options={options} />
+          <Bar data={MinCasados} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Abstenções entre casados</h2>
-          <Bar data={MaxCasados} options={options} />
+          <Bar data={MaxCasados} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Abstenções entre solteiros</h2>
-          <Bar data={MinSolteiros} options={options} />
+          <Bar data={MinSolteiros} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Abstenções entre solteiros</h2>
-          <Bar data={MaxSolteiros} options={options} />
+          <Bar data={MaxSolteiros} options={tooltip_inteiro} />
         </div>
       </div>
     );
@@ -240,11 +267,11 @@ export default function Abstencao() {
       <div className="chart-view">
         <div className="chart-item">
           <h2>Maiores Abstenções</h2>
-          <Bar data={MaxAbsten} options={options} />
+          <Bar data={MaxAbsten} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Abstenções</h2>
-          <Bar data={MinAbsten} options={options} />
+          <Bar data={MinAbsten} options={tooltip_inteiro} />
         </div>
       </div>
     );

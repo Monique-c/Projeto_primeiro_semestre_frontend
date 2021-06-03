@@ -457,7 +457,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_jovens],
-          banana: municipios.valor_eleitorado_jovens,
+          valor_inteiro: municipios.valor_eleitorado_jovens,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -494,6 +494,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.min_eleitorado_jovens],
+          valor_inteiro: municipios.valor_eleitorado_jovens,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -529,6 +530,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_adultos],
+          valor_inteiro: municipios.valor_eleitorado_adultos,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -565,6 +567,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.min_eleitorado_adultos],
+          valor_inteiro: municipios.valor_eleitorado_adultos,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -600,6 +603,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_idosos],
+          valor_inteiro: municipios.valor_eleitorado_idosos,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -636,6 +640,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.min_eleitorado_idosos],
+          valor_inteiro: municipios.valor_eleitorado_idosos,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -672,6 +677,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_superior_completo],
+          valor_inteiro: municipios.valor_eleitorado_superior_completo,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -708,6 +714,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.min_eleitorado_superior_completo],
+          valor_inteiro: municipios.valor_eleitorado_superior_completo,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -743,6 +750,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_medio_completo],
+          valor_inteiro: municipios.valor_eleitorado_medio_completo,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -779,6 +787,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.min_eleitorado_medio_completo],
+          valor_inteiro: municipios.valor_eleitorado_medio_completo,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -814,6 +823,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_analfabeto],
+          valor_inteiro: municipios.valor_eleitorado_analfabeto,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -850,6 +860,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.min_eleitorado_analfabeto],
+          valor_inteiro: municipios.valor_eleitorado_analfabeto,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -886,6 +897,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_casados],
+          valor_inteiro: municipios.valor_eleitorado_casados,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -922,6 +934,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.min_eleitorado_casados],
+          valor_inteiro: municipios.valor_eleitorado_casados,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -957,6 +970,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_solteiros],
+          valor_inteiro: municipios.valor_eleitorado_solteiros,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,
@@ -993,6 +1007,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.min_eleitorado_solteiros],
+          valor_inteiro: municipios.valor_eleitorado_solteiros,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,

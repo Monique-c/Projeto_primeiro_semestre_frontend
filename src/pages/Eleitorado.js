@@ -95,12 +95,22 @@ export default function Eleitorado() {
     },
   };
 
-  const option2 = {
+  const tooltip_inteiro = {
+    scales: {
+      xAxes: [{}],
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
     tooltips: {
       callbacks: {
         label: function (tooltipItem, data) {
           let dataset = data.datasets[tooltipItem.datasetIndex];
-          let interger = data.datasets[tooltipItem.datasetIndex].banana;
+          let interger = data.datasets[tooltipItem.datasetIndex].valor_inteiro;
           let currentValue = dataset.data[tooltipItem.index];
 
           return interger + " (" + currentValue + "%)";
@@ -149,27 +159,27 @@ export default function Eleitorado() {
       <div className="chart-view">
         <div className="chart-item">
           <h2>Maiores Eleitorados de Jovens (%)</h2>
-          <Bar data={MaxEleitJovens} options={option2} />
+          <Bar data={MaxEleitJovens} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Eleitorados de Jovens (%)</h2>
-          <Bar data={MinEleitJovens} options={options} />
+          <Bar data={MinEleitJovens} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Eleitorados de Adultos (%)</h2>
-          <Bar data={MaxEleitAdultos} options={options} />
+          <Bar data={MaxEleitAdultos} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Eleitorados de Adultos (%)</h2>
-          <Bar data={MinEleitAdultos} options={options} />
+          <Bar data={MinEleitAdultos} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Eleitorados de Idosos (%)</h2>
-          <Bar data={MaxEleitIdosos} options={options} />
+          <Bar data={MaxEleitIdosos} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Eleitorados de Idosos (%)</h2>
-          <Bar data={MinEleitIdosos} options={options} />
+          <Bar data={MinEleitIdosos} options={tooltip_inteiro} />
         </div>
       </div>
     );
@@ -180,27 +190,27 @@ export default function Eleitorado() {
       <div className="chart-view">
         <div className="chart-item">
           <h2>Maiores Eleitorados com Ens. Superior Completo (%)</h2>
-          <Bar data={MaxEleitSupComp} options={options} />
+          <Bar data={MaxEleitSupComp} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Eleitorados com Ens. Superior Completo (%)</h2>
-          <Bar data={MinEleitSupComp} options={options} />
+          <Bar data={MinEleitSupComp} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Eleitorados com Ens. Médio Completo (%)</h2>
-          <Bar data={MaxEleitMedComp} options={options} />
+          <Bar data={MaxEleitMedComp} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Eleitorados com Ens. Médio Completo (%)</h2>
-          <Bar data={MinEleitMedComp} options={options} />
+          <Bar data={MinEleitMedComp} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Eleitorados de Analfabetos (%)</h2>
-          <Bar data={MaxEleitAnalfabeto} options={options} />
+          <Bar data={MaxEleitAnalfabeto} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Eleitorados de Analfabetos (%)</h2>
-          <Bar data={MinEleitAnalfabeto} options={options} />
+          <Bar data={MinEleitAnalfabeto} options={tooltip_inteiro} />
         </div>
       </div>
     );
@@ -211,19 +221,19 @@ export default function Eleitorado() {
       <div className="chart-view">
         <div className="chart-item">
           <h2>Maiores Eleitorados de Casados (%)</h2>
-          <Bar data={MaxEleitCasados} options={options} />
+          <Bar data={MaxEleitCasados} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Eleitorados de Casados (%)</h2>
-          <Bar data={MinEleitCasados} options={options} />
+          <Bar data={MinEleitCasados} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Maiores Eleitorados de Solteiros (%)</h2>
-          <Bar data={MaxEleitSolteiros} options={options} />
+          <Bar data={MaxEleitSolteiros} options={tooltip_inteiro} />
         </div>
         <div className="chart-item">
           <h2>Menores Eleitorados de Solteiros (%)</h2>
-          <Bar data={MinEleitSolteiros} options={options} />
+          <Bar data={MinEleitSolteiros} options={tooltip_inteiro} />
         </div>
       </div>
     );

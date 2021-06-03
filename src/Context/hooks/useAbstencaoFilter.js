@@ -214,6 +214,7 @@ export default function useFilter() {
     const handleAbstencaoMax = data.maiores_abstencoes.map((item) => {
       const valores = {
         AbstencaoRelevantes: item.min_abstencao,
+        qt_min_abstencao: item.qt_min_abstencao,
         municipio: item.municipio,
       };
 
@@ -222,6 +223,7 @@ export default function useFilter() {
     const handleAbstencaoMin = data.menores_abstencoes.map((item) => {
       const valores = {
         AbstencaoRelevantes: item.min_abstencao,
+        qt_min_abstencao: item.qt_min_abstencao,
         municipio: item.municipio,
       };
 
@@ -231,6 +233,7 @@ export default function useFilter() {
     const handleRelevantesMINJovens = data.min_abstencoes_jovens.map((item) => {
       const valores = {
         AbstencaoRelevantes: item.abstencao_jovens,
+        qt_abstencao_jovens: item.qt_abstencao_jovens,
         municipio: item.municipio,
       };
 
@@ -239,6 +242,7 @@ export default function useFilter() {
     const handleRelevantesMAXJovens = data.max_abstencoes_jovens.map((item) => {
       const valores = {
         AbstencaoRelevantes: item.abstencao_jovens,
+        qt_abstencao_jovens: item.qt_abstencao_jovens,
         municipio: item.municipio,
       };
 
@@ -249,6 +253,7 @@ export default function useFilter() {
       (item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_adultos,
+          qt_abstencao_adultos: item.qt_abstencao_adultos,
           municipio: item.municipio,
         };
 
@@ -260,6 +265,7 @@ export default function useFilter() {
       (item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_adultos,
+          qt_abstencao_adultos: item.qt_abstencao_adultos,
           municipio: item.municipio,
         };
 
@@ -270,6 +276,7 @@ export default function useFilter() {
     const handleRelevantesMINidosos = data.min_abstencoes_idosos.map((item) => {
       const valores = {
         AbstencaoRelevantes: item.abstencao_idosos,
+        qt_abstencao_idosos: item.qt_abstencao_idosos,
         municipio: item.municipio,
       };
 
@@ -278,6 +285,7 @@ export default function useFilter() {
     const handleRelevantesMAXidosos = data.max_abstencoes_idosos.map((item) => {
       const valores = {
         AbstencaoRelevantes: item.abstencao_idosos,
+        qt_abstencao_idosos: item.qt_abstencao_idosos,
         municipio: item.municipio,
       };
 
@@ -288,6 +296,7 @@ export default function useFilter() {
       (item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_analfabetos,
+          qt_abstencao_analfabetos: item.qt_abstencao_analfabetos,
           municipio: item.municipio,
         };
 
@@ -299,6 +308,7 @@ export default function useFilter() {
       (item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_analfabetos,
+          qt_abstencao_analfabetos: item.qt_abstencao_analfabetos,
           municipio: item.municipio,
         };
 
@@ -310,6 +320,7 @@ export default function useFilter() {
       data.min_abstencoes_medio_completo.map((item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_medio_completo,
+          qt_abstencao_medio_completo: item.qt_abstencao_medio_completo,
           municipio: item.municipio,
         };
 
@@ -320,6 +331,7 @@ export default function useFilter() {
       data.max_abstencoes_medio_completo.map((item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_medio_completo,
+          qt_abstencao_medio_completo: item.qt_abstencao_medio_completo,
           municipio: item.municipio,
         };
 
@@ -330,6 +342,7 @@ export default function useFilter() {
       data.min_abstencoes_superior_completo.map((item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_superior_completo,
+          qt_abstencao_superior_completo: item.qt_abstencao_superior_completo,
           municipio: item.municipio,
         };
 
@@ -340,6 +353,7 @@ export default function useFilter() {
       data.max_abstencoes_superior_completo.map((item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_superior_completo,
+          qt_abstencao_superior_completo: item.qt_abstencao_superior_completo,
           municipio: item.municipio,
         };
 
@@ -350,6 +364,7 @@ export default function useFilter() {
       (item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_casados,
+          qt_abstencao_casados: item.qt_abstencao_casados,
           municipio: item.municipio,
         };
 
@@ -361,6 +376,7 @@ export default function useFilter() {
       (item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_casados,
+          qt_abstencao_casados: item.qt_abstencao_casados,
           municipio: item.municipio,
         };
 
@@ -372,6 +388,7 @@ export default function useFilter() {
       (item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_solteiros,
+          qt_abstencao_solteiros: item.qt_abstencao_solteiros,
           municipio: item.municipio,
         };
 
@@ -383,6 +400,7 @@ export default function useFilter() {
       (item) => {
         const valores = {
           AbstencaoRelevantes: item.abstencao_solteiros,
+          qt_abstencao_solteiros: item.qt_abstencao_solteiros,
           municipio: item.municipio,
         };
 
@@ -598,6 +616,7 @@ export default function useFilter() {
       const newDataset = maioresAbstencao.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_min_abstencao,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -635,6 +654,7 @@ export default function useFilter() {
       const newDataset = menoresAbstencao.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_min_abstencao,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -670,6 +690,7 @@ export default function useFilter() {
       const newDataset = maxjovens.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_jovens,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -704,6 +725,7 @@ export default function useFilter() {
       const newDataset = minjovens.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_jovens,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -738,6 +760,7 @@ export default function useFilter() {
       const newDataset = maxadultos.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_adultos,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -772,6 +795,7 @@ export default function useFilter() {
       const newDataset = minadultos.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_adultos,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -806,6 +830,7 @@ export default function useFilter() {
       const newDataset = maxidosos.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_idosos,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -840,6 +865,7 @@ export default function useFilter() {
       const newDataset = minidosos.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_idosos,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -874,6 +900,7 @@ export default function useFilter() {
       const newDataset = maxanalfabeto.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_analfabetos,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -908,6 +935,7 @@ export default function useFilter() {
       const newDataset = minanalfabeto.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_analfabetos,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -942,6 +970,7 @@ export default function useFilter() {
       const newDataset = maxEMcompleto.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_medio_completo,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -976,6 +1005,7 @@ export default function useFilter() {
       const newDataset = minEMcompleto.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_medio_completo,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -1011,6 +1041,7 @@ export default function useFilter() {
         const newDataset = maxSPRcompleto.map((valores, index) => {
           return {
             data: [valores.AbstencaoRelevantes],
+            valor_inteiro: valores.qt_abstencao_superior_completo,
             label: valores.municipio,
             backgroundColor: [colors[index]],
             borderColor: [borderColors[index]],
@@ -1047,6 +1078,7 @@ export default function useFilter() {
         const newDataset = minSPRcompleto.map((valores, index) => {
           return {
             data: [valores.AbstencaoRelevantes],
+            valor_inteiro: valores.qt_abstencao_superior_completo,
             label: valores.municipio,
             backgroundColor: [colors[index]],
             borderColor: [borderColors[index]],
@@ -1082,6 +1114,7 @@ export default function useFilter() {
       const newDataset = mincasados.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_casados,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -1116,6 +1149,7 @@ export default function useFilter() {
       const newDataset = maxcasados.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_casados,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -1150,6 +1184,7 @@ export default function useFilter() {
       const newDataset = minsolteiros.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_solteiros,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
@@ -1184,6 +1219,7 @@ export default function useFilter() {
       const newDataset = maxsolteiros.map((valores, index) => {
         return {
           data: [valores.AbstencaoRelevantes],
+          valor_inteiro: valores.qt_abstencao_solteiros,
           label: valores.municipio,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
