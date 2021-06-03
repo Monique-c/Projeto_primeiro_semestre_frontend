@@ -1,4 +1,4 @@
-.card-container {
+.card-relevantes {
   width: 300px;
   padding: 1rem 2rem;
 }
@@ -26,29 +26,6 @@
 
 .card-form {
   margin-top: 2rem;
-}
-
-.card-form .select-cities {
-  border-radius: 4pt;
-
-  font: var(--main-font-sz-regular);
-  text-align: left;
-  color: var(--main-font-color-primary);
-}
-
-.card-form .select-cities:focus,
-.card-form .select-cities:hover {
-  filter: brightness(95%);
-
-  border-color: var(--main-font-color-primary);
-}
-
-.card-form select option {
-  font-family: Roboto;
-  font-size: 13px;
-  letter-spacing: 0.2px;
-
-  color: var(--main-font-color-primary);
 }
 
 .card-form .dropdown-view {
@@ -83,21 +60,6 @@
   padding: 1rem;
 
   max-width: 10rem;
-}
-
-.card-form .badge-content {
-  margin: 1rem 0 1rem 0;
-}
-
-.card-form .badge-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card-form .badge-item > i:hover {
-  cursor: pointer;
-  font-weight: bold;
 }
 
 .card-form .view-button {

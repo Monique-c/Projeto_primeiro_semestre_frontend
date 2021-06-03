@@ -13,8 +13,6 @@ import "../assets/styles/homepage.css";
 import "../assets/styles/eleitorado.css";
 
 // core components
-import Navbar from "components/Navbars/Navbar.js";
-import Footer from "components/Footers/Footer.js";
 import EleitoradoFilter from "components/Cards/eleitoradoFilter";
 import InfoFilter from "components/Cards/infoFilter";
 
@@ -249,7 +247,6 @@ export default function Eleitorado() {
   //---------------------------------------------------------------------------------------------
   return (
     <>
-      <Navbar />
       <Container style={{ minHeight: "90vh", marginTop: "8%" }} fluid>
         <div className="text-center my-5">
           <span className="eleitorado-title">Perfil do Eleitorado</span>
@@ -391,7 +388,6 @@ export default function Eleitorado() {
           )}
         </Row>
       </Container>
-      <Footer />
     </>
   );
 }

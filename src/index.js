@@ -21,6 +21,9 @@ import Eleitorado from "./pages/Eleitorado";
 import Abstencao from "./pages/Abstencao";
 import Renda from "./pages/Renda";
 
+import Navbar from "components/Navbars/Navbar.js";
+import Footer from "components/Footers/Footer.js";
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
@@ -31,7 +34,9 @@ ReactDOM.render(
           path="/eleitorado"
           render={(props) => (
             <EleitoradoProvider>
+              <Navbar />
               <Eleitorado {...props} />
+              <Footer />
             </EleitoradoProvider>
           )}
         />
@@ -40,7 +45,9 @@ ReactDOM.render(
           path="/abstencao"
           render={(props) => (
             <AbstencaoProvider>
+              <Navbar />
               <Abstencao {...props} />
+              <Footer />
             </AbstencaoProvider>
           )}
         />
@@ -49,7 +56,9 @@ ReactDOM.render(
           path="/renda"
           render={(props) => (
             <RendaProvider>
+              <Navbar />
               <Renda {...props} />
+              <Footer />
             </RendaProvider>
           )}
         />

@@ -182,7 +182,7 @@ export default function AbstençãoFilter() {
                   }}
                 />
                 <span className="form-check-sign" />
-                <span>Escolaridade Declarada</span>
+                <span>Escolaridade</span>
               </Label>
 
               <Label check>
