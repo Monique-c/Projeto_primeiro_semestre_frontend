@@ -4,7 +4,7 @@ import { Navbar, Row } from "reactstrap";
 
 import { Link, useRouteMatch } from "react-router-dom";
 
-import "./../../assets/styles/navbar.css";
+import "../assets/styles/navbar.css";
 
 function Example() {
   function MenuLink({ label, to }) {

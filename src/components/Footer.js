@@ -4,7 +4,7 @@ import React from "react";
 // reactstrap components
 import { Container } from "reactstrap";
 
-import "../../assets/styles/footer.css";
+import "../assets/styles/footer.css";
 
 function Footer() {
   return (

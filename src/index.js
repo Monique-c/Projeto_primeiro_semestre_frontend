@@ -21,14 +21,23 @@ import Eleitorado from "./pages/Eleitorado";
 import Abstencao from "./pages/Abstencao";
 import Renda from "./pages/Renda";
 
-import Navbar from "components/Navbars/Navbar.js";
-import Footer from "components/Footers/Footer.js";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Switch>
-        <Route path="/home" render={(props) => <Homepage {...props} />} />
+        <Route
+          path="/home"
+          render={(props) => (
+            <>
+              <Navbar />
+              <Homepage {...props} />
+              <Footer />
+            </>
+          )}
+        />
 
         <Route
           path="/eleitorado"
