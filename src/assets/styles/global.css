@@ -140,6 +140,7 @@ label {
 @media (max-width: 990px) {
   .card-fixed {
     position: relative;
+    height: auto;
   }
 }
 
