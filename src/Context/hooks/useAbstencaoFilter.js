@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 import api from "../../services/api";
-import abstencao from "../../controllers/abstencao_atualizado_json";
-import { NewLineKind } from "typescript";
+import abstencao from "../../controllers/abstencao_json";
 
 var randomColor = require("randomcolor");
 

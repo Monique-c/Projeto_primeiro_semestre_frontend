@@ -129,6 +129,7 @@ export default function useFilter() {
       (eleMaxJov) => {
         const municipios = {
           max_eleitorado_jovens: eleMaxJov.porcentagem_eleitorado_jovens,
+          valor_eleitorado_jovens: eleMaxJov.valor_eleitorado_jovens,
           municipio: eleMaxJov.municipio,
         };
         return municipios;
@@ -139,6 +140,7 @@ export default function useFilter() {
       (eleMinJov) => {
         const municipios = {
           min_eleitorado_jovens: eleMinJov.porcentagem_eleitorado_jovens,
+          valor_eleitorado_jovens: eleMinJov.valor_eleitorado_jovens,
           municipio: eleMinJov.municipio,
         };
         return municipios;
@@ -149,6 +151,7 @@ export default function useFilter() {
       (eleMaxAdu) => {
         const municipios = {
           max_eleitorado_adultos: eleMaxAdu.porcentagem_eleitorado_adultos,
+          valor_eleitorado_adultos: eleMaxAdu.valor_eleitorado_adultos,
           municipio: eleMaxAdu.municipio,
         };
         return municipios;
@@ -159,6 +162,7 @@ export default function useFilter() {
       (eleMinAdu) => {
         const municipios = {
           min_eleitorado_adultos: eleMinAdu.porcentagem_eleitorado_adultos,
+          valor_eleitorado_adultos: eleMinAdu.valor_eleitorado_adultos,
           municipio: eleMinAdu.municipio,
         };
         return municipios;
@@ -169,6 +173,7 @@ export default function useFilter() {
       (eleMaxIdo) => {
         const municipios = {
           max_eleitorado_idosos: eleMaxIdo.porcentagem_eleitorado_idosos,
+          valor_eleitorado_idosos: eleMaxIdo.valor_eleitorado_idosos,
           municipio: eleMaxIdo.municipio,
         };
         return municipios;
@@ -179,6 +184,7 @@ export default function useFilter() {
       (eleMinIdo) => {
         const municipios = {
           min_eleitorado_idosos: eleMinIdo.porcentagem_eleitorado_idosos,
+          valor_eleitorado_idosos: eleMinIdo.valor_eleitorado_idosos,
           municipio: eleMinIdo.municipio,
         };
         return municipios;
@@ -190,6 +196,8 @@ export default function useFilter() {
         const municipios = {
           max_eleitorado_superior_completo:
             eleMaxSupComp.porcentagem_eleitorado_superior_completo,
+          valor_eleitorado_superior_completo:
+            eleMaxSupComp.valor_eleitorado_superior_completo,
           municipio: eleMaxSupComp.municipio,
         };
         return municipios;
@@ -200,6 +208,8 @@ export default function useFilter() {
         const municipios = {
           min_eleitorado_superior_completo:
             eleMinSupComp.porcentagem_eleitorado_superior_completo,
+          valor_eleitorado_superior_completo:
+            eleMinSupComp.valor_eleitorado_superior_completo,
           municipio: eleMinSupComp.municipio,
         };
         return municipios;
@@ -210,6 +220,8 @@ export default function useFilter() {
         const municipios = {
           max_eleitorado_medio_completo:
             eleMaxMedComp.porcentagem_eleitorado_medio_completo,
+          valor_eleitorado_medio_completo:
+            eleMaxMedComp.valor_eleitorado_medio_completo,
           municipio: eleMaxMedComp.municipio,
         };
         return municipios;
@@ -221,6 +233,8 @@ export default function useFilter() {
         const municipios = {
           min_eleitorado_medio_completo:
             eleMinMedComp.porcentagem_eleitorado_medio_completo,
+          valor_eleitorado_medio_completo:
+            eleMinMedComp.valor_eleitorado_medio_completo,
           municipio: eleMinMedComp.municipio,
         };
         return municipios;
@@ -232,6 +246,7 @@ export default function useFilter() {
         const municipios = {
           max_eleitorado_analfabeto:
             eleMaxAnf.porcentagem_eleitorado_analfabeto,
+          valor_eleitorado_analfabeto: eleMaxAnf.valor_eleitorado_analfabeto,
           municipio: eleMaxAnf.municipio,
         };
         return municipios;
@@ -243,6 +258,7 @@ export default function useFilter() {
         const municipios = {
           min_eleitorado_analfabeto:
             eleMinAnf.porcentagem_eleitorado_analfabeto,
+          valor_eleitorado_analfabeto: eleMinAnf.valor_eleitorado_analfabeto,
           municipio: eleMinAnf.municipio,
         };
         return municipios;
@@ -253,6 +269,7 @@ export default function useFilter() {
       (eleMaxCasados) => {
         const municipios = {
           max_eleitorado_casados: eleMaxCasados.porcentagem_eleitorado_casados,
+          valor_eleitorado_casados: eleMaxCasados.valor_eleitorado_casados,
           municipio: eleMaxCasados.municipio,
         };
         return municipios;
@@ -263,6 +280,7 @@ export default function useFilter() {
       (eleMinCasados) => {
         const municipios = {
           min_eleitorado_casados: eleMinCasados.porcentagem_eleitorado_casados,
+          valor_eleitorado_casados: eleMinCasados.valor_eleitorado_casados,
           municipio: eleMinCasados.municipio,
         };
         return municipios;
@@ -274,6 +292,8 @@ export default function useFilter() {
         const municipios = {
           max_eleitorado_solteiros:
             eleMaxSolteiros.porcentagem_eleitorado_solteiros,
+          valor_eleitorado_solteiros:
+            eleMaxSolteiros.valor_eleitorado_solteiros,
           municipio: eleMaxSolteiros.municipio,
         };
         return municipios;
@@ -285,6 +305,8 @@ export default function useFilter() {
         const municipios = {
           min_eleitorado_solteiros:
             eleMinSolteiros.porcentagem_eleitorado_solteiros,
+          valor_eleitorado_solteiros:
+            eleMinSolteiros.valor_eleitorado_solteiros,
           municipio: eleMinSolteiros.municipio,
         };
         return municipios;
@@ -435,6 +457,7 @@ export default function useFilter() {
         return {
           label: municipios.municipio,
           data: [municipios.max_eleitorado_jovens],
+          banana: municipios.valor_eleitorado_jovens,
           backgroundColor: [colors[index]],
           borderColor: [borderColors[index]],
           borderWidth: 2,

@@ -94,6 +94,23 @@ export default function Eleitorado() {
       ],
     },
   };
+
+  const option2 = {
+    tooltips: {
+      callbacks: {
+        label: function (tooltipItem, data) {
+          let dataset = data.datasets[tooltipItem.datasetIndex];
+          let interger = data.datasets[tooltipItem.datasetIndex].banana;
+          let currentValue = dataset.data[tooltipItem.index];
+
+          return interger + " (" + currentValue + "%)";
+        },
+        title: function (tooltipItem, data) {
+          return data.labels[tooltipItem[0].index];
+        },
+      },
+    },
+  };
   //---------------------------------------------------------------------------------------------
   //---------------------------------------------------------------------------------------------
   const Chart = () => {
@@ -132,7 +149,7 @@ export default function Eleitorado() {
       <div className="chart-view">
         <div className="chart-item">
           <h2>Maiores Eleitorados de Jovens (%)</h2>
-          <Bar data={MaxEleitJovens} options={options} />
+          <Bar data={MaxEleitJovens} options={option2} />
         </div>
         <div className="chart-item">
           <h2>Menores Eleitorados de Jovens (%)</h2>
