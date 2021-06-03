@@ -30,7 +30,6 @@ import InfoFilter from "components/Cards/infoFilter";
 
 export default function Abstencao() {
   const container = useRef(null);
-  const cardRelevante = useRef(null);
 
   const {
     loading,
@@ -82,10 +81,6 @@ export default function Abstencao() {
       });
     }
   }, [loading]);
-
-  useEffect(() => {
-    console.log("a");
-  });
 
   const options = {
     maintainAspectRatio: true,

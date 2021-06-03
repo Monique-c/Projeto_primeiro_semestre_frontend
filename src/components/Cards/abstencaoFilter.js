@@ -18,9 +18,9 @@ import {
 
 import { Context } from "../../Context/AbstencaoFilterContext";
 
-import "../../assets/styles/card-filter.css";
-
 import ibge from "../../services/api_ibge";
+
+import "../../assets/styles/card-filter.css";
 
 export default function AbstençãoFilter() {
   const [comparacaoAtiva, setComparacaoAtiva] = useState(false);

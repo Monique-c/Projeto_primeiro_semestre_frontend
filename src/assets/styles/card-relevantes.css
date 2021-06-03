@@ -67,3 +67,28 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.card-relevantes .btn-relevante {
+  margin-top: 2rem;
+  width: 100%;
+
+  background-color: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 4pt;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font: 400 0.8rem/1.5 "Roboto", sans-serif;
+  color: var(--main-font-color-primary);
+}
+
+.card-relevantes .btn-relevante:hover {
+  filter: brightness(98%);
+
+  background-color: var(--main-bg-color);
+  color: var(--main-font-color-primary);
+
+  border-color: #12516e;
+}

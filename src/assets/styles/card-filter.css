@@ -56,8 +56,34 @@
   margin: 0;
 }
 
+.btn:hover,
+.btn:focus,
+.btn:not(:disabled):not(.disabled):active,
+.btn:not(:disabled):not(.disabled).active,
+.btn:not(:disabled):not(.disabled):active:focus,
+.btn:not(:disabled):not(.disabled).active:focus,
+.btn:active:hover,
+.btn.active:hover,
+.show > .btn.dropdown-toggle,
+.show > .btn.dropdown-toggle:focus,
+.show > .btn.dropdown-toggle:hover,
+.navbar .navbar-nav > a.btn:hover,
+.navbar .navbar-nav > a.btn:focus,
+.navbar .navbar-nav > a.btn:not(:disabled):not(.disabled):active,
+.navbar .navbar-nav > a.btn:not(:disabled):not(.disabled).active,
+.navbar .navbar-nav > a.btn:not(:disabled):not(.disabled):active:focus,
+.navbar .navbar-nav > a.btn:not(:disabled):not(.disabled).active:focus,
+.navbar .navbar-nav > a.btn:active:hover,
+.navbar .navbar-nav > a.btn.active:hover,
+.show > .navbar .navbar-nav > a.btn.dropdown-toggle,
+.show > .navbar .navbar-nav > a.btn.dropdown-toggle:focus,
+.show > .navbar .navbar-nav > a.btn.dropdown-toggle:hover {
+  background-color: var(--main-bg-color);
+  color: var(--main-font-color-primary);
+}
+
 .card-form .dropdown {
-  background-color: #fff;
+  background-color: var(--main-bg-color);
   border: 1px solid #e3e3e3;
   border-radius: 4pt;
 
@@ -65,7 +91,7 @@
   justify-content: space-between;
   align-items: center;
 
-  font: 400 0.8rem/1.5 "Roboto", sans-serif;
+  font: var(--main-font-sz-regular);
   text-align: left;
   color: var(--main-font-color-primary);
 }

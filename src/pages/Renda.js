@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, Card } from "reactstrap";
 
 import { Bar } from "react-chartjs-2";
 
@@ -9,17 +9,16 @@ import { Context } from "../Context/RendaFilterContext";
 import lottie from "lottie-web";
 import loading_lottie from "../assets/lottieJSONs/loading_lottie.json";
 
-import "../assets/styles/homepage.css";
 import "../assets/styles/renda.css";
+import "../assets/styles/card-relevantes.css";
 
 // core components
-import Navbar from "components/Navbars/Navbar.js";
-import Footer from "components/Footers/Footer.js";
 import RendaFilter from "components/Cards/rendaFilter";
 import InfoFilter from "components/Cards/infoFilter";
 
 export default function Renda() {
   const container = useRef(null);
+
   const {
     loading,
     filtroAplicado,
@@ -59,17 +58,13 @@ export default function Renda() {
 
   const Chart = () => {
     return (
-      <div>
-        <div>
-          <h5>
-            <b>PIB</b>
-          </h5>
+      <div className="chart-view">
+        <div className="chart-item">
+          <h2>PIB</h2>
           <Bar data={PIB} options={options} />
         </div>
-        <div>
-          <h5>
-            <b> PIB Percapita</b>
-          </h5>
+        <div className="chart-item">
+          <h2>PIB Percapita</h2>
           <Bar data={PIB_Percapta} options={options} />
         </div>
       </div>
@@ -77,29 +72,21 @@ export default function Renda() {
   };
   const ChartRelevantes = () => {
     return (
-      <div>
-        <div>
-          <h5>
-            <b> Maiores PIBs</b>
-          </h5>
+      <div className="chart-view">
+        <div className="chart-item">
+          <h2>Maiores PIBs</h2>
           <Bar data={MaxPIB} options={options} />
         </div>
-        <div>
-          <h5>
-            <b> Menores PIBs</b>
-          </h5>
+        <div className="chart-item">
+          <h2>Menores PIBs</h2>
           <Bar data={MinPIB} options={options} />
         </div>
-        <div>
-          <h5>
-            <b> Maiores PIBs Percapita</b>
-          </h5>
+        <div className="chart-item">
+          <h2>Maiores PIBs Percapita</h2>
           <Bar data={MaxPIB_Percapta} options={options} />
         </div>
-        <div>
-          <h5>
-            <b> Menores PIBs Percapita</b>
-          </h5>
+        <div className="chart-item">
+          <h2>Menores PIBs Percapita</h2>
           <Bar data={MinPIB_Percapta} options={options} />
         </div>
       </div>
@@ -107,74 +94,59 @@ export default function Renda() {
   };
 
   return (
-    <>
-      <Navbar />
-      <Container style={{ minHeight: "90vh", marginTop: "8%" }} fluid>
-        <div className="text-center my-5">
-          <span className="renda-title">Renda</span>
-        </div>
+    <Container fluid className="page-content">
+      <h1 className="text-center">Renda</h1>
 
-        <Row>
-          <Col lg="4">
+      <Row>
+        <Col lg="4">
+          <div className="card-fixed">
             <RendaFilter />
-          </Col>
 
-          {loading ? (
-            <Col>
-              <Row
-                style={{ height: "150px", marginTop: "-4%" }}
-                className="d-flex align-items-center mr-5"
-              >
-                <div className="loading_lottie" ref={container} />
-              </Row>
-            </Col>
-          ) : (
-            <>
-              {filtroAplicado ? (
-                <Col lg="8">
-                  <Chart className="charts" />
-                  {!DadosRelevantesButton ? (
-                    <Row className="d-flex justify-content-end mr-3">
-                      <Button
-                        onClick={() =>
-                          setDadosRelevantesButton(!DadosRelevantesButton)
-                        }
-                        style={{
-                          backgroundColor: "#214bb5",
-                        }}
-                      >
-                        Mostrar Dados Relevantes
-                      </Button>
-                    </Row>
-                  ) : (
-                    <div>
-                      <Row className="d-flex justify-content-end mr-3">
-                        <Button
-                          onClick={() =>
-                            setDadosRelevantesButton(!DadosRelevantesButton)
-                          }
-                          style={{
-                            backgroundColor: "#214bb5",
-                          }}
-                        >
-                          Esconder Dados Relevantes
-                        </Button>
-                      </Row>
-                      <h3 className="renda-title">Dados Relevantes</h3>
-                      <ChartRelevantes className="charts" />
-                    </div>
-                  )}
-                </Col>
-              ) : (
-                <Col>
-                  <InfoFilter />
-                </Col>
-              )}
-            </>
-          )}
-        </Row>
-      </Container>
-      <Footer />
-    </>
+            {filtroAplicado ? (
+              <Card className="card-relevantes">
+                <section className="card-header">
+                  <h2> Dados Relevantes </h2>
+                  <span onClick={() => setDadosRelevantesButton(false)}>
+                    Remover
+                  </span>
+                </section>
+
+                <button
+                  type="button"
+                  className="button button-primary btn-relevante"
+                  onClick={() => setDadosRelevantesButton(true)}
+                >
+                  Mostrar todos
+                </button>
+              </Card>
+            ) : null}
+          </div>
+        </Col>
+
+        {loading ? (
+          <Col className="loading_lottie">
+            <div ref={container} />
+          </Col>
+        ) : (
+          <>
+            {filtroAplicado ? (
+              <Col lg="7">
+                <Chart className="charts" />
+                {DadosRelevantesButton ? (
+                  <div>
+                    <h1>Dados Relevantes</h1>
+                    <ChartRelevantes className="charts" />
+                  </div>
+                ) : null}
+              </Col>
+            ) : (
+              <Col>
+                <InfoFilter />
+              </Col>
+            )}
+          </>
+        )}
+      </Row>
+    </Container>
   );
 }
