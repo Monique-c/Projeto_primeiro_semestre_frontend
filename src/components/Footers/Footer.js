@@ -17,12 +17,6 @@ function Footer() {
                 Fatec
               </a>
             </li>
-
-            <li>
-              <a href="/" target="_blank">
-                Sobre nós
-              </a>
-            </li>
           </ul>
         </nav>
 

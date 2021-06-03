@@ -2,30 +2,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  height:9%;
-  
-  letter-spacing: 0.2px;
+
+  height: 9%;
 }
 
 .navbar-initialPage {
-  font-family: 'Mulish', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  
-  line-height: 18px;
-  color: #3C64B1;
-  
-  margin-right: 25px;
+  margin-right: 3rem;
 }
 
-.navbar-items {
-  font-family: 'Mulish', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  
-  line-height: 18px;
-  color: #3C64B1;
+.active {
+  font: 600 1rem/1.5 "Mulish", sans-serif;
+
+  border-bottom: 2px solid #3c64b1;
+
+  color: #3c64b1;
+
+  margin: 0 1rem 0 1rem;
+}
+
+.no-active {
+  font: 400 1rem/1.5 "Mulish", sans-serif;
+  margin: 0 1rem 0 1rem;
+
+  color: #373f41;
+}
+
+.no-active:hover {
+  color: #3c64b1;
 }
