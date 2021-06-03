@@ -1,0 +1,22 @@
+.container-footer {
+  position: fixed;
+  bottom: 0;
+
+  padding: 0.4rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 425px) {
+  .container-footer {
+    position: relative;
+  }
+}
+
+@media (max-width: 500px) {
+  .container-footer {
+  }
+}

@@ -1,0 +1,94 @@
+.card-relevantes {
+  width: 300px;
+  padding: 1rem 2rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-header h2 {
+  text-transform: none;
+  letter-spacing: 0.2px;
+}
+
+.card-header span {
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  color: var(--main-font-color-action);
+  cursor: pointer;
+}
+
+.card-header span:hover {
+  filter: brightness(50%);
+}
+
+.card-form {
+  margin-top: 2rem;
+}
+
+.card-form .dropdown-view {
+  width: 100%;
+  margin: 0;
+}
+
+.card-form .dropdown {
+  background-color: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 4pt;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font: 400 0.8rem/1.5 "Roboto", sans-serif;
+  text-align: left;
+  color: var(--main-font-color-primary);
+}
+
+.card-form .dropdown:hover {
+  filter: brightness(98%);
+
+  background-color: var(--main-bg-color);
+  color: var(--main-font-color-primary);
+
+  border-color: #12516e;
+}
+
+.card-form .dropdown-menu {
+  padding: 1rem;
+
+  max-width: 10rem;
+}
+
+.card-form .view-button {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card-relevantes .btn-relevante {
+  margin-top: 2rem;
+  width: 100%;
+
+  background-color: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 4pt;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font: 400 0.8rem/1.5 "Roboto", sans-serif;
+  color: var(--main-font-color-primary);
+}
+
+.card-relevantes .btn-relevante:hover {
+  filter: brightness(98%);
+
+  background-color: var(--main-bg-color);
+  color: var(--main-font-color-primary);
+
+  border-color: #12516e;
+}

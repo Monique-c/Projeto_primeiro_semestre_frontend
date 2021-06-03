@@ -12,11 +12,17 @@ import "assets/scss/now-ui-kit.scss?v=1.4.0";
 import "assets/demo/demo.css?v=1.4.0";
 import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 
+// styles for global Pages
+import "assets/styles/global.css";
+
 //API Pages
 import Homepage from "./pages/Homepage";
 import Eleitorado from "./pages/Eleitorado";
 import Abstencao from "./pages/Abstencao";
 import Renda from "./pages/Renda";
+
+import Navbar from "components/Navbars/Navbar.js";
+import Footer from "components/Footers/Footer.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -28,7 +34,9 @@ ReactDOM.render(
           path="/eleitorado"
           render={(props) => (
             <EleitoradoProvider>
+              <Navbar />
               <Eleitorado {...props} />
+              <Footer />
             </EleitoradoProvider>
           )}
         />
@@ -37,7 +45,9 @@ ReactDOM.render(
           path="/abstencao"
           render={(props) => (
             <AbstencaoProvider>
+              <Navbar />
               <Abstencao {...props} />
+              <Footer />
             </AbstencaoProvider>
           )}
         />
@@ -46,7 +56,9 @@ ReactDOM.render(
           path="/renda"
           render={(props) => (
             <RendaProvider>
+              <Navbar />
               <Renda {...props} />
+              <Footer />
             </RendaProvider>
           )}
         />

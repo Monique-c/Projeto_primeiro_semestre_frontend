@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-bg-color: #ffffff;
+
+  --main-color-primary: #0a6893;
+  --main-color-gray: #c9cbcf;
+
+  --main-font-color-nav: #3c64b1;
+  --main-font-color-primary: #0a3143;
+  --main-font-color-action: #214bb5;
+  --main-font-color-placeholder: #cccccc;
+
+  --main-color-gray1: #fafafa;
+  --main-color-gray2: #f2f2f3;
+  --main-color-gray6: #868e96;
+  --main-color-gray7: #495057;
+  --main-color-gray8: #343a40;
+
+  --main-color-danger: #dc143c;
+  --main-color-success: #2dce89;
+
+  --main-font-sz-title: 700 1.5rem/1.5 "Roboto", sans-serif;
+  --main-font-sz-subtitle: 500 1rem "Roboto", sans-serif;
+  --main-font-sz-medium: 400 0.9rem/1.5 "Roboto", sans-serif;
+  --main-font-sz-regular: 400 0.8rem/1.5 "Roboto", sans-serif;
+
+  --main-font-sz-input: 400 14px "IBM Plex Sans", sans-serif;
+  --main-font-sz-checkbox: 400 13px "IBM Plex Sans", sans-serif;
+  --main-font-sz-tiny: 400 10px "IBM Plex Sans", sans-serif;
+}
+
+h1 {
+  font: var(--main-font-sz-title);
+}
+
+h2 {
+  font: var(--main-font-sz-subtitle);
+  text-transform: uppercase;
+}
+
+h3 {
+  font: var(--main-font-sz-regular);
+}
+
+h4 {
+  font: var(--main-font-sz-medium);
+  letter-spacing: 0.2px;
+}
+
+span {
+  font: var(--main-font-sz-regular);
+  letter-spacing: 0.2px;
+}
+
+h1,
+h2,
+h3,
+h4,
+span,
+label {
+  margin: 0;
+  color: var(--main-font-color-primary);
+}
+
+.page-content {
+  margin-top: 15vh;
+}
+
+.button {
+  font: var(--main-font-sz-regular);
+  min-width: 6.7rem;
+  border: none;
+  border-radius: 5pt;
+
+  height: 2rem;
+  color: #fff;
+  cursor: pointer;
+  padding: 0px 1rem;
+}
+
+.button-primary {
+  background-color: var(--main-font-color-action);
+}
+
+.button-primary:hover {
+  filter: brightness(90%);
+}
+
+.loading_lottie {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  max-width: 20rem;
+  max-height: 20rem;
+}
+
+.chart-view {
+  margin-top: 4rem;
+}
+
+.chart-item {
+  margin-bottom: 5rem;
+}
+
+.card-fixed {
+  position: fixed;
+
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  height: 80vh;
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e9e9e9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main-font-color-primary);
+}
+
+@media (max-width: 1080px) {
+  :root {
+    font-size: 93.75%; /* 15px */
+  }
+}
+
+@media (max-width: 990px) {
+  .card-fixed {
+    position: relative;
+    height: auto;
+  }
+}
+
+@media (max-width: 970px) {
+  :root {
+    font-size: 87.5%; /* 14px */
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    font-size: 75%; /* 12px */
+  }
+}
+
+@media (max-width: 590px) {
+  :root {
+    font-size: 62.25%; /* 10px */
+  }
+}
